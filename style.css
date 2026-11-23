@@ -1745,13 +1745,12 @@ body::before {
 }
 
 /* Текст в инпутах */
-input:not([type="checkbox"]):not([type="radio"]), 
-textarea, 
-select {
+input, textarea, select {
     background-color: var(--bg-body) !important;
     color: var(--color-text) !important;
     border-color: var(--border-color) !important;
 }
+
 /* Кнопка переключения темы */
 .theme-toggle-btn {
     position: fixed;

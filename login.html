@@ -75,6 +75,33 @@
             text-decoration: none;
             font-weight: 700;
         }
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            box-sizing: border-box;
+            padding-right: 50px !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            color: #777;
+        }
+
+        .password-toggle:hover {
+            opacity: 0.7;
+        }
     </style>
 </head>
 
@@ -99,7 +126,17 @@
 
         <form id="login-form">
             <input type="email" id="email" placeholder="Ваша почта" autocomplete="email" required>
-            <input type="password" id="password" placeholder="Пароль" autocomplete="current-password" required>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Пароль"
+                    autocomplete="current-password" required>
+
+                <button type="button" id="toggle-password"
+                        class="password-toggle"
+                        aria-label="Показать пароль"
+                        title="Показать пароль">
+                    👁
+                </button>
+            </div>
             <button type="submit" class="btn-login" id="submit-btn">Войти</button>
         </form>
 
@@ -221,7 +258,28 @@ form.addEventListener('submit', function(e) {
     script.src = SCRIPT_URL + '?' + params.toString();
     document.body.appendChild(script);
 });
+
+
+const passwordInput = document.getElementById('password');
+const togglePassword = document.getElementById('toggle-password');
+
+togglePassword.addEventListener('click', function() {
+    const isHidden = passwordInput.type === 'password';
+
+    passwordInput.type = isHidden ? 'text' : 'password';
+
+    togglePassword.textContent = isHidden ? '🙈' : '👁';
+
+    togglePassword.setAttribute(
+        'aria-label',
+        isHidden ? 'Скрыть пароль' : 'Показать пароль'
+    );
+
+    togglePassword.title = isHidden ? 'Скрыть пароль' : 'Показать пароль';
+});
 </script>
+
+
 
 
 </body>
