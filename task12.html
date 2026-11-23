@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Задание 12. Наибольшее/наименьшее значение</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @media (max-width: 600px) {
+            .card { padding: 20px 15px !important; }
+            .card-header h2 { font-size: 20px !important; }
+            .theory-text p, .theory-text ul { font-size: 15px !important; line-height: 1.6 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item active"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html" class="active"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 12</div>
+                    <h1 class="page-title">Задание №12<br><span>Наибольшее/наименьшее значение</span></h1>
+                    <p class="page-description">
+                        Исследование функций с помощью производной: точки максимума и минимума, наибольшее и наименьшее значение на отрезке. Погнали! 📈
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="150" height="150" fill="#5c8ae6">
+                        <path d="M64 64h384v384H64z" fill="none" stroke="#5c8ae6" stroke-width="24"/>
+                        <path d="M64 384c64-64 128-256 192-256s128 192 192 256" fill="none" stroke="#f78fb3" stroke-width="24" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </header>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ================= ТЕОРИЯ ================= -->
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>Как искать max/min и наибольшее/наименьшее значение?</h2>
+                        <div class="icon-circle icon-circle--pink">📈</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            Главный инструмент — <strong>производная</strong>. Она показывает, как меняется функция.
+                        </p>
+
+                        <div style="background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-blue); margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-blue); font-size: 18px; margin-bottom: 10px;">1. Точки экстремума (max/min)</h3>
+                            <ol style="padding-left: 20px; font-size: 15px; line-height: 1.8; margin-bottom: 0;">
+                                <li>Находим производную \(y'\).</li>
+                                <li>Приравниваем к нулю: \(y' = 0\) — это <strong>критические точки</strong>.</li>
+                                <li>Определяем знак \(y'\) слева и справа от каждой точки.</li>
+                                <li>Если знак меняется с \(+\) на \(−\) — это <strong>максимум</strong>. С \(−\) на \(+\) — <strong>минимум</strong>.</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-pink); margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-pink); font-size: 18px; margin-bottom: 10px;">2. Наибольшее/наименьшее значение на отрезке \([a; b]\)</h3>
+                            <ol style="padding-left: 20px; font-size: 15px; line-height: 1.8; margin-bottom: 0;">
+                                <li>Находим \(y'\) и критические точки.</li>
+                                <li>Оставляем только те критические точки, которые лежат <strong>внутри отрезка</strong>.</li>
+                                <li>Считаем значения функции в этих точках и на <strong>концах отрезка</strong> \(a\) и \(b\).</li>
+                                <li>Из всех значений выбираем наибольшее/наименьшее.</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid var(--color-blue-light); flex-direction: column; align-items: flex-start;">
+                            <strong style="color: var(--color-heading); margin-bottom: 10px;">📝 Пример: \(y = x^3 - 27x + 14\), найти точку максимума.</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                <strong>1.</strong> \(y' = 3x^2 - 27 = 3(x^2 - 9) = 3(x-3)(x+3)\).<br><br>
+                                <strong>2.</strong> \(y' = 0 \Rightarrow x = 3\) или \(x = -3\).<br><br>
+                                <strong>3.</strong> Знаки \(y'\):<br>
+                                \(x < -3\): \(y' > 0\) (возрастает)<br>
+                                \(-3 < x < 3\): \(y' < 0\) (убывает)<br>
+                                \(x > 3\): \(y' > 0\) (возрастает)<br><br>
+                                <strong>4.</strong> В точке \(x = -3\) знак меняется с \(+\) на \(−\) — это <strong>максимум</strong>.<br><br>
+                                <strong>Ответ:</strong> \(-3\)
+                            </p>
+                        </div>
+
+                        <div class="tip-box" style="margin-top: 20px;">
+                            <span class="tip-icon">💡</span>
+                            <p><strong>Лайфхак:</strong> Если в задаче спрашивают «точку максимума/минимума» — в ответ пишем <strong>только \(x\)</strong>. Если «наибольшее/наименьшее значение» — пишем <strong>\(y\)</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА ================= -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">✍️ Практика</h2>
+                <div class="tasks-grid">
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>Найдите точку максимума функции \(y = x^3 - 27x + 14\).</p>
+                            <div class="interactive-check" data-answer="-3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>Найдите точку минимума функции \(y = x^2 - 300x + 11\).</p>
+                            <div class="interactive-check" data-answer="150">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>Найдите наибольшее значение функции \(y = 3x^5 - 5x^3 + 1\) на отрезке \([-7; 0]\).</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>Найдите наименьшее значение функции \(y = 12x^2 - x^3 + 3\) на отрезке \([-5; 6]\).</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>Найдите точку минимума функции \(y = x^2 - 18x + 29\).</p>
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>Найдите точку максимума функции \(y = 4 + 9x - x^2\).</p>
+                            <div class="interactive-check" data-answer="4.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>Найдите точку максимума функции \(y = (x - 4)^2(x + 5) + 8\).</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>Найдите точку минимума функции \(y = (x - 1)^2(x + 4) + 10\).</p>
+                            <div class="interactive-check" data-answer="-2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>Найдите точку максимума функции \(y = (x + 3) \cdot e^{3-x}\).</p>
+                            <div class="interactive-check" data-answer="-2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>Найдите точку минимума функции \(y = (x + 5) \cdot e^{x-5}\).</p>
+                            <div class="interactive-check" data-answer="-6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>Найдите точку максимума функции \(y = (x+5)^2 \cdot e^{2-x}\).</p>
+                            <div class="interactive-check" data-answer="-3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>Найдите точку минимума функции \(y = (x^2 - 11x + 11) \cdot e^{x+13}\).</p>
+                            <div class="interactive-check" data-answer="0">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>Найдите точку максимума функции \(y = -\dfrac{x^2+1}{x}\).</p>
+                            <div class="interactive-check" data-answer="-1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Найдите точку минимума функции \(y = -\dfrac{x^2+196}{x}\).</p>
+                            <div class="interactive-check" data-answer="14">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Найдите точку максимума функции \(y = x^2 - 33x + 136\ln x + 74\).</p>
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Найдите точку минимума функции \(y = 2x^2 - 23x + 33\ln x - 17\).</p>
+                            <div class="interactive-check" data-answer="8.25">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>Найдите точку максимума функции \(y = \ln(x+11) - 4x + 5\).</p>
+                            <div class="interactive-check" data-answer="-10.75">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>Найдите точку минимума функции \(y = 2x - \ln(x+7) + 9\).</p>
+                            <div class="interactive-check" data-answer="-6.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>Найдите наибольшее значение функции \(y = 10\ln(x+9) - 10x - 7\) на отрезке \([-8{,}5; 0]\).</p>
+                            <div class="interactive-check" data-answer="-17">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>Найдите наименьшее значение функции \(y = 9x - 9\ln(x+11) + 7\) на отрезке \([-10{,}5; 0]\).</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Найдите точку максимума функции \(y = (2x-1)\cos x - 2\sin x + 5\), принадлежащую промежутку \((0; \frac{\pi}{2})\).</p>
+                            <div class="interactive-check" data-answer="0.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>Найдите точку минимума функции \(y = (1-2x)\cos x + 2\sin x + 7\), принадлежащую промежутку \((0; \frac{\pi}{2})\).</p>
+                            <div class="interactive-check" data-answer="0">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>Найдите наибольшее значение функции \(y = 43x - 40\sin x + 34\) на отрезке \([-\frac{\pi}{2}; 0]\).</p>
+                            <div class="interactive-check" data-answer="74">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>Найдите наименьшее значение функции \(y = 18x - 10\sin x + 15\) на отрезке \([0; \frac{\pi}{2}]\).</p>
+                            <div class="interactive-check" data-answer="15">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task12';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none";
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.match(/\d+/)[0];
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL + '?action=recordProgress&email=' + encodeURIComponent(email) + '&taskId=' + encodeURIComponent(fullTaskId) + '&callback=' + cb;
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL + '?action=getStudentStats&email=' + encodeURIComponent(email) + '&callback=' + cb;
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || []).map(String).filter(id => id.startsWith(prefix)).map(id => id.slice(prefix.length));
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var id = card.querySelector('.task-number').textContent.match(/\d+/)[0];
+                    if (serverIds.includes(String(id))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        if (msg) { msg.textContent = "Верно! 🎉"; msg.className = "result-message correct"; }
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) { checkBtn.style.display = "none"; }
+                    }
+                });
+                updateProgressBar();
+            };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            if (!name) return;
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+            if (!menuBtn || !menu) return;
+            menuBtn.addEventListener('click', () => { menu.classList.add('open'); document.body.classList.add('menu-open'); });
+            closeBtn.addEventListener('click', () => { menu.classList.remove('open'); document.body.classList.remove('menu-open'); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') { menu.classList.remove('open'); document.body.classList.remove('menu-open'); }
+            });
+        });
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const TASK_KEY = 'task12';
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) { data = JSON.parse(text); }
+            if (!data || !data.success) return;
+            const allowedTasks = data.access || [];
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+        } catch (error) {
+            console.error("Ошибка получения доступов: ", error);
+        }
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">✈️ Telegram: @sonchesmath</a>
+                        </div>
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+
+</body>
+</html>

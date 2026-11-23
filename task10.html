@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Задание 10. Текстовые задачи</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @media (max-width: 600px) {
+            .card { padding: 20px 15px !important; }
+            .card-header h2 { font-size: 20px !important; }
+            .theory-text p, .theory-text ul { font-size: 15px !important; line-height: 1.6 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item active"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html" class="active"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 10</div>
+                    <h1 class="page-title">Задание №10<br><span>Текстовые задачи</span></h1>
+                    <p class="page-description">
+                        Задачи на движение, работу, проценты, смеси и сплавы. Учимся составлять уравнения и решать их. Погнали! 📝
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="150" height="150" fill="#5c8ae6">
+                        <path d="M464 0H144c-26.5 0-48 21.5-48 48v384c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM362 290H182c-6.6 0-12-5.4-12-12v-4c0-6.6 5.4-12 12-12h180c6.6 0 12 5.4 12 12v4c0 6.6-5.4 12-12 12zm0-96H182c-6.6 0-12-5.4-12-12v-4c0-6.6 5.4-12 12-12h180c6.6 0 12 5.4 12 12v4c0 6.6-5.4 12-12 12zM96 176H64c-17.7 0-32 14.3-32 32v208c0 17.7 14.3 32 32 32h32V176z"/>
+                    </svg>
+                </div>
+            </header>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ================= ТЕОРИЯ ================= -->
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>1. Задачи на движение</h2>
+                        <div class="icon-circle icon-circle--pink">🚗</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            Главная формула: <strong>\(S = v \cdot t\)</strong> (расстояние = скорость × время).
+                        </p>
+                        <ul class="theory-list">
+                            <li><strong>Навстречу друг другу:</strong> скорости складываются. \(v_{\text{сбл}} = v_1 + v_2\).</li>
+                            <li><strong>Вдогонку:</strong> скорости вычитаются. \(v_{\text{сбл}} = v_1 - v_2\).</li>
+                            <li><strong>По воде:</strong> \(v_{\text{по течению}} = v_{\text{собств}} + v_{\text{теч}}\), \(v_{\text{против}} = v_{\text{собств}} - v_{\text{теч}}\).</li>
+                        </ul>
+
+                        <div style="background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-pink); box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin: 20px 0;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-pink); font-size: 18px; margin-bottom: 10px;">🎯 Что брать за \(x\)?</h3>
+                            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 0;">
+                                <strong>Берём за \(x\) то, что просят найти в задаче.</strong><br>
+                                Просят скорость — обозначаем скорость. Просят время — обозначаем время. Просят расстояние — обозначаем расстояние. Не надо угадывать «удобную» переменную — просто читаем вопрос.
+                            </p>
+                        </div>
+
+                        <div style="background: #fff; padding: 18px 20px; border-radius: 15px; border-left: 5px solid var(--color-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin: 20px 0;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-blue); font-size: 18px; margin-bottom: 12px;">🏁 Средняя скорость</h3>
+                            <div class="formula-box" style="background: #f9fbfd; border: 2px solid var(--color-blue-light); margin: 0;">
+                                <div class="formula" style="text-align: center; font-size: 20px; color: var(--color-heading);">
+                                    \(v_{\text{ср}} = \dfrac{S_{\text{общ}}}{t_{\text{общ}}}\)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <span class="tip-icon">💡</span>
+                            <p><strong>Лайфхак:</strong> Единицы измерения должны совпадать! Если скорость в км/ч, то и время — в часах, расстояние — в км.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--pink">
+                    <div class="card-header">
+                        <h2>2. Задачи на работу</h2>
+                        <div class="icon-circle icon-circle--blue">🔧</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            Формула: <strong>\(A = p \cdot t\)</strong> (работа = производительность × время).
+                        </p>
+                        <ul class="theory-list">
+                            <li>Если всю работу принимают за 1, то производительность \(p = \frac{1}{t}\) (часть работы за единицу времени).</li>
+                            <li><strong>Совместная работа:</strong> производительности складываются: \(p_{\text{общ}} = p_1 + p_2\).</li>
+                        </ul>
+
+                        <div style="background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin: 20px 0;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-blue); font-size: 18px; margin-bottom: 10px;">🎯 Что брать за \(x\)?</h3>
+                            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 0;">
+                                <strong>Берём за \(x\) то, что просят найти в задаче.</strong><br>
+                                Чаще всего в задачах на работу просят найти <strong>производительность</strong> (сколько деталей в час, литров в минуту и т.д.) — её и обозначаем за \(x\). Если просят время — обозначаем время. Вопрос задачи = наша переменная.
+                            </p>
+                        </div>
+
+                        <div class="tip-box">
+                            <span class="tip-icon">💡</span>
+                            <p><strong>Лайфхак:</strong> Производительность — это «скорость работы». Всё как в движении, только вместо км/ч — детали/час или литры/мин.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--white">
+                    <div class="card-header">
+                        <h2>3. Проценты, смеси и сплавы</h2>
+                        <div class="icon-circle icon-circle--yellow">🧪</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            <strong>Проценты:</strong> чтобы найти \(p\%\) от числа \(A\), нужно \(A \cdot \frac{p}{100}\).
+                        </p>
+
+                        <div style="background: #fff; padding: 25px; border-radius: 15px; border-left: 5px solid var(--color-pink); box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-pink); font-size: 20px; margin-bottom: 15px;">💡 Главное правило для смесей и сплавов</h3>
+
+                            <p style="font-size: 16px; margin-bottom: 15px; line-height: 1.6;">
+                                Можно <strong>не составлять таблицы</strong> и не искать «массу вещества». Достаточно одного уравнения — <strong>баланса масс</strong>:
+                            </p>
+
+                            <div class="formula-box" style="background: #f9fbfd; border: 2px solid var(--color-blue-light); margin-bottom: 20px;">
+                                <div class="formula" style="text-align: center; font-size: 22px; color: var(--color-heading);">
+                                    \(m_1 \cdot p_1 + m_2 \cdot p_2 = m_3 \cdot p_3\)
+                                </div>
+                            </div>
+
+                            <ul class="theory-list" style="margin-bottom: 0;">
+                                <li>\(m_1,\ m_2\) — массы <strong>исходных</strong> растворов/сплавов;</li>
+                                <li>\(p_1,\ p_2\) — их концентрации (в процентах или долях — главное, <strong>в одинаковых единицах</strong>);</li>
+                                <li>\(m_3 = m_1 + m_2\) — масса <strong>получившейся</strong> смеси;</li>
+                                <li>\(p_3\) — концентрация получившейся смеси.</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: #fdf0f5; padding: 20px; border-radius: 15px; border: 2px solid var(--color-pink-light); margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-pink); font-size: 18px; margin-bottom: 12px;">Частные случаи</h3>
+                            <ul class="theory-list" style="margin-bottom: 0;">
+                                <li><strong>Добавили чистую воду:</strong> \(p = 0\%\). Тогда \(m_1 p_1 + m_{\text{воды}} \cdot 0 = m_3 p_3\), то есть \(m_1 p_1 = (m_1 + m_{\text{воды}}) \cdot p_3\).</li>
+                                <li><strong>Добавили чистое вещество:</strong> \(p = 100\%\).</li>
+                                <li><strong>Слили два одинаковых раствора</strong> (\(p_1 = p_2\)): концентрация не меняется, \(p_3 = p_1\).</li>
+                            </ul>
+                        </div>
+
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid var(--color-blue-light); flex-direction: column; align-items: flex-start;">
+                            <strong style="color: var(--color-heading); margin-bottom: 10px;">📝 Пример:</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                Смешали 3 кг 10%-го раствора соли и 5 кг 30%-го раствора. Найдите концентрацию получившегося раствора.<br><br>
+
+                                <strong>1.</strong> Пишем баланс масс:<br>
+                                \(3 \cdot 10 + 5 \cdot 30 = (3 + 5) \cdot p_3\)<br><br>
+
+                                <strong>2.</strong> Считаем:<br>
+                                \(30 + 150 = 8 \cdot p_3\)<br>
+                                \(180 = 8 \cdot p_3\)<br>
+                                \(p_3 = 22{,}5\)<br><br>
+
+                                <strong>Ответ:</strong> 22,5%
+                            </p>
+                        </div>
+
+                        <div class="tip-box" style="margin-top: 20px; align-items: center;">
+                            <span class="tip-icon">⚠️</span>
+                            <p style="margin: 0;"><strong>Внимание:</strong> проценты в уравнении можно оставлять как есть (10, 30, 22,5) — главное, чтобы <strong>все три</strong> концентрации были в одинаковых единицах. Если одна в долях (0,1), то и остальные переводи в доли.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА: ПРОЦЕНТЫ, СМЕСИ, СПЛАВЫ ================= -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🧪 Проценты, смеси и сплавы</h2>
+
+                <div class="tasks-grid">
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>В сосуд, содержащий 10 литров 14-процентного водного раствора некоторого вещества, добавили 4 литра воды. Сколько процентов составит концентрация получившегося раствора?</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>Смешали некоторое количество 19-процентного раствора некоторого вещества с таким же количеством 17-процентного раствора этого вещества. Сколько процентов составляет концентрация получившегося раствора?</p>
+                            <div class="interactive-check" data-answer="18">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>Имеется два сплава. Первый сплав содержит 5% меди, второй — 11% меди. Масса второго сплава больше массы первого на 8 кг. Из этих двух сплавов получили третий сплав, содержащий 10% меди. Найдите массу третьего сплава. Ответ дайте в килограммах.</p>
+                            <div class="interactive-check" data-answer="16">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>Имеется два сплава. Первый сплав содержит 40% меди, второй — 25% меди. Масса первого сплава больше массы второго на 10 кг. Из этих двух сплавов получили третий сплав, содержащий 35% меди. Найдите массу третьего сплава. Ответ дайте в килограммах.</p>
+                            <div class="interactive-check" data-answer="30">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>Имеется два сплава. Первый содержит 5% никеля, второй — 30% никеля. Из этих двух сплавов получили третий сплав массой 100 кг, содержащий 20% никеля. На сколько килограммов масса первого сплава была меньше массы второго?</p>
+                            <div class="interactive-check" data-answer="60">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>Изюм получается в процессе сушки винограда. Сколько килограммов винограда потребуется для получения 38 килограммов изюма, если виноград содержит 82% воды, а изюм содержит 19% воды?</p>
+                            <div class="interactive-check" data-answer="171">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>Изюм получается в процессе сушки винограда. Сколько килограммов винограда потребуется для получения 20 килограммов изюма, если виноград содержит 90% воды, а изюм содержит 5% воды?</p>
+                            <div class="interactive-check" data-answer="190">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>Шесть одинаковых рубашек дешевле куртки на 10%. На сколько процентов семь таких же рубашек дороже куртки?</p>
+                            <div class="interactive-check" data-answer="5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>Семья состоит из мужа, жены и их дочери-студентки. Если бы зарплата мужа увеличилась вдвое, общий доход семьи вырос бы на 51%. Если бы стипендия дочери уменьшилась вдвое, общий доход семьи сократился бы на 3%. Сколько процентов от общего дохода семьи составляет зарплата жены?</p>
+                            <div class="interactive-check" data-answer="45">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>Имеется два сосуда. Первый содержит 80 кг, а второй — 70 кг раствора кислоты различной концентрации. Если эти растворы смешать, то получится раствор, содержащий 63% кислоты. Если же смешать равные массы этих растворов, то получится раствор, содержащий 65% кислоты. Сколько процентов кислоты содержится в первом сосуде?</p>
+                            <div class="interactive-check" data-answer="60">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>Имеется два сосуда. Первый содержит 30 кг, а второй — 20 кг раствора кислоты различной концентрации. Если эти растворы смешать, то получится раствор, содержащий 68% кислоты. Если же смешать равные массы этих растворов, то получится раствор, содержащий 70% кислоты. Сколько килограммов кислоты содержится в первом сосуде?</p>
+                            <div class="interactive-check" data-answer="18">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>Смешав 24-процентный и 67-процентный растворы кислоты и добавив 10 кг чистой воды, получили 41-процентный раствор кислоты. Если бы вместо 10 кг воды добавили 10 кг 50-процентного раствора той же кислоты, то получили бы 45-процентный раствор кислоты. Сколько килограммов 24-процентного раствора использовали для получения смеси?</p>
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>В понедельник акции компании подорожали на некоторое число процентов, а во вторник подешевели на то же самое число процентов. В результате они стали стоить на 4% дешевле, чем при открытии торгов в понедельник. На сколько процентов подорожали акции компании в понедельник?</p>
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА: ДВИЖЕНИЕ ПО ПРЯМОЙ ================= -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🚗 Движение по прямой</h2>
+
+                <div class="tasks-grid">
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Первый час автомобиль ехал со скоростью 115 км/ч, следующие три часа — со скоростью 45 км/ч, а затем два часа — со скоростью 40 км/ч. Найдите среднюю скорость автомобиля на протяжении всего пути. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="55">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Первые 120 км автомобиль ехал со скоростью 60 км/ч, следующие 200 км — со скоростью 100 км/ч, а затем 160 км — со скоростью 120 км/ч. Найдите среднюю скорость автомобиля на протяжении всего пути. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="80">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Автомобиль, движущийся с постоянной скоростью 66 км/ч по прямому шоссе, обгоняет другой автомобиль, движущийся в ту же сторону с постоянной скоростью 34 км/ч. Каким будет расстояние (в километрах) между этими автомобилями через 12 минут после обгона?</p>
+                            <div class="interactive-check" data-answer="6.4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>Дорога между пунктами А и В состоит из подъёма и спуска, а её длина равна 22 км. Путь из А в В занял у туриста 8 часов, из которых 3 часа ушло на спуск. Найдите скорость туриста на спуске, если она больше скорости на подъёме на 2 км/ч. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>Расстояние между городами А и В равно 500 км. Из города А в город В выехал первый автомобиль, а через час после этого навстречу ему из города В выехал со скоростью 80 км/ч второй автомобиль. Найдите скорость первого автомобиля, если автомобили встретились на расстоянии 260 км от города А. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="65">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>Велосипедист выехал с постоянной скоростью из города А в город В, расстояние между которыми равно 156 км. На следующий день он отправился обратно со скоростью на 1 км/ч больше прежней. По дороге он сделал остановку на 1 час. В результате он затратил на обратный путь столько же времени, сколько на путь из А в В. Найдите скорость велосипедиста на пути из А в В. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>Два велосипедиста одновременно отправились в 140-километровый пробег. Первый ехал со скоростью на 4 км/ч большей, чем скорость второго, и прибыл к финишу на 4 часа раньше второго. Найдите скорость велосипедиста, пришедшего к финишу первым. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="14">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Из пункта А в пункт В, расстояние между которыми 50 км, одновременно выехали автомобилист и велосипедист. За час автомобилист проезжает на 30 км больше, чем велосипедист. Определите скорость велосипедиста, если известно, что он прибыл в пункт В на 1 час 30 минут позже автомобилиста. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>Расстояние между городами А и В равно 420 км. Из города А в город В выехал автомобиль, а через 1 час следом за ним со скоростью 80 км/ч выехал мотоциклист, догнал автомобиль в городе С и повернул обратно. Когда он вернулся в А, автомобиль прибыл в В. Найдите расстояние от А до С. Ответ дайте в километрах.</p>
+                            <div class="interactive-check" data-answer="240">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>Из городов А и В навстречу друг другу одновременно выехали мотоциклист и велосипедист. Мотоциклист приехал в город В на 10 часов раньше, чем велосипедист приехал в город А, а встретились они через 3 часа 45 минут после выезда. Сколько часов затратил на путь из города В в город А велосипедист?</p>
+                            <div class="interactive-check" data-answer="15">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>По двум параллельным железнодорожным путям навстречу друг другу следуют скорый и пассажирский поезда, скорости которых равны соответственно 85 км/ч и 35 км/ч. Длина пассажирского поезда равна 250 метрам. Найдите длину скорого поезда, если время, за которое он прошёл мимо пассажирского, равно 30 секундам. Ответ дайте в метрах.</p>
+                            <div class="interactive-check" data-answer="750">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА: ДВИЖЕНИЕ ПО ВОДЕ ================= -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🌊 Движение по воде</h2>
+
+                <div class="tasks-grid">
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 25</h3>
+                            <p>От пристани А к пристани В, расстояние между которыми равно 240 км, отправился с постоянной скоростью первый теплоход, а через 1 час после этого следом за ним, со скоростью на 1 км/ч большей, отправился второй. Найдите скорость первого теплохода, если в пункт В оба теплохода прибыли одновременно. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="15">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 26</h3>
+                            <p>Теплоход, скорость которого в неподвижной воде равна 27 км/ч, проходит некоторое расстояние по реке и после стоянки возвращается в исходный пункт. Скорость течения равна 1 км/ч, стоянка длится 5 часов, а в исходный пункт теплоход возвращается через 32 часа после отправления из него. Сколько километров проходит теплоход за весь рейс?</p>
+                            <div class="interactive-check" data-answer="728">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 27</h3>
+                            <p>Пристани А и В расположены на озере, расстояние между ними равно 264 км. Баржа отправилась с постоянной скоростью из А в В. На следующий день после прибытия она отправилась тем же путём обратно со скоростью на 2 км/ч больше прежней, сделав по пути остановку на 1 час. В результате она затратила на обратный путь столько же времени, сколько на путь из А в В. Найдите скорость баржи на пути из А в В. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="22">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 28</h3>
+                            <p>Теплоход проходит по течению реки до пункта назначения 48 км и после стоянки возвращается в пункт отправления. Найдите скорость теплохода в неподвижной воде, если скорость течения равна 4 км/ч, стоянка длится 5 часов, а в пункт отправления теплоход возвращается через 10 часов. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 29</h3>
+                            <p>Теплоход проходит по течению реки до пункта назначения 775 км и после стоянки возвращается в пункт отправления. Найдите скорость течения, если скорость теплохода в неподвижной воде равна 28 км/ч, стоянка длится 5 часов, а в пункт отправления теплоход возвращается через 61 час. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 30</h3>
+                            <p>Моторная лодка прошла против течения реки 48 км и вернулась в пункт отправления, затратив на обратный путь на 8 часов меньше. Найдите скорость течения, если скорость лодки в неподвижной воде равна 8 км/ч. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 31</h3>
+                            <p>Моторная лодка прошла против течения реки 91 км и вернулась в пункт отправления, затратив на обратный путь на 6 часов меньше. Найдите скорость лодки в неподвижной воде, если скорость течения равна 3 км/ч. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 32</h3>
+                            <p>Катер в 10:00 вышел по течению реки из пункта А в пункт В, расположенный в 35 км от А. Пробыв в пункте В 4 часа, катер отправился назад и вернулся в пункт А в 18:00 того же дня. Определите собственную скорость катера (в км/ч), если известно, что скорость течения реки 3 км/ч.</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 33</h3>
+                            <p>Баржа в 10:00 вышла из пункта А в пункт В, расположенный в 30 км от А. Пробыв в пункте В 4 часа, баржа отправилась назад и вернулась в пункт А в 22:00 того же дня. Определите (в км/ч) скорость течения реки, если известно, что собственная скорость баржи равна 8 км/ч.</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 34</h3>
+                            <p>Байдарка в 07:00 вышла из пункта А в пункт В, расположенный в 30 км от А. Пробыв в пункте В 2 часа 40 минут, байдарка отправилась назад и вернулась в пункт А в 23:00 того же дня. Определите (в км/ч) собственную скорость байдарки, если известно, что скорость течения реки равна 3 км/ч.</p>
+                            <div class="interactive-check" data-answer="6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 35</h3>
+                            <p>Расстояние между пристанями А и В равно 160 км. Из А в В по течению реки отправился плот, а через 1 час вслед за ним отправилась яхта, которая, прибыв в пункт В, тотчас повернула обратно и возвратилась в А. К этому времени плот проплыл 39 км. Найдите скорость яхты в неподвижной воде, если скорость течения реки равна 3 км/ч. Ответ дайте в км/ч.</p>
+                            <div class="interactive-check" data-answer="27">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 36</h3>
+                            <p>Весной катер идёт против течения реки в 12 раза медленнее, чем по течению. Летом течение становится на 1 км/ч медленнее. Поэтому летом катер идёт против течения в 14 раза медленнее, чем по течению. Найдите скорость течения весной (в км/ч).</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА: РАБОТА ================= -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔧 Работа</h2>
+
+                <div class="tasks-grid">
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 37</h3>
+                            <p>Заказ на изготовление 209 деталей первый рабочий выполняет на 8 часов быстрее, чем второй. Сколько деталей за час изготавливает второй рабочий, если известно, что первый за час изготавливает на 8 деталей больше?</p>
+                            <div class="interactive-check" data-answer="11">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 38</h3>
+                            <p>Заказ на изготовление 228 деталей первый рабочий выполняет на 7 часов быстрее, чем второй. Сколько деталей в час делает первый рабочий, если известно, что он за час изготавливает на 7 деталей больше, чем второй?</p>
+                            <div class="interactive-check" data-answer="19">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 39</h3>
+                            <p>На изготовление 77 деталей первый рабочий тратит на 4 часа меньше, чем второй рабочий на изготовление 99 таких же деталей. Известно, что первый рабочий за час изготавливает на 2 детали больше, чем второй. Сколько деталей за час делает второй рабочий?</p>
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 40</h3>
+                            <p>Первая труба пропускает на 3 литра воды в минуту меньше, чем вторая. Сколько литров воды в минуту пропускает первая труба, если резервуар объёмом 108 литров она заполняет на 3 минуты дольше, чем вторая труба?</p>
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 41</h3>
+                            <p>Первая труба пропускает на 6 литров воды в минуту меньше, чем вторая. Сколько литров воды в минуту пропускает вторая труба, если резервуар объёмом 112 литров она заполняет на 6 минут быстрее, чем первая труба?</p>
+                            <div class="interactive-check" data-answer="14">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 42</h3>
+                            <p>Первая труба наполняет резервуар на 13 минут дольше, чем вторая. Обе трубы, работая одновременно, наполняют этот же резервуар за 42 минуты. За сколько минут наполняет этот резервуар одна вторая труба?</p>
+                            <div class="interactive-check" data-answer="78">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 43</h3>
+                            <p>Один мастер может выполнить заказ за 30 часов, а другой — за 15 часов. За сколько часов выполнят заказ оба мастера, работая вместе?</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 44</h3>
+                            <p>Первый насос наполняет бак за 11 минут, второй — за 15 минут, а третий — за 1 час 50 минут. За сколько минут наполнят этот бак три насоса, работая одновременно?</p>
+                            <div class="interactive-check" data-answer="6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 45</h3>
+                            <p>Катя и Настя, работая вместе, пропалывают грядку за 24 минуты, а одна Настя — за 42 минуты. За сколько минут пропалывает грядку одна Катя?</p>
+                            <div class="interactive-check" data-answer="56">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Твой ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task10';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none";
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.match(/\d+/)[0];
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL + '?action=recordProgress&email=' + encodeURIComponent(email) + '&taskId=' + encodeURIComponent(fullTaskId) + '&callback=' + cb;
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL + '?action=getStudentStats&email=' + encodeURIComponent(email) + '&callback=' + cb;
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || []).map(String).filter(id => id.startsWith(prefix)).map(id => id.slice(prefix.length));
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var id = card.querySelector('.task-number').textContent.match(/\d+/)[0];
+                    if (serverIds.includes(String(id))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        if (msg) { msg.textContent = "Верно! 🎉"; msg.className = "result-message correct"; }
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) { checkBtn.style.display = "none"; }
+                    }
+                });
+                updateProgressBar();
+            };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            if (!name) return;
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+            if (!menuBtn || !menu) return;
+            menuBtn.addEventListener('click', () => { menu.classList.add('open'); document.body.classList.add('menu-open'); });
+            closeBtn.addEventListener('click', () => { menu.classList.remove('open'); document.body.classList.remove('menu-open'); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') { menu.classList.remove('open'); document.body.classList.remove('menu-open'); }
+            });
+        });
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const TASK_KEY = 'task10';
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) { data = JSON.parse(text); }
+            if (!data || !data.success) return;
+            const allowedTasks = data.access || [];
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+        } catch (error) {
+            console.error("Ошибка получения доступов: ", error);
+            document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                 if (!a.href.includes('index.html') && !a.href.includes('dashboard.html')) {
+                     a.style.opacity = '0.4';
+                     a.style.pointerEvents = 'none';
+                 }
+            });
+        }
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">✈️ Telegram: @sonchesmath</a>
+                        </div>
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+
+</body>
+</html>

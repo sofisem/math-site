@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Задание 9. Задачи с прикладным содержанием</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        @media (max-width: 600px) {
+            .card { padding: 20px 15px !important; }
+            .card-header h2 { font-size: 20px !important; }
+            .theory-text p, .theory-text ul { font-size: 15px !important; line-height: 1.6 !important; }
+            .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px; }
+            .table-responsive table { min-width: 450px; }
+            .formula-box { padding: 15px 10px !important; }
+            .example-box { padding: 15px !important; }
+            .example-box .step { margin-bottom: 15px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+    
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item active"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html" class="active"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 9</div>
+                    <h1 class="page-title">Задание №9<br><span>Задачи с прикладным содержанием</span></h1>
+                    <p class="page-description">
+                        Физика, экономика и формулы. Учимся подставлять числа и решать уравнения. Погнали! 🧮
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <img src="https://img.icons8.com/color/144/000000/calculator.png" alt="Калькулятор">
+                </div>
+            </header>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ================= ТЕОРИЯ ================= -->
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>Как решать задачи с формулами?</h2>
+                        <div class="icon-circle icon-circle--pink">📝</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px;">
+                            В этих задачах всегда есть формула. Твоя цель — понять, что дано, а что нужно найти.
+                        </p>
+                        
+                        <div style="background: #fff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-blue); margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--color-heading); font-size: 18px; margin-bottom: 10px;">Алгоритм действий:</h3>
+                            <ol style="padding-left: 20px; font-size: 15px; line-height: 1.8; margin-bottom: 0;">
+                                <li>Выписываем формулу из условия.</li>
+                                <li>Подставляем все известные числа.</li>
+                                <li>Решаем получившееся уравнение (чаще всего квадратное) относительно неизвестной.</li>
+                                <li>Если корней несколько, выбираем подходящий по смыслу (время не может быть отрицательным, длина — тоже и т.д.).</li>
+                            </ol>
+                        </div>
+
+                        <div class="tip-box" style="margin-top: 20px; align-items: center;">
+                            <span class="tip-icon">💡</span>
+                            <p style="margin: 0;">
+                                <strong>Главный лайфхак:</strong> Не бойся страшных формул (с логарифмами, синусами или корнями). В 90% задач это просто подстановка чисел, после которой остаётся обычное уравнение.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА ================= -->
+            
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🌉 Ванты моста</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>На рисунке изображена схема моста. Вертикальные пилоны связаны провисающей цепью. Тросы, которые свисают с цепи и поддерживают полотно моста, называются вантами. Введём систему координат: ось \(Oy\) направим вертикально вверх вдоль одного из пилонов, а ось \(Ox\) направим вдоль полотна моста, как показано на рисунке. В этой системе координат линия, по которой провисает цепь моста, задаётся формулой \(y=0,0043x^2-0,74x+35\), где \(x\) и \(y\) измеряются в метрах. Найдите длину ванты, расположенной в 70 метрах от пилона. Ответ дайте в метрах.</p>
+                            <div class="interactive-check" data-answer="3.5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>На рисунке изображена схема моста. Вертикальные пилоны связаны провисающей цепью. Тросы, которые свисают с цепи и поддерживают полотно моста, называются вантами. Введём систему координат: ось \(Oy\) направим вертикально вверх вдоль одного из пилонов, а ось \(Ox\) направим вдоль полотна моста, как показано на рисунке. В этой системе координат линия, по которой провисает цепь моста, задаётся формулой \(y=0,0029x^2-0,53x+28\), где \(x\) и \(y\) измеряются в метрах. Найдите длину ванты, расположенной в 90 метрах от пилона. Ответ дайте в метрах.</p>
+                            <div class="interactive-check" data-answer="2.3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🚗 Тормозной путь</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>Автомобиль, движущийся со скоростью \(v_0 = 24\) м/с, начал торможение с постоянным ускорением \(a = 3\) м/с². За \(t\) секунд после начала торможения он прошёл путь \(S = v_0t - \frac{at^2}{2}\) (м). Определите время, прошедшее с момента начала торможения, если известно, что за это время автомобиль проехал 90 метров. Ответ дайте в секундах.</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>Автомобиль, движущийся со скоростью \(v_0 = 22\) м/с, начал торможение с постоянным ускорением \(a = 4\) м/с². За \(t\) секунд после начала торможения он прошёл путь \(S = v_0t - \frac{at^2}{2}\) (м). Определите время, прошедшее с момента начала торможения, если известно, что за это время автомобиль проехал 60 метров. Ответ дайте в секундах.</p>
+                            <div class="interactive-check" data-answer="5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🏍️ Разгон мотоциклиста</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>Мотоциклист, движущийся по городу со скоростью \(v_0 = 60\) км/ч, выезжает из него и сразу после выезда начинает разгоняться с постоянным ускорением \(a = 18\) км/ч². Расстояние (в км) от мотоциклиста до города вычисляется по формуле \(S = v_0t + \frac{at^2}{2}\), где \(t\) – время в часах, прошедшее после выезда из города. Определите время, прошедшее после выезда мотоциклиста из города, если известно, что за это время он удалился от города на 21 км. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>Мотоциклист, движущийся по городу со скоростью \(v_0 = 65\) км/ч, выезжает из него и сразу после выезда начинает разгоняться с постоянным ускорением \(a = 40\) км/ч². Расстояние (в км) от мотоциклиста до города вычисляется по формуле \(S = v_0t + \frac{at^2}{2}\), где \(t\) – время в часах, прошедшее после выезда из города. Определите время, прошедшее после выезда мотоциклиста из города, если известно, что за это время он удалился от города на 60 км. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="48">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">⚙️ Лебёдка</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>Для сматывания кабеля на заводе используют лебёдку, которая равноускоренно наматывает кабель на катушку. Угол, на который поворачивается катушка, изменяется со временем по закону \(\varphi = \omega t + \frac{\beta t^2}{2}\), где \(t\) – время в минутах, прошедшее после начала работы лебёдки, \(\omega=25\) град./мин – начальная угловая скорость вращения катушки, а \(\beta =10\) град./мин² – угловое ускорение, с которым наматывается кабель. Определите время, прошедшее после начала работы лебёдки, если известно, что за это время угол намотки \(\varphi\) достиг 1500°. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="15">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>Для сматывания кабеля на заводе используют лебёдку, которая равноускоренно наматывает кабель на катушку. Угол, на который поворачивается катушка, изменяется со временем по закону \(\varphi = \omega t + \frac{\beta t^2}{2}\), где \(t\) – время в минутах, прошедшее после начала работы лебёдки, \(\omega=15\) град./мин – начальная угловая скорость вращения катушки, а \(\beta =6\) град./мин² – угловое ускорение, с которым наматывается кабель. Определите время, прошедшее после начала работы лебёдки, если известно, что за это время угол намотки \(\varphi\) достиг 2250°. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">💰 Выручка предприятия</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>Зависимость объёма спроса \(q\) (единиц в месяц) на продукцию предприятия-монополиста от цены \(p\) (тыс. руб.) задаётся формулой \(q = 60 - 5p\). Выручка предприятия за месяц \(r\) (в тыс. руб.) вычисляется по формуле \(r(p) = q \cdot p\). Определите наибольшую цену \(p\), при которой месячная выручка \(r(p)\) составит не менее 100 тыс. руб. Ответ приведите в тыс. руб.</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>Зависимость объёма спроса \(q\) (единиц в месяц) на продукцию предприятия-монополиста от цены \(p\) (тыс. руб.) задаётся формулой \(q = 95 - 5p\). Выручка предприятия за месяц \(r\) (в тыс. руб.) вычисляется по формуле \(r(p) = q \cdot p\). Определите наибольшую цену \(p\), при которой месячная выручка \(r(p)\) составит не менее 170 тыс. руб. Ответ приведите в тыс. руб.</p>
+                            <div class="interactive-check" data-answer="17">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🚰 Вытекание воды из бака</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>В боковой стенке высокого цилиндрического бака у самого дна закреплён кран. После его открытия вода начинает вытекать из бака, при этом высота столба воды в нём меняется по закону \(H(t)=at^2+bt+H_0\), \(H\) – высота воды в метрах, \(H_0=7\) м – начальный уровень воды, \(a=\frac{1}{700}\) мин⁻² и \(b=-\frac{1}{5}\) мин⁻¹ – постоянные, \(t\) – время в минутах, прошедшее с момента открытия крана. Сколько минут вода будет вытекать из бака?</p>
+                            <div class="interactive-check" data-answer="140">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>В боковой стенке высокого цилиндрического бака у самого дна закреплён кран. После его открытия вода начинает вытекать из бака, при этом высота столба воды в нём меняется по закону \(H(t)=at^2+bt+H_0\), \(H\) – высота воды в метрах, \(H_0=3\) м – начальный уровень воды, \(a=\frac{1}{768}\) мин⁻² и \(b=-\frac{1}{8}\) мин⁻¹ – постоянные, \(t\) – время в минутах, прошедшее с момента открытия крана. Сколько минут вода будет вытекать из бака?</p>
+                            <div class="interactive-check" data-answer="96">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔥 Нагревательный элемент</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>Для нагревательного элемента некоторого прибора экспериментально была получена зависимость температуры (в К) от времени работы: \(T(t)=T_0+bt+at^2\), где \(t\) – время (в мин.), \(T_0=1380\) К, \(a=-15\) К/мин², \(b=165\) К/мин. Известно, что при температуре нагревательного элемента свыше 1800 К прибор может испортиться, поэтому его нужно отключить. Найдите, через какое наибольшее время после начала работы нужно отключить прибор. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Для нагревательного элемента некоторого прибора экспериментально была получена зависимость температуры (в К) от времени работы: \(T(t)=T_0+bt+at^2\), где \(t\) – время (в мин.), \(T_0=1320\) К, \(a=-20\) К/мин², \(b=200\) К/мин. Известно, что при температуре нагревательного элемента свыше 1800 К прибор может испортиться, поэтому его нужно отключить. Найдите, через какое наибольшее время после начала работы нужно отключить прибор. Ответ дайте в минутах.</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">⚽ Мяч в воздухе</h2>
+                
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Высота над землёй подброшенного вверх мяча меняется по закону \(h(t)=2+11t-5t^2\), где \(h\) – высота в метрах, \(t\) – время в секундах, прошедшее с момента броска. Сколько секунд мяч будет находиться на высоте не менее 4 метров?</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Высота над землёй подброшенного вверх мяча меняется по закону \(h(t)=2+13t-5t^2\), где \(h\) – высота в метрах, \(t\) – время в секундах, прошедшее с момента броска. Сколько секунд мяч будет находиться на высоте не менее 8 метров?</p>
+                            <div class="interactive-check" data-answer="1.8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔍 Оптика (Линзы)</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>Для получения на экране увеличенного изображения лампочки в лаборатории используется собирающая линза с главным фокусным расстоянием \(f = 36\) см. Расстояние \(d_1\) от линзы до лампочки может изменяться в пределах от 30 см до 50 см, а расстояние \(d_2\) от линзы до экрана – в пределах от 160 до 180 см. Изображение на экране будет чётким, если выполнено соотношение \(\frac{1}{d_1} + \frac{1}{d_2} = \frac{1}{f}\). На каком наименьшем расстоянии от линзы нужно поместить лампочку, чтобы её изображение на экране было чётким? Ответ выразите в сантиметрах.</p>
+                            <div class="interactive-check" data-answer="45">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>Для получения на экране увеличенного изображения лампочки в лаборатории используется собирающая линза с главным фокусным расстоянием \(f = 20\) см. Расстояние \(d_1\) от линзы до лампочки может изменяться в пределах от 15 см до 40 см, а расстояние \(d_2\) от линзы до экрана – в пределах от 100 до 120 см. Изображение на экране будет чётким, если выполнено соотношение \(\frac{1}{d_1} + \frac{1}{d_2} = \frac{1}{f}\). На каком наименьшем расстоянии от линзы нужно поместить лампочку, чтобы её изображение на экране было чётким? Ответ выразите в сантиметрах.</p>
+                            <div class="interactive-check" data-answer="24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">⚡ Закон Ома (нагрузка)</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>К источнику с ЭДС \(\varepsilon = 180\) В и внутренним сопротивлением \(r = 1\) Ом хотят подключить нагрузку с сопротивлением \(R\) (в Ом). Напряжение (в В) на этой нагрузке вычисляется по формуле \(U = \frac{\varepsilon R}{R + r}\). При каком значении сопротивления нагрузки напряжение на ней будет равно 170 В? Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="17">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>К источнику с ЭДС \(\varepsilon = 115\) В и внутренним сопротивлением \(r = 0,6\) Ом хотят подключить нагрузку с сопротивлением \(R\) (в Ом). Напряжение (в В) на этой нагрузке вычисляется по формуле \(U = \frac{\varepsilon R}{R + r}\). При каком значении сопротивления нагрузки напряжение на ней будет равно 100 В? Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">📰 Рейтинг изданий</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Независимое агентство намерено ввести рейтинг \(R\) новостных изданий на основе показателей информативности \(In\), оперативности \(Op\) и объективности \(Tr\) публикаций. Каждый отдельный показатель – целое число от 0 до 3. Составители рейтинга считают, что информативность публикаций ценится втрое, а объективность – вчетверо дороже, чем оперативность, то есть \(R = \frac{3In + Op + 4Tr}{A}\). Найдите, каким должно быть число \(A\), чтобы издание, у которого все показатели максимальны, получило рейтинг 30.</p>
+                            <div class="interactive-check" data-answer="0.8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>Независимое агентство намерено ввести рейтинг \(R\) новостных изданий на основе показателей информативности \(In\), оперативности \(Op\) и объективности \(Tr\) публикаций. Каждый показатель оценивается целыми числами от 1 до 6. Аналитик, составляющий формулу, считает, что объективность публикаций ценится вдвое, а информативность – вчетверо дороже, чем оперативность. В результате, формула примет вид \(R = \frac{4In + Op + 2Tr}{A}\). Каким должно быть число \(A\), чтобы издание, у которого все показатели наибольшие, получило рейтинг 20?</p>
+                            <div class="interactive-check" data-answer="2.1">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔌 Сила тока</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>Сила тока \(I\) (в А) в электросети вычисляется по закону Ома: \(I = \frac{U}{R}\), где \(U\) – напряжение электросети (в В), \(R\) – сопротивление подключаемого электроприбора (в Ом). Электросеть прекращает работать, если сила тока превышает 5 А. Определите, какое наименьшее сопротивление может быть у электроприбора, подключаемого к электросети с напряжением 220 В, чтобы электросеть продолжала работать. Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="44">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>Сила тока \(I\) (в А) в электросети вычисляется по закону Ома: \(I = \frac{U}{R}\), где \(U\) – напряжение электросети (в В), \(R\) – сопротивление подключаемого электроприбора (в Ом). Электросеть прекращает работать, если сила тока превышает 8 А. Определите, какое наименьшее сопротивление может быть у электроприбора, подключаемого к электросети с напряжением 220 В, чтобы электросеть продолжала работать. Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="27.5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔋 Параллельное соединение</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 25</h3>
+                            <p>В розетку электросети подключена электрическая духовка, сопротивление которой составляет \(R_1=36\) Ом. Параллельно с ней в розетку предполагается подключить электрообогреватель, сопротивление которого \(R_2\) (в Ом). При параллельном соединении двух электроприборов с сопротивлениями \(R_1\) и \(R_2\) их общее сопротивление вычисляется по формуле \(R_{общ} = \frac{R_1 R_2}{R_1 + R_2}\). Для нормального функционирования электросети общее сопротивление в ней должно быть не меньше 20 Ом. Определите наименьшее возможное сопротивление \(R_2\) электрообогревателя. Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="45">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 26</h3>
+                            <p>В розетку электросети подключена электрическая духовка, сопротивление которой составляет \(R_1=60\) Ом. Параллельно с ней в розетку предполагается подключить электрообогреватель, сопротивление которого \(R_2\) (в Ом). При параллельном соединении двух электроприборов с сопротивлениями \(R_1\) и \(R_2\) их общее сопротивление вычисляется по формуле \(R_{общ} = \frac{R_1 R_2}{R_1 + R_2}\). Для нормального функционирования электросети общее сопротивление в ней должно быть не меньше 10 Ом. Определите наименьшее возможное сопротивление \(R_2\) электрообогревателя. Ответ дайте в омах.</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🚂 Эффект Доплера</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 27</h3>
+                            <p>Перед отправкой тепловоз издал гудок с частотой \(f_0 = 154\) Гц. Чуть позже гудок издал подъезжающий к платформе тепловоз. Из-за эффекта Доплера частота второго гудка \(f\) (в Гц) больше первого: она зависит от скорости тепловоза \(v\) (в м/с) по закону \(f(v) = f_0 \cdot (1 - \frac{v}{c})\) (Гц), где \(c\) – скорость звука (в м/с). Человек, стоящий на платформе, различает сигналы по тону, если они отличаются не менее чем на 6 Гц. Определите, с какой минимальной скоростью приближался к платформе тепловоз, если человек смог различить сигналы, а \(c = 320\) м/с. Ответ дайте в м/с.</p>
+                            <div class="interactive-check" data-answer="12.5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 28</h3>
+                            <p>Перед отправкой тепловоз издал гудок с частотой \(f_0 = 308\) Гц. Чуть позже гудок издал подъезжающий к платформе тепловоз. Из-за эффекта Доплера частота второго гудка \(f\) (в Гц) больше первого: она зависит от скорости тепловоза \(v\) (в м/с) по закону \(f(v) = f_0 \cdot (1 - \frac{v}{c})\) (Гц), где \(c\) – скорость звука (в м/с). Человек, стоящий на платформе, различает сигналы по тону, если они отличаются не менее чем на 7 Гц. Определите, с какой минимальной скоростью приближался к платформе тепловоз, если человек смог различить сигналы, а \(c = 315\) м/с. Ответ дайте в м/с.</p>
+                            <div class="interactive-check" data-answer="7.15">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🚢 Батискаф</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 29</h3>
+                            <p>Локатор батискафа, равномерно погружающегося вертикально вниз, испускает ультразвуковые импульсы частотой 247 МГц. Скорость погружения батискафа \(v\) (в м/с) вычисляется по формуле \(v = c \cdot \frac{f - f_0}{f + f_0}\), где \(c = 1500\) м/с – скорость звука в воде, \(f_0\) – частота испускаемых импульсов (в МГц), \(f\) – частота отражённого от дна сигнала (в МГц), регистрируемая приёмником. Определите частоту отражённого сигнала, если скорость погружения батискафа равна 18 м/с. Ответ дайте в МГц.</p>
+                            <div class="interactive-check" data-answer="253">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 30</h3>
+                            <p>Локатор батискафа, равномерно погружающегося вертикально вниз, испускает ультразвуковые импульсы частотой 370 МГц. Скорость погружения батискафа \(v\) (в м/с) вычисляется по формуле \(v = c \cdot \frac{f - f_0}{f + f_0}\), где \(c = 1500\) м/с – скорость звука в воде, \(f_0\) – частота испускаемых импульсов (в МГц), \(f\) – частота отражённого от дна сигнала (в МГц), регистрируемая приёмником. Определите частоту отражённого сигнала, если скорость погружения батискафа равна 20 м/с. Ответ дайте в МГц.</p>
+                            <div class="interactive-check" data-answer="375">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🏎️ Разгон автомобиля</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 31</h3>
+                            <p>Автомобиль разгоняется на прямолинейном участке шоссе с постоянным ускорением \(a = 3000\) км/ч². Скорость \(v\) (в км/ч) вычисляется по формуле \(v = \sqrt{2la}\), где \(l\) – пройденный автомобилем путь (в км). Найдите, сколько километров проедет автомобиль к моменту, когда он разгонится до скорости 60 км/ч.</p>
+                            <div class="interactive-check" data-answer="0.6">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 32</h3>
+                            <p>Автомобиль разгоняется на прямолинейном участке шоссе с постоянным ускорением \(a = 9000\) км/ч². Скорость \(v\) (в км/ч) вычисляется по формуле \(v = \sqrt{2la}\), где \(l\) – пройденный автомобилем путь (в км). Найдите, сколько километров проедет автомобиль к моменту, когда он разгонится до скорости 120 км/ч.</p>
+                            <div class="interactive-check" data-answer="0.8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🌅 Линия горизонта</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 33</h3>
+                            <p>Расстояние от наблюдателя, находящегося на небольшой высоте \(h\) (в километрах) над землёй, до наблюдаемой им линии горизонта вычисляется по формуле \(l = \sqrt{2Rh}\), где \(R = 6400\) км – радиус Земли. С какой высоты горизонт виден на расстоянии 64 километров? Ответ дайте в километрах.</p>
+                            <div class="interactive-check" data-answer="0.32">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 34</h3>
+                            <p>Расстояние от наблюдателя, находящегося на небольшой высоте \(h\) (в километрах) над землёй, до наблюдаемой им линии горизонта вычисляется по формуле \(l = \sqrt{2Rh}\), где \(R = 6400\) км – радиус Земли. С какой высоты горизонт виден на расстоянии 48 километров? Ответ дайте в километрах.</p>
+                            <div class="interactive-check" data-answer="0.18">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">⭐ Звёзды (Стефан-Больцман)</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 35</h3>
+                            <p>Для определения эффективной температуры звёзд используют закон Стефана–Больцмана, согласно которому \(P = \sigma S T^4\), где \(P\) – мощность излучения звезды (в Вт), \(\sigma = 5,7 \cdot 10^{-8}\) Вт/(м²·К⁴) — постоянная, \(S\) – площадь поверхности звезды (в м²), а \(T\) – температура (в К). Известно, что площадь поверхности некоторой звезды равна \(S = \frac{1}{25} \cdot 10^{20}\) м², а мощность её излучения равна \(P = 1,425 \cdot 10^{26}\) Вт. Найдите температуру этой звезды. Ответ дайте в кельвинах.</p>
+                            <div class="interactive-check" data-answer="5000">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 36</h3>
+                            <p>Для определения эффективной температуры звёзд используют закон Стефана–Больцмана, согласно которому \(P = \sigma S T^4\), где \(P\) – мощность излучения звезды (в Вт), \(\sigma = 5,7 \cdot 10^{-8}\) Вт/(м²·К⁴) — постоянная, \(S\) – площадь поверхности звезды (в м²), а \(T\) – температура (в К). Известно, что площадь поверхности некоторой звезды равна \(S = \frac{1}{18} \cdot 10^{21}\) м², а мощность её излучения равна \(P = 4,104 \cdot 10^{27}\) Вт. Найдите температуру этой звезды. Ответ дайте в кельвинах.</p>
+                            <div class="interactive-check" data-answer="6000">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">☢️ Радиоактивный распад</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 37</h3>
+                            <p>В ходе распада радиоактивного изотопа его масса \(m\) (в мг) уменьшается по закону \(m(t) = m_0 \cdot 2^{-\frac{t}{T}}\), где \(m_0\) – начальная масса изотопа (в мг), \(t\) – время (в минутах), прошедшее от начального момента, \(T\) – период полураспада (в минутах). В начальный момент времени масса изотопа равна 16 мг. Период его полураспада составляет 7 минут. Через сколько минут масса изотопа будет равна 1 мг?</p>
+                            <div class="interactive-check" data-answer="28">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 38</h3>
+                            <p>В ходе распада радиоактивного изотопа его масса \(m\) (в мг) уменьшается по закону \(m(t) = m_0 \cdot 2^{-\frac{t}{T}}\), где \(m_0\) – начальная масса изотопа (в мг), \(t\) – время (в минутах), прошедшее от начального момента, \(T\) – период полураспада (в минутах). В начальный момент времени масса изотопа равна 160 мг. Период его полураспада составляет 8 минут. Через сколько минут масса изотопа будет равна 5 мг?</p>
+                            <div class="interactive-check" data-answer="40">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">💨 Адиабатическое сжатие</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 39</h3>
+                            <p>Установка для демонстрации адиабатического сжатия представляет собой сосуд с поршнем, резко сжимающим газ. При этом объём и давление связаны соотношением \(p_1 V_1^{1,4} = p_2 V_2^{1,4}\), где \(p_1\) и \(p_2\) – давление газа (в атмосферах) в начальном и конечном состояниях, \(V_1\) и \(V_2\) – объём газа (в литрах) в начальном и конечном состояниях. Изначально объём газа равен 294,4 л, а давление газа равно одной атмосфере. До какого объёма нужно сжать газ, чтобы давление в сосуде стало 128 атмосфер? Ответ дайте в литрах.</p>
+                            <div class="interactive-check" data-answer="9.2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 40</h3>
+                            <p>Установка для демонстрации адиабатического сжатия представляет собой сосуд с поршнем, резко сжимающим газ. При этом объём и давление связаны соотношением \(p_1 V_1^{1,4} = p_2 V_2^{1,4}\), где \(p_1\) и \(p_2\) – давление газа (в атмосферах) в начальном и конечном состояниях, \(V_1\) и \(V_2\) – объём газа (в литрах) в начальном и конечном состояниях. Изначально объём газа равен 316,8 л, а давление газа равно одной атмосфере. До какого объёма нужно сжать газ, чтобы давление в сосуде стало 128 атмосфер? Ответ дайте в литрах.</p>
+                            <div class="interactive-check" data-answer="9.9">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔊 Сближение источника и приёмника</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 41</h3>
+                            <p>При сближении источника и приёмника звуковых сигналов, движущихся в некоторой среде по прямой навстречу друг другу со скоростями \(u\) и \(v\) (в м/с) соответственно, частота звукового сигнала \(f\) (в Гц), регистрируемого приёмником, вычисляется по формуле \(f = f_0 \cdot \frac{c + u}{c - v}\), где \(f_0 = 110\) Гц – частота исходного сигнала, \(c\) – скорость распространения сигнала в среде (в м/с), а \(u = 8\) м/с и \(v = 11\) м/с – скорости источника и приёмника относительно среды. При какой скорости распространения сигнала в среде частота сигнала в приёмнике будет равна 115 Гц? Ответ дайте в м/с.</p>
+                            <div class="interactive-check" data-answer="515">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 42</h3>
+                            <p>При сближении источника и приёмника звуковых сигналов, движущихся в некоторой среде по прямой навстречу друг другу со скоростями \(u\) и \(v\) (в м/с) соответственно, частота звукового сигнала \(f\) (в Гц), регистрируемого приёмником, вычисляется по формуле \(f = f_0 \cdot \frac{c + u}{c - v}\), где \(f_0 = 140\) Гц – частота исходного сигнала, \(c\) – скорость распространения сигнала в среде (в м/с), а \(u = 15\) м/с и \(v = 14\) м/с – скорости источника и приёмника относительно среды. При какой скорости распространения сигнала в среде частота сигнала в приёмнике будет равна 150 Гц? Ответ дайте в м/с.</p>
+                            <div class="interactive-check" data-answer="550">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔔 Водолазный колокол</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 43</h3>
+                            <p>Водолазный колокол, содержащий \(u=6\) моль воздуха при давлении \(p_1=2,5\) атмосферы, медленно опускают на дно водоёма. При этом происходит изотермическое сжатие воздуха до конечного давления \(p_2\) (в атмосферах). Работа (в джоулях), совершаемая водой при сжатии воздуха, определяется выражением \(A=\alpha u T \log_2 \frac{p_2}{p_1}\), где \(\alpha=5,75\) Дж/(моль·К) – постоянная, \(T=300\) К – температура воздуха. Найдите, какое давление \(p_2\) будет иметь воздух в колоколе, если при сжатии воздуха была совершена работа в 10 350 Дж.</p>
+                            <div class="interactive-check" data-answer="5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 44</h3>
+                            <p>Водолазный колокол, содержащий \(u=3\) моль воздуха при давлении \(p_1=1,5\) атмосферы, медленно опускают на дно водоёма. При этом происходит изотермическое сжатие воздуха до конечного давления \(p_2\) (в атмосферах). Работа (в джоулях), совершаемая водой при сжатии воздуха, определяется выражением \(A=\alpha u T \log_2 \frac{p_2}{p_1}\), где \(\alpha=14,9\) Дж/(моль·К) – постоянная, \(T=300\) К – температура воздуха. Найдите, какое давление \(p_2\) будет иметь воздух в колоколе, если при сжатии воздуха была совершена работа в 13 410 Дж.</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">📺 Конденсатор в телевизоре</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 45</h3>
+                            <p>В телевизоре ёмкость высоковольтного конденсатора \(C = 3\cdot 10^{-6}\) Ф. Параллельно с конденсатором подключён резистор с сопротивлением \(R = 3\cdot 10^6\) Ом. Во время работы телевизора напряжение на конденсаторе \(U_0 = 24\) кВ. После выключения телевизора напряжение на конденсаторе убывает до значения \(U\) (в киловольтах) за время (в секундах), определяемое выражением \(t = \alpha R C \log_2 \frac{U_0}{U}\), где \(\alpha = 0,9\) – постоянная. Определите напряжение на конденсаторе, если после выключения телевизора прошло 16,2 секунды. Ответ дайте в киловольтах.</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 46</h3>
+                            <p>В телевизоре ёмкость высоковольтного конденсатора \(C = 4\cdot 10^{-6}\) Ф. Параллельно с конденсатором подключён резистор с сопротивлением \(R = 2\cdot 10^6\) Ом. Во время работы телевизора напряжение на конденсаторе \(U_0 = 22\) кВ. После выключения телевизора напряжение на конденсаторе убывает до значения \(U\) (в киловольтах) за время (в секундах), определяемое выражением \(t = \alpha R C \log_2 \frac{U_0}{U}\), где \(\alpha = 1,7\) – постоянная. Определите напряжение на конденсаторе, если после выключения телевизора прошло 27,2 секунды. Ответ дайте в киловольтах.</p>
+                            <div class="interactive-check" data-answer="5.5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🌡️ Радиатор отопления</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 47</h3>
+                            <p>Для обогрева помещения, температура в котором поддерживается на уровне \(T_п = 25^\circ C\), через радиатор отопления пропускают горячую воду. Расход проходящей через трубу радиатора воды \(m = 0,3\) кг/с. Проходя по трубе расстояние \(x\), вода охлаждается от начальной температуры \(T_в = 57^\circ C\) до температуры \(T\) (°C), причём \(x = \alpha \cdot \frac{c m}{\gamma} \log_2 \frac{T_в - T_п}{T - T_п}\), где \(c = 4200\) Вт·с/(кг·°C) – теплоёмкость воды, \(\gamma = 63\) Вт/(м·°C) – коэффициент теплообмена, \(\alpha = 1,4\) – постоянная. Найдите, до какой температуры (в градусах Цельсия) охладится вода, если длина трубы радиатора равна 56 м.</p>
+                            <div class="interactive-check" data-answer="41">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 48</h3>
+                            <p>Для обогрева помещения, температура в котором поддерживается на уровне \(T_п = 15^\circ C\), через радиатор отопления пропускают горячую воду. Расход проходящей через трубу радиатора воды \(m = 0,6\) кг/с. Проходя по трубе расстояние \(x\), вода охлаждается от начальной температуры \(T_в = 91^\circ C\) до температуры \(T\) (°C), причём \(x = \alpha \cdot \frac{c m}{\gamma} \log_2 \frac{T_в - T_п}{T - T_п}\), где \(c = 4200\) Вт·с/(кг·°C) – теплоёмкость воды, \(\gamma = 28\) Вт/(м·°C) – коэффициент теплообмена, а \(\alpha = 0,8\) – постоянная. Найдите, до какой температуры (в градусах Цельсия) охладится вода, если длина трубы радиатора равна 144 м.</p>
+                            <div class="interactive-check" data-answer="31">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🏐 Мяч под углом к горизонту</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 49</h3>
+                            <p>Мяч бросили под углом \(\alpha\) к плоской горизонтальной поверхности земли. Время полёта мяча (в секундах) определяется по формуле \(t = \frac{2v_0 \sin \alpha}{g}\). При каком наименьшем значении угла \(\alpha\) (в градусах) время полёта будет не меньше 2,1 секунды, если мяч бросают с начальной скоростью \(v_0 = 21\) м/с? Считайте, что ускорение свободного падения \(g = 10\) м/с².</p>
+                            <div class="interactive-check" data-answer="30">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 50</h3>
+                            <p>Небольшой мячик бросают под острым углом \(\alpha\) к плоской горизонтальной поверхности земли. Максимальная высота полёта мячика \(H\) (в м) вычисляется по формуле \(H = \frac{v_0^2}{4g} (1 - \cos 2\alpha)\), где \(v_0 = 24\) м/с – начальная скорость мячика, а \(g\) – ускорение свободного падения (считайте \(g = 10\) м/с²). При каком наименьшем значении угла \(\alpha\) мячик пролетит над стеной высотой 6,2 м на расстоянии 1 м? Ответ дайте в градусах.</p>
+                            <div class="interactive-check" data-answer="15">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">〰️ Колебания на пружине</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 51</h3>
+                            <p>Груз массой 0,5 кг колеблется на пружине. Его скорость \(v\) (в м/с) меняется по закону \(v = v_0 \sin \frac{2\pi t}{T}\), где \(t\) – время с момента начала колебаний в секундах, \(T = 27\) с – период колебаний, \(v_0 = 0,8\) м/с. Кинетическая энергия \(E\) (в Дж) груза вычисляется по формуле \(E = \frac{m v^2}{2}\), где \(m\) – масса груза (в кг), \(v\) – скорость груза (в м/с). Найдите кинетическую энергию груза через 9 секунд после начала колебаний. Ответ дайте в джоулях.</p>
+                            <div class="interactive-check" data-answer="0.24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 52</h3>
+                            <p>Груз массой 0,38 кг колеблется на пружине. Его скорость \(v\) (в м/с) меняется по закону \(v = v_0 \sin \frac{2\pi t}{T}\), где \(t\) – время с момента начала колебаний в секундах, \(T = 8\) с – период колебаний, \(v_0 = 2\) м/с. Кинетическая энергия \(E\) (в Дж) груза вычисляется по формуле \(E = \frac{m v^2}{2}\), где \(m\) – масса груза (в кг), \(v\) – скорость груза (в м/с). Найдите кинетическую энергию груза через 7 секунд после начала колебаний. Ответ дайте в джоулях.</p>
+                            <div class="interactive-check" data-answer="0.38">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">💥 Неупругое соударение</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 53</h3>
+                            <p>Два тела, массой \(m=2\) кг каждое, движутся с одинаковой скоростью \(v=8\) м/с под углом \(2\alpha\) друг к другу. Энергия (в Дж), выделяющаяся при их абсолютно неупругом соударении, вычисляется по формуле \(Q = \frac{m v^2}{2} \sin^2 \alpha\), где \(m\) – масса (в кг), \(v\) – скорость (в м/с). Найдите, под каким углом \(2\alpha\) должны двигаться тела, чтобы в результате соударения выделилась энергия, равная 32 Дж. Ответ дайте в градусах.</p>
+                            <div class="interactive-check" data-answer="60">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 54</h3>
+                            <p>Два тела, массой \(m=2\) кг каждое, движутся с одинаковой скоростью \(v=10\) м/с под углом \(2\alpha\) друг к другу. Энергия (в Дж), выделяющаяся при их абсолютно неупругом соударении, вычисляется по формуле \(Q = \frac{m v^2}{2} \sin^2 \alpha\), где \(m\) – масса (в кг), \(v\) – скорость (в м/с). Найдите, под каким углом \(2\alpha\) должны двигаться тела, чтобы в результате соударения выделилась энергия, равная 100 Дж. Ответ дайте в градусах.</p>
+                            <div class="interactive-check" data-answer="90">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🛒 Рейтинг интернет-магазина</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 55</h3>
+                            <p>Рейтинг \(R\) интернет-магазина вычисляется по формуле \(R = \frac{r_{пок} - r_{экс}}{(K+1) \cdot r_{пок} + 0,1}\), где \(r_{пок}\) – средняя оценка магазина покупателями (от 0 до 1), \(r_{экс}\) – оценка магазина экспертами (от 0 до 0,7) и \(K\) – число покупателей, оценивших магазин. Найдите рейтинг интернет-магазина «Альфа», если число покупателей, оставивших отзыв о магазине, равно 10, их средняя оценка равна 0,45, а оценка экспертов равна 0,67.</p>
+                            <div class="interactive-check" data-answer="0.44">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 56</h3>
+                            <p>Рейтинг \(R\) интернет-магазина вычисляется по формуле \(R = \frac{r_{пок} - r_{экс}}{(K+1) \cdot r_{пок} + 0,1}\), где \(r_{пок}\) – средняя оценка магазина покупателями (от 0 до 1), \(r_{экс}\) – оценка магазина экспертами (от 0 до 0,7) и \(K\) – число покупателей, оценивших магазин. Найдите рейтинг интернет-магазина «Бета», если число покупателей, оставивших отзыв о магазине, равно 11, их средняя оценка равна 0,5, а оценка экспертов равна 0,28.</p>
+                            <div class="interactive-check" data-answer="0.22">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">💨 Адиабатический процесс (\(pV^k\))</h2>
+                <div class="tasks-grid">
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 57</h3>
+                            <p>При адиабатическом процессе для идеального газа выполняется закон \(pV^k = 6,4 \cdot 10^6\) Па·м⁵, где \(p\) – давление в газе (в Па), \(V\) – объём газа (в м³), \(k = \frac{5}{3}\). Найдите, какой объём \(V\) (в м³) будет занимать газ при давлении \(p\), равном \(2 \cdot 10^5\) Па.</p>
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 58</h3>
+                            <p>При адиабатическом процессе для идеального газа выполняется закон \(pV^k = 1,6 \cdot 10^5\) Па·м⁵, где \(p\) – давление в газе (в Па), \(V\) – объём газа (в м³), \(k = \frac{4}{3}\). Найдите, какой объём \(V\) (в м³) будет занимать газ при давлении \(p\), равном \(6,25 \cdot 10^6\) Па.</p>
+                            <div class="interactive-check" data-answer="0.008">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task9';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none";
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.replace(/[^\d]/g, '');
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=recordProgress'
+                + '&email=' + encodeURIComponent(email)
+                + '&taskId=' + encodeURIComponent(fullTaskId)
+                + '&callback=' + cb;
+
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=getStudentStats'
+                + '&email=' + encodeURIComponent(email)
+                + '&callback=' + cb;
+
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || [])
+                    .map(String)
+                    .filter(id => id.startsWith(prefix))
+                    .map(id => id.slice(prefix.length));
+
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var idText = card.querySelector('.task-number').textContent.replace(/[^\d]/g, '');
+                    if (serverIds.includes(String(idText))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        
+                        if (msg) {
+                            msg.textContent = "Верно! 🎉";
+                            msg.className = "result-message correct";
+                        }
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) {
+                            checkBtn.style.display = "none";
+                        }
+                    }
+                });
+
+                updateProgressBar();
+            };
+
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            if (!name) return; 
+
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+
+            if (!menuBtn || !menu) return;
+
+            menuBtn.addEventListener('click', () => {
+                menu.classList.add('open');
+                document.body.classList.add('menu-open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                menu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    menu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const TASK_KEY = 'task9'; 
+
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) {
+                data = JSON.parse(text);
+            }
+            
+            if (!data || !data.success) return;
+            
+            const allowedTasks = data.access || [];
+            
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+
+        } catch (error) {
+            console.error("Ошибка получения доступов: ", error);
+            document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                 if (!a.href.includes('index.html') && !a.href.includes('dashboard.html')) {
+                     a.style.opacity = '0.4';
+                     a.style.pointerEvents = 'none';
+                 }
+            });
+        }
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике.</p>
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">✈️ Telegram: @sonchesmath</a>
+                        </div>
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+</body>
+</html>

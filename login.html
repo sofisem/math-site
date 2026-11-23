@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Sonches Math | Вход</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .login-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.08);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        #login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #login-form input {
+            padding: 15px;
+            border: 2px solid #dceaff;
+            border-radius: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        #login-form input:focus {
+            border-color: #75aaff;
+        }
+
+        .btn-login {
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: var(--color-blue);
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #4a8cdb;
+        }
+
+        .btn-login:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        #error-msg {
+            color: #e53935;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .register-link a {
+            color: var(--color-pink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bg-blob bg-blob--blue"></div>
+<div class="bg-blob bg-blob--pink"></div>
+
+<div class="app-wrapper" style="justify-content:center;align-items:center;">
+
+    <div class="login-card">
+
+        <div class="mascot" style="margin-bottom:20px;">
+            <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник">
+        </div>
+
+        <h1 class="logo" style="font-size: 32px; margin-bottom: 10px;">Sonches<span>Math</span></h1>
+
+        <p style="color:#777;margin-bottom:30px;">
+            Вход в личный кабинет
+        </p>
+
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Ваша почта" autocomplete="email" required>
+            <input type="password" id="password" placeholder="Пароль" autocomplete="current-password" required>
+            <button type="submit" class="btn-login" id="submit-btn">Войти</button>
+        </form>
+
+        <div id="error-msg" role="alert"></div>
+
+        <div class="register-link" style="margin-bottom: 10px;">
+            <a href="reset.html" style="color:#777; font-weight: 600;">Забыли пароль?</a>
+        </div>
+
+        <div class="register-link">
+            Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+'use strict';
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+
+const form = document.getElementById('login-form');
+const submitBtn = document.getElementById('submit-btn');
+const errorMsg = document.getElementById('error-msg');
+
+let requestActive = false;
+
+function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+}
+
+function resetButton() {
+    requestActive = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Войти';
+}
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (requestActive) return;
+
+    // Берем почту и пароль. Пароль обрезаем от случайных пробелов.
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        showError('Заполните все поля.');
+        return;
+    }
+
+    requestActive = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Проверка...';
+    errorMsg.style.display = 'none';
+
+    const callbackName = 'sonchesCallback_' + Date.now();
+    const params = new URLSearchParams();
+    params.set('email', email);
+    params.set('password', password);
+    params.set('callback', callbackName);
+
+    const script = document.createElement('script');
+    script.async = true;
+    let finished = false;
+    let timeout;
+
+    function finish() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        resetButton();
+    }
+
+    timeout = setTimeout(function() {
+        finish();
+        showError('Превышено время ожидания сервера. Проверьте подключение.');
+    }, 20000);
+
+    window[callbackName] = function(data) {
+        if (finished) return;
+        finish();
+
+        if (!data || typeof data.success !== 'boolean') {
+            showError('Сервер вернул некорректный ответ.');
+            return;
+        }
+
+        if (data.success === true) {
+            const role = String(data.role || 'student');
+            const allowedRoles = ['student', 'teacher', 'admin'];
+
+            if (!allowedRoles.includes(role)) {
+                showError('Неизвестная роль пользователя.');
+                return;
+            }
+
+            localStorage.setItem('sonches_user_name', String(data.name || 'Пользователь'));
+            localStorage.setItem('sonches_user_email', email);
+            localStorage.setItem('sonches_user_role', role);
+
+            document.getElementById('password').value = '';
+            window.location.replace('index.html');
+            showToast('Добро пожаловать!', 'success');
+        } else {
+            showError(data.message || 'Неверная почта или пароль.');
+        }
+    };
+
+    script.onerror = function() {
+        finish();
+        showError('Google Apps Script недоступен. Проверьте URL и настройки развёртывания.');
+    };
+
+    script.src = SCRIPT_URL + '?' + params.toString();
+    document.body.appendChild(script);
+});
+</script>
+
+
+</body>
+</html>

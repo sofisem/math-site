@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Восстановление пароля</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.08);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+        }
+        #reset-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        #reset-form input {
+            padding: 15px;
+            border: 2px solid #dceaff;
+            border-radius: 15px;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+        #reset-form input:focus {
+            border-color: #75aaff;
+        }
+        .btn-login {
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: var(--color-pink);
+            color: #fff;
+            transition: 0.3s;
+            font-family: var(--font-body);
+            font-size: 16px;
+        }
+        .btn-login:hover { background-color: #f06a9a; }
+        .btn-login:disabled { opacity: .6; cursor: not-allowed; }
+        #error-msg {
+            color: #e53935;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        #success-msg {
+            color: #2ecc71;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            line-height: 1.5;
+        }
+        .link-box {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .link-box a {
+            color: var(--color-pink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .link-box a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="bg-blob bg-blob--blue"></div>
+<div class="bg-blob bg-blob--pink"></div>
+
+<div class="app-wrapper" style="justify-content:center;align-items:center;">
+
+    <div class="login-card">
+        <div class="mascot" style="margin-bottom:20px;">
+            <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник">
+        </div>
+
+        <h1 class="logo" style="font-size: 32px; margin-bottom: 10px;">Sonches<span>Math</span></h1>
+        <p style="color:#777;margin-bottom:30px;">Восстановление пароля</p>
+
+        <form id="reset-form">
+            <input type="email" id="email" placeholder="Ваша почта" autocomplete="email" required>
+            <button type="submit" class="btn-login" id="submit-btn">Отправить новый пароль</button>
+        </form>
+
+        <div id="error-msg"></div>
+        <div id="success-msg"></div>
+
+        <div class="link-box">
+            Вспомнили пароль? <a href="login.html">Войти</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+'use strict';
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+
+const form = document.getElementById('reset-form');
+const submitBtn = document.getElementById('submit-btn');
+const errorMsg = document.getElementById('error-msg');
+const successMsg = document.getElementById('success-msg');
+
+let requestActive = false;
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (requestActive) return;
+
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    if (!email) {
+        errorMsg.textContent = 'Введите почту.';
+        errorMsg.style.display = 'block';
+        return;
+    }
+
+    requestActive = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+
+    const callbackName = 'sonchesCallback_' + Date.now();
+    const params = new URLSearchParams();
+    params.set('action', 'resetPassword');
+    params.set('email', email);
+    params.set('callback', callbackName);
+
+    const script = document.createElement('script');
+    script.async = true;
+    let finished = false;
+    const timeout = setTimeout(() => {
+        if (finished) return;
+        finished = true;
+        delete window[callbackName];
+        script.remove();
+        requestActive = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить новый пароль';
+        errorMsg.textContent = 'Сервер не ответил. Попробуйте ещё раз.';
+        errorMsg.style.display = 'block';
+    }, 20000);
+
+    window[callbackName] = function (data) {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        requestActive = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить новый пароль';
+
+        if (data && data.success) {
+            successMsg.textContent = data.message || 'Новый пароль отправлен на вашу почту. Проверьте входящие и папку «Спам».';
+            successMsg.style.display = 'block';
+            form.reset();
+        } else {
+            errorMsg.textContent = (data && data.message) || 'Не удалось отправить пароль.';
+            errorMsg.style.display = 'block';
+        }
+    };
+
+    script.onerror = function () {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        requestActive = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить новый пароль';
+        errorMsg.textContent = 'Ошибка сети. Проверьте подключение к интернету.';
+        errorMsg.style.display = 'block';
+    };
+
+    script.src = SCRIPT_URL + '?' + params.toString();
+    document.body.appendChild(script);
+});
+</script>
+
+</body>
+</html>

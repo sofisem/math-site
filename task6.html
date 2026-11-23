@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Задание 6. Уравнения</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+    
+    <!-- Кнопка-бургер (только мобильные) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Полноэкранное меню (только мобильные) -->
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+            </div>
+
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item active"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Оверлей для мобильного меню -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        
+        <!-- БОКОВАЯ ПАНЕЛЬ -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Поиск по заданиям...">
+            </div>
+
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                </ul>
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html" class="active"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <main class="content">
+            
+            <!-- Шапка -->
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 6</div>
+                    <h1 class="page-title">Задание №6<br><span>Уравнения</span></h1>
+                    <p class="page-description">
+                        Здесь мы разберем все типы уравнений из первой части ЕГЭ: линейные, рациональные, иррациональные, показательные и логарифмические. Погнали! ✍️
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <img src="https://img.icons8.com/color/144/000000/math.png" alt="Математика">
+                </div>
+            </header>
+
+            <!-- Блок прогресса -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ================= ТЕОРИЯ ================= -->
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+
+                <!-- Карточка 1: Линейные и рациональные -->
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>1. Линейные и рациональные</h2>
+                        <div class="icon-circle icon-circle--pink">➗</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <ul class="theory-list">
+                            <li><strong>Линейные:</strong> Переносим неизвестные в одну сторону, известные — в другую. Делим на коэффициент перед \(x\).</li>
+                            <li><strong>Дробно-рациональные:</strong> Умножаем обе части на общий знаменатель, чтобы избавиться от дробей. <strong>Важно:</strong> проверяем, что знаменатель не равен нулю!</li>
+                            <li><strong>Пропорция:</strong> Если \(\frac{a}{b} = \frac{c}{d}\), то \(a \cdot d = b \cdot c\) (правило «креста»).</li>
+                        </ul>
+                        
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid var(--color-blue-light); flex-direction: column; align-items: flex-start;">
+                            <strong style="color: var(--color-heading); margin-bottom: 10px;">📝 Пример:</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                Решить уравнение: \(\frac{1}{2x+5} = \frac{1}{3}\)<br><br>
+                                <strong>1.</strong> Применяем правило пропорции (перемножаем крест-накрест):<br>
+                                \(1 \cdot 3 = 1 \cdot (2x+5)\)<br>
+                                \(3 = 2x + 5\)<br><br>
+                                <strong>2.</strong> Переносим 5 влево:<br>
+                                \(3 - 5 = 2x\)<br>
+                                \(-2 = 2x\)<br><br>
+                                <strong>3.</strong> Делим на 2:<br>
+                                \(x = -1\)<br><br>
+                                <strong>Ответ:</strong> -1
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Иррациональные -->
+                <div class="card card--pink">
+                    <div class="card-header">
+                        <h2>2. Иррациональные (с корнем)</h2>
+                        <div class="icon-circle icon-circle--blue">√</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <ul class="theory-list">
+                            <li>Чтобы избавиться от квадратного корня, возводим обе части уравнения в квадрат.</li>
+                            <li><strong>Важно:</strong> после возведения в квадрат могут появиться «посторонние корни». Обязательно делаем проверку!</li>
+                            <li>Если корень кубический (\(\sqrt[3]{x}\)), возводим в 3-ю степень. Здесь проверка не нужна.</li>
+                        </ul>
+                        
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid var(--color-pink-light); flex-direction: column; align-items: flex-start;">
+                            <strong style="color: var(--color-pink); margin-bottom: 10px;">📝 Пример:</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                Решить уравнение: \(\sqrt{x+32} = 5\)<br><br>
+                                <strong>1.</strong> Возводим обе части в квадрат:<br>
+                                \((\sqrt{x+32})^2 = 5^2\)<br>
+                                \(x + 32 = 25\)<br><br>
+                                <strong>2.</strong> Переносим 32 вправо:<br>
+                                \(x = 25 - 32\)<br>
+                                \(x = -7\)<br><br>
+                                <strong>3.</strong> Проверка: \(\sqrt{-7+32} = \sqrt{25} = 5\). Верно!<br><br>
+                                <strong>Ответ:</strong> -7
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Показательные -->
+                <div class="card card--white">
+                    <div class="card-header">
+                        <h2>3. Показательные</h2>
+                        <div class="icon-circle icon-circle--yellow">x</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <ul class="theory-list">
+                            <li>Главное правило: привести обе части уравнения к <strong>одинаковому основанию</strong>.</li>
+                            <li>Если \(a^{f(x)} = a^{g(x)}\), то \(f(x) = g(x)\).</li>
+                            <li>Помни степени: \(2^3 = 8\), \(3^2 = 9\), \(5^2 = 25\), \(2^{-2} = \frac{1}{4}\).</li>
+                        </ul>
+                        
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid #fde49a; flex-direction: column; align-items: flex-start;">
+                            <strong style="color: #d4a017; margin-bottom: 10px;">📝 Пример:</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                Решить уравнение: \(6^{x-5} = 36\)<br><br>
+                                <strong>1.</strong> Представляем 36 как степень числа 6:<br>
+                                \(36 = 6^2\)<br>
+                                Получаем: \(6^{x-5} = 6^2\)<br><br>
+                                <strong>2.</strong> Основания равны, значит и показатели равны:<br>
+                                \(x - 5 = 2\)<br><br>
+                                <strong>3.</strong> Переносим -5 вправо:<br>
+                                \(x = 2 + 5\)<br>
+                                \(x = 7\)<br><br>
+                                <strong>Ответ:</strong> 7
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 4: Логарифмические -->
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>4. Логарифмические</h2>
+                        <div class="icon-circle icon-circle--pink">log</div>
+                    </div>
+                    <div class="theory-text" style="width: 100%;">
+                        <ul class="theory-list">
+                            <li><strong>Определение:</strong> \(\log_a b = c \Leftrightarrow a^c = b\).</li>
+                            <li>Если \(\log_a f(x) = \log_a g(x)\), то \(f(x) = g(x)\).</li>
+                            <li><strong>ОДЗ:</strong> выражение под логарифмом должно быть строго больше нуля (\(f(x) > 0\)).</li>
+                        </ul>
+                        
+                        <div class="tip-box" style="background-color: #fff; border: 2px solid var(--color-blue-light); flex-direction: column; align-items: flex-start;">
+                            <strong style="color: var(--color-heading); margin-bottom: 10px;">📝 Пример:</strong>
+                            <p style="font-size: 15px; line-height: 1.6;">
+                                Решить уравнение: \(\log_5(x+4) = 2\)<br><br>
+                                <strong>1.</strong> Используем определение логарифма:<br>
+                                \(x + 4 = 5^2\)<br>
+                                \(x + 4 = 25\)<br><br>
+                                <strong>2.</strong> Переносим 4 вправо:<br>
+                                \(x = 25 - 4\)<br>
+                                \(x = 21\)<br><br>
+                                <strong>3.</strong> Проверка ОДЗ: \(21 + 4 = 25 > 0\). Подходит.<br><br>
+                                <strong>Ответ:</strong> 21
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА ================= -->
+            
+            <!-- ========== СЕКЦИЯ 1: ЛИНЕЙНЫЕ И РАЦИОНАЛЬНЫЕ ========== -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">➗ Линейные и рациональные</h2>
+                
+                <div class="tasks-grid">
+                    <!-- Задание 1 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>Найдите корень уравнения: \(\frac{2}{7}x = -5\frac{1}{7}\)</p>
+                            <div class="interactive-check" data-answer="-18">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 1 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>Найдите корень уравнения: \(\frac{5}{6}x = -4\frac{1}{6}\)</p>
+                            <div class="interactive-check" data-answer="-5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 1 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>Найдите корень уравнения: \(\frac{4}{5}x = -9\frac{3}{5}\)</p>
+                            <div class="interactive-check" data-answer="-12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 2 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{2x+5} = \frac{1}{3}\)</p>
+                            <div class="interactive-check" data-answer="-1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 2 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{5x-7} = \frac{1}{2}\)</p>
+                            <div class="interactive-check" data-answer="1.8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 2 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{4x+8} = \frac{1}{2}\)</p>
+                            <div class="interactive-check" data-answer="-1.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 3 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{2x+5} = \frac{1}{3x-8}\)</p>
+                            <div class="interactive-check" data-answer="13">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 3 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{2x-5} = \frac{1}{4x-13}\)</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 3 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{4x-11} = \frac{1}{5x-6}\)</p>
+                            <div class="interactive-check" data-answer="-5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 4 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{2x+7} = 5\)</p>
+                            <div class="interactive-check" data-answer="-3.4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 4 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{5x+7} = 2\)</p>
+                            <div class="interactive-check" data-answer="-1.3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 4 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>Найдите корень уравнения: \(\frac{1}{3x+8} = 2\)</p>
+                            <div class="interactive-check" data-answer="-2.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 5 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>Найдите корень уравнения: \((6x-13)^2 = (6x-11)^2\)</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 5 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Найдите корень уравнения: \((2x-3)^2 = (2x+9)^2\)</p>
+                            <div class="interactive-check" data-answer="-1.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 5 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Найдите корень уравнения: \((4x+3)^2 = (4x+5)^2\)</p>
+                            <div class="interactive-check" data-answer="-1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 6 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Найдите корень уравнения: \((x+9)^2 = 36x\)</p>
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 6 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>Найдите корень уравнения: \((x+12)^2 = 48x\)</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 6 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>Найдите корень уравнения: \((x+7)^2 = 28x\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 7 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>Найдите корень уравнения: \((x+5)^7 = 1\)</p>
+                            <div class="interactive-check" data-answer="-4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 7 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>Найдите корень уравнения: \((x-6)^3 = 1000\)</p>
+                            <div class="interactive-check" data-answer="16">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 7 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Найдите корень уравнения: \((x-10)^7 = 1\)</p>
+                            <div class="interactive-check" data-answer="11">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 7 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>Найдите корень уравнения: \((x+4)^3 = -125\)</p>
+                            <div class="interactive-check" data-answer="-9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 7 (10) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>Найдите корень уравнения: \((x-2)^9 = -1\)</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== СЕКЦИЯ 2: ИРРАЦИОНАЛЬНЫЕ ========== -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">√ Иррациональные (с корнем)</h2>
+                
+                <div class="tasks-grid">
+                    <!-- Задание 8 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{x+32} = 5\)</p>
+                            <div class="interactive-check" data-answer="-7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 8 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 25</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{65-x} = 8\)</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 8 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 26</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{7x-31} = 2\)</p>
+                            <div class="interactive-check" data-answer="5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 8 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 27</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{2x+59} = 9\)</p>
+                            <div class="interactive-check" data-answer="11">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 8 (10) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 28</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{44-5x} = 3\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 8 (12) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 29</h3>
+                            <p>Найдите корень уравнения: \(\sqrt{34-9x} = 4\)</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 9 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 30</h3>
+                            <p>Решите уравнение. Если уравнение имеет более одного корня, укажите меньший из них: \(\sqrt{32+4x} = x\)</p>
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 9 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 31</h3>
+                            <p>Решите уравнение. Если уравнение имеет более одного корня, укажите меньший из них: \(\sqrt{54-3x} = x\)</p>
+                            <div class="interactive-check" data-answer="6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 10 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 32</h3>
+                            <p>Найдите корень уравнения: \(\sqrt[3]{x-6} = 2\)</p>
+                            <div class="interactive-check" data-answer="14">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 10 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 33</h3>
+                            <p>Найдите корень уравнения: \(\sqrt[3]{x-3} = 4\)</p>
+                            <div class="interactive-check" data-answer="67">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 10 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 34</h3>
+                            <p>Найдите корень уравнения: \(\sqrt[3]{x-5} = 3\)</p>
+                            <div class="interactive-check" data-answer="32">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== СЕКЦИЯ 3: ПОКАЗАТЕЛЬНЫЕ ========== -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">x Показательные</h2>
+                
+                <div class="tasks-grid">
+                    <!-- Задание 11 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 35</h3>
+                            <p>Найдите корень уравнения: \(5^{x+1} = 5\)</p>
+                            <div class="interactive-check" data-answer="0">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 11 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 36</h3>
+                            <p>Найдите корень уравнения: \(8^{x-5} = 8\)</p>
+                            <div class="interactive-check" data-answer="6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 11 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 37</h3>
+                            <p>Найдите корень уравнения: \(6^{x-5} = 36\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 11 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 38</h3>
+                            <p>Найдите корень уравнения: \(7^{x+8} = 49\)</p>
+                            <div class="interactive-check" data-answer="-6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 12 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 39</h3>
+                            <p>Найдите корень уравнения: \(6^{-6+x} = 36\)</p>
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 12 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 40</h3>
+                            <p>Найдите корень уравнения: \(8^{9-x} = 64\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 12 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 41</h3>
+                            <p>Найдите корень уравнения: \(2^{-4-x} = 16\)</p>
+                            <div class="interactive-check" data-answer="-8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 12 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 42</h3>
+                            <p>Найдите корень уравнения: \(5^{7-5x} = 125\)</p>
+                            <div class="interactive-check" data-answer="0.8">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 13 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 43</h3>
+                            <p>Найдите корень уравнения: \(2^{x+9} = 4^{2x}\)</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 13 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 44</h3>
+                            <p>Найдите корень уравнения: \(7^{1+2x} = 49^{2x}\)</p>
+                            <div class="interactive-check" data-answer="0.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 13 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 45</h3>
+                            <p>Найдите корень уравнения: \(5^{3+5x} = 25^{2x}\)</p>
+                            <div class="interactive-check" data-answer="-3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 14 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 46</h3>
+                            <p>Найдите корень уравнения: \(3^{x-8} = \frac{1}{81}\)</p>
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 14 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 47</h3>
+                            <p>Найдите корень уравнения: \(7^{x-5} = \frac{1}{49}\)</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 14 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 48</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{2}\right)^{x-6} = \frac{1}{64}\)</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 14 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 49</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{3}\right)^{x-7} = \frac{1}{27}\)</p>
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 14 (10) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 50</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{5}\right)^{x+1} = 25\)</p>
+                            <div class="interactive-check" data-answer="-3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 15 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 51</h3>
+                            <p>Найдите корень уравнения: \(3^{4x-7} = \frac{1}{27}\)</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 15 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 52</h3>
+                            <p>Найдите корень уравнения: \(4^{10x-9} = \frac{1}{64}\)</p>
+                            <div class="interactive-check" data-answer="0.6">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 15 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 53</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{3}\right)^{5x-6} = 81\)</p>
+                            <div class="interactive-check" data-answer="0.4">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 15 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 54</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{6}\right)^{10x-1} = 36\)</p>
+                            <div class="interactive-check" data-answer="-0.1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 16 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 55</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{5}\right)^{x-9} = 25^x\)</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 16 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 56</h3>
+                            <p>Найдите корень уравнения: \(\left(\frac{1}{2}\right)^{x-6} = 8^x\)</p>
+                            <div class="interactive-check" data-answer="1,5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 16 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 57</h3>
+                            <p>Найдите корень уравнения: \(36^{x-5} = \frac{1}{6}\)</p>
+                            <div class="interactive-check" data-answer="4.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 16 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 58</h3>
+                            <p>Найдите корень уравнения: \(64^{x-4} = \frac{1}{8}\)</p>
+                            <div class="interactive-check" data-answer="3.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== СЕКЦИЯ 4: ЛОГАРИФМИЧЕСКИЕ ========== -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">log Логарифмические</h2>
+                
+                <div class="tasks-grid">
+                    <!-- Задание 17 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 59</h3>
+                            <p>Найдите корень уравнения: \(\log_3(x+4) = \log_3 16\)</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 17 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 60</h3>
+                            <p>Найдите корень уравнения: \(\log_4(x-4) = \log_4 3\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 17 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 61</h3>
+                            <p>Найдите корень уравнения: \(\log_5(18-x) = \log_5 9\)</p>
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 18 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 62</h3>
+                            <p>Найдите корень уравнения: \(\lg(x+11) = 1\)</p>
+                            <div class="interactive-check" data-answer="-1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 18 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 63</h3>
+                            <p>Найдите корень уравнения: \(\log_2(x-1) = 4\)</p>
+                            <div class="interactive-check" data-answer="17">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 19 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 64</h3>
+                            <p>Найдите корень уравнения: \(\log_8(5x+47) = 3\)</p>
+                            <div class="interactive-check" data-answer="93">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 19 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 65</h3>
+                            <p>Найдите корень уравнения: \(\log_3(3+6x) = 2\)</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 66</h3>
+                            <p>Найдите корень уравнения: \(\log_3(8x-15) = 4\)</p>
+                            <div class="interactive-check" data-answer="12">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 67</h3>
+                            <p>Найдите корень уравнения: \(\log_2(14-5x) = 6\)</p>
+                            <div class="interactive-check" data-answer="-10">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 68</h3>
+                            <p>Найдите корень уравнения: \(\log_2(-3x+8) = 7\)</p>
+                            <div class="interactive-check" data-answer="-40">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 69</h3>
+                            <p>Найдите корень уравнения: \(\log_3(-9+5x) = 4\)</p>
+                            <div class="interactive-check" data-answer="18">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (10) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 70</h3>
+                            <p>Найдите корень уравнения: \(\log_3(-10x-14) = 4\)</p>
+                            <div class="interactive-check" data-answer="-9.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 20 (12) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 71</h3>
+                            <p>Найдите корень уравнения: \(\log_5(-10-3x) = 3\)</p>
+                            <div class="interactive-check" data-answer="-45">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== СЕКЦИЯ 5: КОМБИНИРОВАННЫЕ ========== -->
+            <section class="practice-section" style="margin-bottom: 50px;">
+                <h2 class="section-title" style="text-align: left; padding-left: 20px;">🔄 Комбинированные</h2>
+                
+                <div class="tasks-grid">
+                    <!-- Задание 21 (2) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 72</h3>
+                            <p>Найдите корень уравнения: \(5^{\log_{25}(2x-1)} = 5\)</p>
+                            <div class="interactive-check" data-answer="13">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 21 (4) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 73</h3>
+                            <p>Найдите корень уравнения: \(2^{\log_4(2x+5)} = 4\)</p>
+                            <div class="interactive-check" data-answer="5.5">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 21 (6) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 74</h3>
+                            <p>Найдите корень уравнения: \(2^{\log_4(2x+2)} = 4\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 21 (8) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 75</h3>
+                            <p>Найдите корень уравнения: \(\log_{81} 3^{2x-6} = 2\)</p>
+                            <div class="interactive-check" data-answer="7">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 21 (10) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 76</h3>
+                            <p>Найдите корень уравнения: \(\log_{27} 3^{5x+5} = 2\)</p>
+                            <div class="interactive-check" data-answer="0,2">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Задание 21 (12) -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 77</h3>
+                            <p>Найдите корень уравнения: \(\log_8 2^{3x+9} = 4\)</p>
+                            <div class="interactive-check" data-answer="1">
+                                <div class="input-group"><input type="text" class="answer-input" placeholder="Ответ"><button class="btn-check" onclick="checkAnswer(this)">Проверить</button></div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task6';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+
+                // ФИКСАЦИЯ ОТВЕТА
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none"; // Прячем кнопку "Проверить"
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.match(/\d+/)[0];
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=recordProgress'
+                + '&email=' + encodeURIComponent(email)
+                + '&taskId=' + encodeURIComponent(fullTaskId)
+                + '&callback=' + cb;
+
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        // Восстановление ТОЛЬКО С СЕРВЕРА при открытии страницы
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=getStudentStats'
+                + '&email=' + encodeURIComponent(email)
+                + '&callback=' + cb;
+
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || [])
+                    .map(String)
+                    .filter(id => id.startsWith(prefix))
+                    .map(id => id.slice(prefix.length));
+
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var id = card.querySelector('.task-number').textContent.match(/\d+/)[0];
+                    if (serverIds.includes(String(id))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        
+                        if (msg) {
+                            msg.textContent = "Верно! 🎉";
+                            msg.className = "result-message correct";
+                        }
+                        // ФИКСАЦИЯ ОТВЕТА ПРИ ЗАГРУЗКЕ
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            // Если ответа нет в поле, подставляем правильный
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) {
+                            checkBtn.style.display = "none";
+                        }
+                    }
+                });
+
+                updateProgressBar();
+            };
+
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            
+            if (!name) return; 
+
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+
+            if (!menuBtn || !menu) return;
+
+            menuBtn.addEventListener('click', () => {
+                menu.classList.add('open');
+                document.body.classList.add('menu-open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                menu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    menu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
+        <!-- ====== ПРОВЕРКА ДОСТУПА К ЗАДАНИЮ ====== -->
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        // НАСТРОЙКА: Для task6.html оставляем 'task6'
+        const TASK_KEY = 'task6'; 
+
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) {
+                data = JSON.parse(text);
+            }
+            
+            if (!data || !data.success) return;
+            
+            const allowedTasks = data.access || [];
+            
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+
+        } catch (error) {
+            console.error("Ошибка получения доступов: ", error);
+            document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                 if (!a.href.includes('index.html') && !a.href.includes('dashboard.html')) {
+                     a.style.opacity = '0.4';
+                     a.style.pointerEvents = 'none';
+                 }
+            });
+        }
+    });
+    </script>
+    <script>
+        // Автоматическая вставка подвала
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+                        
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">
+                                ✈️ Telegram: @sonchesmath
+                            </a>
+                        </div>
+
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+
+</body>
+</html>

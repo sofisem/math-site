@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Личный кабинет</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-container { background: #fff; padding: 40px; border-radius: var(--radius-large); box-shadow: var(--shadow); border: 2px solid var(--color-blue-light); max-width: 1100px; margin: 0 auto; }
+        .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .stat-item { background: var(--color-blue-light); padding: 25px; border-radius: var(--radius-small); text-align: center; }
+        .stat-number { font-size: 48px; font-family: var(--font-heading); font-weight: 700; color: var(--color-heading); }
+        .stat-label { font-size: 16px; color: #555; margin-top: 5px; }
+
+        .students-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        .students-table th, .students-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #eee; }
+        .students-table th { background: #f9fbfd; color: var(--color-heading); font-family: var(--font-heading); font-size: 12px; }
+        .students-table td:first-child, .students-table th:first-child { text-align: left; }
+        .students-table tr:hover { background: #f4f8ff; }
+
+        .cell-btn {
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: transform 0.1s;
+        }
+        .cell-btn:hover { transform: scale(1.1); }
+        .cell-btn:active { transform: scale(0.95); }
+
+        .cell-done { background: #d4f5dd; color: #1e8e3e; }
+        .cell-empty { color: #bbb; background: transparent; cursor: default; }
+        .cell-empty:hover { transform: none; }
+        .cell-partial { background: #fff3cd; color: #856404; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        .modal-close:hover { color: #333; }
+        .modal-title { font-family: var(--font-heading); color: var(--color-heading); font-size: 20px; margin-bottom: 5px; }
+        .modal-subtitle { color: #777; font-size: 14px; margin-bottom: 20px; }
+
+        .modal-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .modal-task-item {
+            background: var(--color-blue-light);
+            color: var(--color-heading);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-task-item:hover { background: var(--color-blue); color: #fff; }
+
+        .loading-text { text-align: center; color: #777; font-size: 18px; }
+        .error-text { text-align: center; color: #e53935; padding: 30px; background: #fdf0f5; border-radius: 12px; }
+        .teacher-note { margin-top: 25px; font-size: 14px; color: #777; background: #fffbe6; padding: 15px; border-radius: 10px; border: 1px solid #fde49a; line-height: 1.6; }
+        .refresh-btn { padding: 10px 20px; background: var(--color-blue); color: #fff; border: none; border-radius: 10px; font-family: var(--font-heading); font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
+        .refresh-btn:hover { background: #4a8cdb; }
+        .empty-state { text-align: center; padding: 40px; }
+        .empty-state__emoji { font-size: 60px; margin-bottom: 15px; }
+
+        .access-checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #f9fbfd;
+            border-radius: 10px;
+            border: 2px solid #e6f0ff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.2s;
+            user-select: none;
+        }
+        .access-checkbox-row:hover { border-color: var(--color-blue); }
+        .access-checkbox-row.checked { background: #e6f0ff; border-color: var(--color-blue); }
+        .access-checkbox-row input { width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+
+        @media (max-width: 700px) {
+            .stat-box { grid-template-columns: 1fr; }
+            .students-table { font-size: 11px; }
+            .students-table th, .students-table td { padding: 6px 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+
+    <!-- Модалка: решённые задачи -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-title" id="modal-title">Задание</div>
+            <div class="modal-subtitle" id="modal-subtitle">Ученик</div>
+            <div class="modal-grid" id="modal-grid"></div>
+        </div>
+    </div>
+
+    <!-- Модалка: доступ к заданиям -->
+    <div class="modal-overlay" id="access-modal">
+        <div class="modal-content" style="max-width: 520px;">
+            <button class="modal-close" onclick="closeAccessModal()">✕</button>
+            <div class="modal-title" id="access-modal-title">Доступ к заданиям</div>
+            <div class="modal-subtitle" id="access-modal-subtitle">Ученик</div>
+            <div id="access-checkboxes"
+                 style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; text-align: left;">
+            </div>
+            <button id="access-save-btn"
+                    style="padding: 12px 25px; background: var(--color-blue); color: #fff; border: none;
+                           border-radius: 10px; font-family: var(--font-heading); font-weight: 700;
+                           cursor: pointer; width: 100%;">
+                Сохранить
+            </button>
+            <div id="access-status" style="margin-top: 12px; font-size: 14px;"></div>
+        </div>
+    </div>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span><span></span><span></span>
+    </button>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item active"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        <!-- Боковая панель (Десктоп) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html" class="active"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Личный кабинет</div>
+                    <h1 class="page-title">Личный кабинет<br><span id="user-name-header">Загрузка...</span></h1>
+                    <p class="page-description" id="user-role-desc">Загрузка данных...</p>
+                </div>
+                <div class="header-illustration">
+                    <img src="https://img.icons8.com/color/144/000000/user.png" alt="Профиль">
+                </div>
+            </header>
+
+            <div class="dashboard-container" id="dashboard-content">
+                <p class="loading-text">Загрузка данных...</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+
+        const TASKS = [
+            { key: 'task1',  title: 'Планиметрия',                    max: 121, short: '№1'  },
+            { key: 'task2',  title: 'Векторы',                        max: 31,  short: '№2'  },
+            { key: 'task3',  title: 'Стереометрия',                   max: 171, short: '№3'  },
+            { key: 'task4',  title: 'Вероятность',                    max: 54,  short: '№4'  },
+            { key: 'task5',  title: 'Сложная вероятность',            max: 34,  short: '№5'  },
+            { key: 'task6',  title: 'Уравнения',                      max: 77,  short: '№6'  },
+            { key: 'task7',  title: 'Вычисления',                     max: 84,  short: '№7'  },
+            { key: 'task8',  title: 'Производная',                    max: 61,  short: '№8'  },
+            { key: 'task9',  title: 'Прикладные задачи',              max: 58,  short: '№9'  },
+            { key: 'task10', title: 'Текстовые задачи',               max: 45,  short: '№10' },
+            { key: 'task11', title: 'Графики функций',                max: 15,  short: '№11' },
+            { key: 'task12', title: 'Наибольшее/наименьшее значение', max: 0,   short: '№12' },
+            { key: 'task13', title: 'Тригонометрия',                  max: 0,   short: '№13' },
+            { key: 'task14', title: 'Планиметрия',                    max: 0,   short: '№14' },
+            { key: 'task15', title: 'Неравенства',                    max: 0,   short: '№15' },
+            { key: 'task16', title: 'Экономическая задача',           max: 0,   short: '№16' },
+            { key: 'task17', title: 'Стереометрия',                   max: 0,   short: '№17' },
+            { key: 'task18', title: 'Параметры',                      max: 0,   short: '№18' },
+            { key: 'task19', title: 'Логическая задача',              max: 0,   short: '№19' },
+        ];
+
+        // ====== УПРАВЛЕНИЕ ДОСТУПОМ ======
+        const ACCESS_TASKS = [
+            { key: 'task1',  label: '№1 Планиметрия' },
+            { key: 'task2',  label: '№2 Векторы' },
+            { key: 'task3',  label: '№3 Стереометрия' },
+            { key: 'task4',  label: '№4 Вероятность' },
+            { key: 'task5',  label: '№5 Сложная вероятность' },
+            { key: 'task6',  label: '№6 Уравнения' },
+            { key: 'task7',  label: '№7 Вычисления' },
+            { key: 'task8',  label: '№8 Производная' },
+            { key: 'task9',  label: '№9 Прикладные задачи' },
+            { key: 'task10', label: '№10 Текстовые задачи' },
+            { key: 'task11', label: '№11 Графики функций' },
+            { key: 'task12', label: '№12 Наибольшее/наименьшее значение' },
+            { key: 'task13', label: '№13 Тригонометрия' },
+            { key: 'task14', label: '№14 Планиметрия' },
+            { key: 'task15', label: '№15 Неравенства' },
+            { key: 'task16', label: '№16 Экономическая задача' },
+            { key: 'task17', label: '№17 Стереометрия' },
+            { key: 'task18', label: '№18 Параметры' },
+            { key: 'task19', label: '№19 Логическая задача' },
+        ];
+
+        let currentAccessStudent = null;
+
+        function openAccessModal(teacherEmail, studentEmail, studentName, currentAccessArray) {
+            currentAccessStudent = { teacherEmail, studentEmail };
+            const current = Array.isArray(currentAccessArray) ? currentAccessArray : [];
+
+            document.getElementById('access-modal-title').textContent = 'Доступ к заданиям';
+            document.getElementById('access-modal-subtitle').textContent =
+                studentName + ' (' + studentEmail + ')';
+
+            const container = document.getElementById('access-checkboxes');
+            container.innerHTML = '';
+
+            ACCESS_TASKS.forEach(t => {
+                const isChecked = current.includes(t.key);
+                const label = document.createElement('label');
+                label.className = 'access-checkbox-row' + (isChecked ? ' checked' : '');
+                label.innerHTML = `
+                    <input type="checkbox" value="${t.key}" ${isChecked ? 'checked' : ''}
+                           onchange="this.parentElement.classList.toggle('checked', this.checked)">
+                    <span>${t.label}</span>
+                `;
+                container.appendChild(label);
+            });
+
+            document.getElementById('access-status').textContent = '';
+            document.getElementById('access-modal').style.display = 'flex';
+        }
+
+        function closeAccessModal() {
+            document.getElementById('access-modal').style.display = 'none';
+            currentAccessStudent = null;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const saveBtn = document.getElementById('access-save-btn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    if (!currentAccessStudent) return;
+
+                    const checked = Array.from(
+                        document.querySelectorAll('#access-checkboxes input[type="checkbox"]:checked')
+                    ).map(cb => cb.value);
+
+                    const accessString = checked.join(',');
+                    const statusEl = document.getElementById('access-status');
+                    statusEl.textContent = 'Сохраняем...';
+                    statusEl.style.color = '#555';
+
+                    fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            action: 'setStudentAccess',
+                            teacherEmail: currentAccessStudent.teacherEmail,
+                            studentEmail: currentAccessStudent.studentEmail,
+                            access: accessString
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.success) {
+                            statusEl.textContent = '✅ Сохранено!';
+                            statusEl.style.color = '#2ecc71';
+                            setTimeout(() => {
+                                closeAccessModal();
+                                document.getElementById('refresh-students')?.click();
+                            }, 700);
+                        } else {
+                            statusEl.textContent = '❌ ' + (data?.message || 'Ошибка');
+                            statusEl.style.color = '#e53935';
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Ошибка сохранения:", err);
+                        statusEl.textContent = '❌ Ошибка сети';
+                        statusEl.style.color = '#e53935';
+                    });
+                });
+            }
+
+            const modal = document.getElementById('access-modal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target.id === 'access-modal') closeAccessModal();
+                });
+            }
+        });
+
+        // ====== JSONP ======
+        function jsonp(url, callback) {
+            const cbName = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const script = document.createElement('script');
+            let finished = false;
+            const finish = (data) => {
+                if (finished) return;
+                finished = true;
+                clearTimeout(timeout);
+                delete window[cbName];
+                if (script.parentNode) script.remove();
+                callback(data);
+            };
+            const timeout = setTimeout(() => finish({ success: false, message: 'Таймаут' }), 15000);
+            window[cbName] = (data) => finish(data);
+            script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+            script.onerror = () => finish({ success: false, message: 'Ошибка сети' });
+            document.body.appendChild(script);
+        }
+
+        // ====== Плашка пользователя ======
+        document.addEventListener('DOMContentLoaded', () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            if (!name) return;
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+            header.parentNode.insertBefore(badge, header);
+        });
+
+        // ====== Мобильное меню ======
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+            if (!menuBtn || !menu) return;
+            menuBtn.addEventListener('click', () => { menu.classList.add('open'); document.body.classList.add('menu-open'); });
+            closeBtn.addEventListener('click', () => { menu.classList.remove('open'); document.body.classList.remove('menu-open'); });
+        });
+
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+
+        // ====== Модалка решённых задач ======
+        function openModal(taskTitle, studentName, tasksArray) {
+            document.getElementById('modal-title').textContent = taskTitle;
+            document.getElementById('modal-subtitle').textContent = studentName;
+            const grid = document.getElementById('modal-grid');
+            grid.innerHTML = '';
+            if (!tasksArray || tasksArray.length === 0) {
+                grid.innerHTML = '<div style="color:#777; width:100%;">Нет решённых задач</div>';
+            } else {
+                tasksArray.sort((a, b) => a - b).forEach(num => {
+                    const el = document.createElement('div');
+                    el.className = 'modal-task-item';
+                    el.textContent = '№ ' + num;
+                    grid.appendChild(el);
+                });
+            }
+            document.getElementById('task-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('task-modal').style.display = 'none';
+        }
+
+        document.getElementById('task-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'task-modal') closeModal();
+        });
+
+        // ====== Инициализация ======
+        document.addEventListener('DOMContentLoaded', () => {
+            const userEmail = localStorage.getItem('sonches_user_email');
+            const userRole  = localStorage.getItem('sonches_user_role');
+            const userName  = localStorage.getItem('sonches_user_name');
+            const dashboard = document.getElementById('dashboard-content');
+            const nameHeader = document.getElementById('user-name-header');
+            const roleDesc   = document.getElementById('user-role-desc');
+
+            if (!userEmail) { window.location.href = 'login.html'; return; }
+            nameHeader.textContent = userName || 'Пользователь';
+
+            if (userRole === 'teacher') {
+                roleDesc.textContent = 'Панель учителя: статистика всех учеников.';
+                loadTeacherDashboard(userEmail, dashboard);
+            } else {
+                roleDesc.textContent = 'Твоя статистика и достижения.';
+                loadStudentDashboard(userEmail, dashboard);
+            }
+        });
+
+        // ====== УЧЕНИК ======
+        function loadStudentDashboard(email, container) {
+            container.innerHTML = '<p class="loading-text">Загрузка статистики...</p>';
+            jsonp(
+                SCRIPT_URL + '?action=getStudentStats&email=' + encodeURIComponent(email),
+                data => {
+                    if (!data || !data.success) {
+                        container.innerHTML = `<div class="error-text">Ошибка: ${data && data.message ? data.message : 'не удалось загрузить'}</div>`;
+                        return;
+                    }
+                    const solvedList = Array.isArray(data.solvedTasks) ? data.solvedTasks : [];
+                    const byTask = {};
+                    TASKS.forEach(t => byTask[t.key] = []);
+                    solvedList.forEach(id => {
+                        const m = String(id).match(/^(task\d+)_(\d+)$/);
+                        if (m && byTask[m[1]]) byTask[m[1]].push(Number(m[2]));
+                    });
+
+                    let totalSolved = 0, totalMax = 0;
+                    TASKS.forEach(t => { totalSolved += byTask[t.key].length; totalMax += t.max; });
+                    const percent = totalMax > 0 ? Math.round(totalSolved / totalMax * 100) : 0;
+
+                    let html = `
+                        <div class="stat-box">
+                            <div class="stat-item">
+                                <div class="stat-number">${totalSolved}</div>
+                                <div class="stat-label">Всего задач решено</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${percent}%</div>
+                                <div class="stat-label">Общий прогресс</div>
+                            </div>
+                        </div>
+                        <h3 style="color: var(--color-heading); margin-bottom: 15px;">Прогресс по заданиям</h3>
+                        <table class="students-table">
+                            <thead><tr><th>Задание</th><th>Решено</th><th>Всего</th></tr></thead>
+                            <tbody>
+                    `;
+                    TASKS.forEach(t => {
+                        const count = byTask[t.key].length;
+                        const cls = count === 0 ? 'cell-empty' : (t.max > 0 && count >= t.max ? 'cell-done' : 'cell-partial');
+                        let cellHtml = `<span class="${cls}">${count}</span>`;
+                        if (count > 0) {
+                            const tasksStr = JSON.stringify(byTask[t.key]).replace(/"/g, '&quot;');
+                            cellHtml = `<button class="cell-btn ${cls}" onclick='openModal("${t.title}", "Твои задачи", ${tasksStr})'>${count}</button>`;
+                        }
+                        html += `<tr>
+                            <td><strong>${t.title}</strong></td>
+                            <td>${cellHtml}</td>
+                            <td>${t.max > 0 ? t.max : '—'}</td>
+                        </tr>`;
+                    });
+                    html += `</tbody></table>`;
+                    container.innerHTML = html;
+                }
+            );
+        }
+
+        // ====== УЧИТЕЛЬ ======
+        function loadTeacherDashboard(teacherEmail, container) {
+            const load = () => {
+                container.innerHTML = `
+                  <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button class="refresh-btn" id="refresh-students" style="margin-bottom: 0;">🔄 Обновить данные</button>
+                    <button class="refresh-btn" id="download-csv" style="margin-bottom: 0; background: #2ecc71; display: none;">📥 Скачать CSV</button>
+                  </div>
+                  <p class="loading-text">Загрузка списка учеников...</p>
+                `;
+                container.querySelector('#refresh-students').onclick = load;
+
+                jsonp(
+                    SCRIPT_URL + '?action=getAllStudents&email=' + encodeURIComponent(teacherEmail),
+                    data => {
+                        if (!data || !data.success) {
+                            container.innerHTML = `<div class="error-text">Ошибка: ${data && data.message ? data.message : 'не удалось загрузить'}</div>`;
+                            return;
+                        }
+                        const students = data.students || [];
+
+                        if (students.length === 0) {
+                            container.innerHTML = `
+                                <button class="refresh-btn" id="refresh-students">🔄 Обновить данные</button>
+                                <div class="empty-state">
+                                    <div class="empty-state__emoji">👩‍🎓</div>
+                                    <h3 style="color: var(--color-heading);">Пока нет учеников</h3>
+                                    <p>Как только ученики зарегистрируются и начнут решать задачи, они появятся здесь.</p>
+                                </div>
+                            `;
+                            container.querySelector('#refresh-students').onclick = load;
+                            return;
+                        }
+
+                        let html = `
+                            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                                <button class="refresh-btn" id="refresh-students" style="margin-bottom: 0;">🔄 Обновить данные</button>
+                                <button class="refresh-btn" id="download-csv" style="margin-bottom: 0; background: #2ecc71;">📥 Скачать CSV</button>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-item">
+                                    <div class="stat-number">${students.length}</div>
+                                    <div class="stat-label">Учеников</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">${students.reduce((s, u) => s + (u.solved || 0), 0)}</div>
+                                    <div class="stat-label">Задач решено всего</div>
+                                </div>
+                            </div>
+                            <h3 style="color: var(--color-heading); margin-bottom: 15px;">Прогресс по заданиям</h3>
+                            <div style="overflow-x: auto;">
+                            <table class="students-table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Ученик</th>
+                                        ${TASKS.map(t => `<th title="${t.title}">${t.short}</th>`).join('')}
+                                        <th>Всего</th>
+                                        <th>Доступ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+
+                        const csvData = [];
+
+                        students.forEach(s => {
+                            const byTask = {};
+                            TASKS.forEach(t => byTask[t.key] = []);
+                            (s.solvedTasks || []).forEach(id => {
+                                const m = String(id).match(/^(task\d+)_(\d+)$/);
+                                if (m && byTask[m[1]]) byTask[m[1]].push(Number(m[2]));
+                            });
+
+                            csvData.push({
+                                name: s.name || 'Без имени',
+                                email: s.email,
+                                counts: TASKS.map(t => byTask[t.key].length),
+                                total: s.solved || 0
+                            });
+
+                            const accessArr = Array.isArray(s.access) ? s.access : [];
+                            const accessJson = JSON.stringify(accessArr).replace(/"/g, '&quot;');
+                            const safeName = (s.name || s.email).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                            const safeEmail = s.email.replace(/'/g, "\\'");
+                            const safeTeacher = teacherEmail.replace(/'/g, "\\'");
+
+                            html += `<tr>
+                                <td><strong>${s.name || 'Без имени'}</strong><br><small style="color:#999;">${s.email}</small></td>
+                                ${TASKS.map(t => {
+                                    const count = byTask[t.key].length;
+                                    const cls = count === 0 ? 'cell-empty' : (t.max > 0 && count >= t.max ? 'cell-done' : 'cell-partial');
+                                    if (count === 0) {
+                                        return `<td><span class="${cls}">0</span></td>`;
+                                    } else {
+                                        const tasksStr = JSON.stringify(byTask[t.key]).replace(/"/g, '&quot;');
+                                        return `<td><button class="cell-btn ${cls}" onclick='openModal("${t.title}", "${(s.name || s.email).replace(/"/g, '&quot;')}", ${tasksStr})'>${count}</button></td>`;
+                                    }
+                                }).join('')}
+                                <td><strong>${s.solved || 0}</strong></td>
+                                <td>
+                                    <button class="cell-btn" style="background: var(--color-blue-light); color: var(--color-heading); padding: 6px 10px;"
+                                        onclick="openAccessModal('${safeTeacher}', '${safeEmail}', '${safeName}', ${accessJson})">
+                                        🔐 Настроить
+                                    </button>
+                                </td>
+                            </tr>`;
+                        });
+
+                        html += `</tbody></table></div>
+                            <div class="teacher-note">
+                                💡 Нажмите на цветную ячейку с числом, чтобы увидеть номера решённых задач.<br>
+                                🔐 Кнопка «Настроить» открывает управление доступом к заданиям.<br>
+                                <strong>Ячейки:</strong> серые — 0 решено, жёлтые — в процессе, зелёные — задание пройдено.
+                            </div>
+                        `;
+
+                        container.innerHTML = html;
+                        container.querySelector('#refresh-students').onclick = load;
+
+                        container.querySelector('#download-csv').onclick = () => {
+                            const headers = ['Ученик', 'Email'];
+                            TASKS.forEach(t => headers.push(t.short));
+                            headers.push('Всего');
+                            const rows = [headers];
+                            csvData.forEach(row => {
+                                const line = [row.name, row.email];
+                                row.counts.forEach(c => line.push(c));
+                                line.push(row.total);
+                                rows.push(line);
+                            });
+                            const csvContent = rows.map(r =>
+                                r.map(cell => {
+                                    const str = String(cell);
+                                    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+                                        return '"' + str.replace(/"/g, '""') + '"';
+                                    }
+                                    return str;
+                                }).join(',')
+                            ).join('\r\n');
+                            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+                            const link = document.createElement('a');
+                            const url = URL.createObjectURL(blob);
+                            link.setAttribute('href', url);
+                            const date = new Date().toISOString().slice(0, 10);
+                            link.setAttribute('download', `Sonches_Stats_${date}.csv`);
+                            link.style.visibility = 'hidden';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(url);
+                        };
+                    }
+                );
+            };
+            load();
+        }
+    </script>
+
+    <!-- ====== СКРИПТ ПРОВЕРКИ ДОСТУПА ДЛЯ МЕНЮ ====== -->
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) {
+                data = JSON.parse(text);
+            }
+
+            if (!data || !data.success) return;
+
+            const allowedTasks = data.access || [];
+
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+
+        } catch (error) {
+            console.error("Ошибка получения доступов для меню: ", error);
+        }
+    });
+    </script>
+
+    <!-- ПОДВАЛ -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">
+                                ✈️ Telegram: @sonchesmath
+                            </a>
+                        </div>
+
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+</body>
+</html>

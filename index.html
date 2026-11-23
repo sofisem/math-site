@@ -1,0 +1,3003 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Задание 1. Планиметрия</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <style id="print-tasks-only">
+    @media print {
+        @page {
+            margin: 14mm;
+        }
+
+        /* Скрываем всё */
+        body * {
+            visibility: hidden !important;
+        }
+
+        /* Показываем только задания */
+        .practice-section,
+        .practice-section * {
+            visibility: visible !important;
+        }
+
+        .practice-section {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* ГАРАНТИРОВАННО скрываем кнопку PDF */
+        button.btn-download-pdf,
+        .btn-download-pdf,
+        button[onclick*="window.print"],
+        button[onclick*="print"] {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        /* Скрываем интерактивные кнопки */
+        .interactive-check {
+            display: none !important;
+        }
+
+        /* Показываем строки для ответов */
+        .practice-section .written-answer {
+            display: block !important;
+            visibility: visible !important;
+            margin-top: 10px !important;
+            font-size: 14px !important;
+            color: black !important;
+        }
+
+        /* Карточки заданий */
+        .practice-section .task-card {
+            break-inside: avoid;
+            page-break-inside: avoid;
+            box-shadow: none !important;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+    
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item active"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="#" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Поиск по заданиям...">
+            </div>
+
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html" class="active"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 1</div>
+                    <h1 class="page-title">Задание №1<br><span>Планиметрия</span></h1>
+                    <p class="page-description">
+                        Привет! Это твой полный гид по первой задаче ЕГЭ. Здесь собрана вся база: от углов в треугольниках до окружностей. Внизу тебя ждут 121 задача для тренировки с подробными ответами. Погнали! 🚀
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <img src="https://img.icons8.com/color/144/000000/geometry.png" alt="Геометрия">
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+                <button class="btn-download-pdf" onclick="window.print()">
+                    📥 Скачать PDF
+                </button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 121</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ================= ТЕОРИЯ ================= -->
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+                <a href="flashcards.html" class="btn-flashcards">
+                    🧠 Вспомнить формулы
+                </a>
+
+                <!-- Карточка 1 -->
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>1. Равнобедренный треугольник</h2>
+                        <div class="icon-circle icon-circle--pink">📐</div>
+                    </div>
+                    
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li>Углы при основании равны (\(\angle A = \angle B\), если \(AC = BC\)).</li>
+                                <li>Сумма всех углов треугольника = \(180^\circ\).</li>
+                                <li>Внешний угол = сумме двух внутренних, не смежных с ним.</li>
+                            </ul>
+                            <div class="tip-box">
+                                <span class="tip-icon">💡</span>
+                                <p><strong>Лайфхак:</strong> Если дан внешний угол при основании, сначала найди внутренний (\(180^\circ - \text{внешний}\)).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="theory-image-box">
+                            <svg viewBox="0 0 200 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="100,20 30,130 170,130" fill="#e6f0ff"/>
+                                <polygon points="100,20 30,130 170,130" stroke="#5c8ae6" stroke-width="3" fill="none" stroke-linejoin="round"/>
+                                <line x1="60" y1="70" x2="70" y2="80" stroke="#f78fb3" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="130" y1="80" x2="140" y2="70" stroke="#f78fb3" stroke-width="3" stroke-linecap="round"/>
+                                <clipPath id="clip-A"><polygon points="100,20 30,130 170,130"/></clipPath>
+                                <clipPath id="clip-B"><polygon points="100,20 30,130 170,130"/></clipPath>
+                                <circle cx="30" cy="130" r="20" stroke="#5c8ae6" stroke-width="2" fill="none" clip-path="url(#clip-A)"/>
+                                <circle cx="170" cy="130" r="20" stroke="#5c8ae6" stroke-width="2" fill="none" clip-path="url(#clip-B)"/>
+                                <text x="93" y="15" fill="#5c8ae6" font-size="16" font-weight="bold" font-family="Arial">C</text>
+                                <text x="15" y="145" fill="#5c8ae6" font-size="16" font-weight="bold" font-family="Arial">A</text>
+                                <text x="175" y="145" fill="#5c8ae6" font-size="16" font-weight="bold" font-family="Arial">B</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div class="card card--pink">
+                    <div class="card-header">
+                        <h2>2. Прямоугольный треугольник</h2>
+                        <div class="icon-circle icon-circle--blue">📏</div>
+                    </div>
+                    
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li><strong>Медиана (\(CM\)):</strong> равна половине гипотенузы (\(CM = AM = MB\)).</li>
+                                <li><strong>Биссектриса (\(CD\)):</strong> делит прямой угол пополам (\(45^\circ\)).</li>
+                                <li><strong>Высота (\(CH\)):</strong> образует два маленьких прямоугольных треугольника.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="theory-image-box theory-image-box--grid">
+                            <div class="img-item">
+                                <svg viewBox="0 0 200 150" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="30,130 30,20 170,130" fill="#fdf0f5"/>
+                                    <polygon points="30,130 30,20 170,130" stroke="#f78fb3" stroke-width="3" fill="none" stroke-linejoin="round"/>
+                                    <polyline points="30,115 45,115 45,130" stroke="#f78fb3" stroke-width="2" fill="none"/>
+                                    <line x1="30" y1="130" x2="100" y2="75" stroke="#f78fb3" stroke-width="3" stroke-linecap="round"/>
+                                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#f78fb3" stroke-width="2.5" stroke-linecap="round" transform="translate(65, 48) rotate(126.87)"/>
+                                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#f78fb3" stroke-width="2.5" stroke-linecap="round" transform="translate(135, 103) rotate(126.87)"/>
+                                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#f78fb3" stroke-width="2.5" stroke-linecap="round" transform="translate(65, 102.5) rotate(142)"/>
+                                    <circle cx="100" cy="75" r="4" fill="#fff" stroke="#f78fb3" stroke-width="2"/>
+                                    <text x="105" y="70" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">M</text>
+                                    <text x="15" y="20" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">B</text>
+                                    <text x="15" y="145" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">A</text>
+                                    <text x="175" y="145" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">C</text>
+                                </svg>
+                                <span>Медиана</span>
+                            </div>
+                            
+                            <div class="img-item">
+                                <svg viewBox="0 0 200 150" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="30,130 30,20 170,130" fill="#fffbeb" stroke="#fde49a" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <polyline points="30,115 45,115 45,130" stroke="#fde49a" stroke-width="2" fill="none"/>
+                                    <line x1="30" y1="130" x2="83.44" y2="61.99" stroke="#d9ae4d" stroke-width="2.5" stroke-linecap="round"/>
+                                    <path d="M 83.44,61.99 L 77.15,57.05 L 72.20,63.34 L 78.26,68.28 Z" stroke="#d9ae4d" stroke-width="2" fill="#fffbeb" stroke-linejoin="round"/>
+                                    <g fill="#a77d28" font-size="13" font-weight="bold" font-family="Arial, sans-serif">
+                                        <text x="15" y="20">B</text>
+                                        <text x="15" y="145">A</text>
+                                        <text x="175" y="145">C</text>
+                                        <text x="88" y="57">H</text>
+                                    </g>
+                                </svg>
+                                <span>Высота</span>
+                            </div>
+                            
+                            <div class="img-item">
+                                <svg viewBox="0 0 200 150" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="30,130 30,20 170,130" fill="#eff9ff" stroke="#a5d8f3" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <polyline points="30,115 45,115 45,130" stroke="#a5d8f3" stroke-width="2" fill="none"/>
+                                    <line x1="30" y1="130" x2="91.6" y2="68.4" stroke="#368fc5" stroke-width="2.5" stroke-linecap="round"/>
+                                    <circle cx="91.6" cy="68.4" r="2" fill="#368fc5"/>
+                                    <path d="M 30,112 A 18,18 0 0 1 42.73,117.27" stroke="#368fc5" stroke-width="1.8" fill="none"/>
+                                    <path d="M 42.73,117.27 A 18,18 0 0 1 48,130" stroke="#368fc5" stroke-width="1.8" fill="none"/>
+                                    <g fill="#287cae" font-size="9" font-weight="bold" font-family="Arial, sans-serif">
+                                        <text x="32" y="101">45°</text>
+                                        <text x="52" y="119">45°</text>
+                                    </g>
+                                    <g fill="#287cae" font-size="13" font-weight="bold" font-family="Arial, sans-serif">
+                                        <text x="15" y="20">B</text>
+                                        <text x="15" y="145">A</text>
+                                        <text x="175" y="145">C</text>
+                                    </g>
+                                </svg>
+                                <span>Биссектриса</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="card card--white">
+                    <div class="card-header">
+                        <h2>3. Четырехугольники</h2>
+                        <div class="icon-circle icon-circle--yellow">🔷</div>
+                    </div>
+                    
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li><strong>Сумма углов четырехугольника:</strong> Всегда равна \(360^\circ\).</li>
+                                <li><strong>Параллелограмм:</strong> Противоположные углы равны. Сумма односторонних (прилежащих к одной стороне) углов равна \(180^\circ\).</li>
+                                <li><strong>Ромб:</strong> Все стороны равны. Диагонали являются биссектрисами углов (делят углы пополам).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="theory-image-box theory-image-box--grid">
+                            <div class="img-item">
+                                <svg viewBox="0 0 200 150" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="60,30 160,30 140,120 40,120" fill="#e6f0ff"/>
+                                    <polygon points="60,30 160,30 140,120 40,120" stroke="#5c8ae6" stroke-width="3" fill="none" stroke-linejoin="round"/>
+                                    <line x1="60" y1="30" x2="140" y2="120" stroke="#f78fb3" stroke-width="2"/>
+                                    <line x1="160" y1="30" x2="40" y2="120" stroke="#f78fb3" stroke-width="2"/>
+                                    <text x="55" y="25" fill="#5c8ae6" font-size="14" font-weight="bold" font-family="Arial">B</text>
+                                    <text x="165" y="25" fill="#5c8ae6" font-size="14" font-weight="bold" font-family="Arial">C</text>
+                                    <text x="145" y="135" fill="#5c8ae6" font-size="14" font-weight="bold" font-family="Arial">D</text>
+                                    <text x="25" y="135" fill="#5c8ae6" font-size="14" font-weight="bold" font-family="Arial">A</text>
+                                </svg>
+                                <span>Параллелограмм</span>
+                            </div>
+
+                            <div class="img-item">
+                                <svg viewBox="0 0 200 150" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="100,20 170,75 100,130 30,75" fill="#fdf0f5"/>
+                                    <polygon points="100,20 170,75 100,130 30,75" stroke="#f78fb3" stroke-width="3" fill="none" stroke-linejoin="round"/>
+                                    <line x1="30" y1="75" x2="170" y2="75" stroke="#5c8ae6" stroke-width="2"/>
+                                    <line x1="100" y1="20" x2="100" y2="130" stroke="#5c8ae6" stroke-width="2"/>
+                                    <text x="90" y="15" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">B</text>
+                                    <text x="175" y="75" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">C</text>
+                                    <text x="90" y="145" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">D</text>
+                                    <text x="15" y="75" fill="#f78fb3" font-size="14" font-weight="bold" font-family="Arial">A</text>
+                                </svg>
+                                <span>Ромб</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 4 -->
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>4. Площади и подобие</h2>
+                        <div class="icon-circle icon-circle--pink">🧩</div>
+                    </div>
+                    
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li>
+                                    <strong>Площадь параллелограмма:</strong> \(S = a \cdot h_a\) (основание на высоту).
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 125" width="200" height="125">
+                                            <polygon points="55,20 175,20 135,95 15,95" fill="#eaf6ff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <line x1="55" y1="20" x2="55" y2="95" stroke="#168bc9" stroke-width="2" stroke-dasharray="4 3"/>
+                                            <path d="M55 85 H65 V95" fill="none" stroke="#168bc9" stroke-width="1.8"/>
+                                            <g fill="#247eaf" font-size="11" font-weight="bold">
+                                                <text x="80" y="112">a</text>
+                                                <text x="35" y="62">hₐ</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Площадь треугольника:</strong>
+                                    <br>1) \(S = \frac{1}{2} a \cdot h_a\) (половина основания на высоту);
+                                    <br>2) \(S = \frac{1}{2} a \cdot b \cdot \sin \gamma\) (через две стороны и угол между ними).
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 135" width="200" height="135">
+                                            <polygon points="25,105 80,20 175,105" fill="#eaf6ff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <line x1="80" y1="20" x2="80" y2="105" stroke="#168bc9" stroke-width="2" stroke-dasharray="4 3"/>
+                                            <path d="M80 95 H90 V105" fill="none" stroke="#168bc9" stroke-width="1.8"/>
+                                            <path d="M43 105 A18 18 0 0 0 35 89" fill="none" stroke="#168bc9" stroke-width="2"/>
+                                            <g fill="#247eaf" font-size="11" font-weight="bold">
+                                                <text x="96" y="68">hₐ</text>
+                                                <text x="95" y="120">a</text>
+                                                <text x="43" y="54">b</text>
+                                                <text x="128" y="55">c</text>
+                                                <text x="48" y="96">γ</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Средняя линия:</strong> отсекает треугольник, площадь которого \(\frac{1}{4}\) от большого.
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 135" width="200" height="135">
+                                            <polygon points="100,15 20,115 180,115" fill="#f3faff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <polygon points="100,15 60,65 140,65" fill="#bce5fb" stroke="none"/>
+                                            <line x1="60" y1="65" x2="140" y2="65" stroke="#168bc9" stroke-width="2.5"/>
+                                            <g fill="#247eaf" font-size="11" font-weight="bold">
+                                                <text x="100" y="47" text-anchor="middle">S/4</text>
+                                                <text x="100" y="96" text-anchor="middle">S</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Площадь трапеции от средней линии:</strong> \(\frac{3}{4}\) от площади большого треугольника.
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 135" width="200" height="135">
+                                            <polygon points="60,65 140,65 180,115 20,115" fill="#bce5fb" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <polygon points="100,15 60,65 140,65" fill="#eaf6ff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <line x1="60" y1="65" x2="140" y2="65" stroke="#168bc9" stroke-width="2.5"/>
+                                            <g fill="#247eaf" font-size="11" font-weight="bold">
+                                                <text x="100" y="48" text-anchor="middle">S/4</text>
+                                                <text x="100" y="96" text-anchor="middle">3S/4</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Теорема Пифагора:</strong> квадрат гипотенузы равен сумме квадратов катетов. <br>\(c^2 = a^2 + b^2\)
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 135" width="200" height="135">
+                                            <polygon points="35,105 35,20 145,105" fill="#eaf6ff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <path d="M35 93 H47 V105" fill="none" stroke="#168bc9" stroke-width="2"/>
+                                            <g fill="#247eaf" font-size="12" font-weight="bold" font-family="Arial, sans-serif">
+                                                <text x="19" y="65">b</text>
+                                                <text x="88" y="121">a</text>
+                                                <text x="100" y="54">c</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Средняя линия треугольника:</strong> отрезок, соединяющий середины двух сторон треугольника, параллелен третьей стороне и равен её половине. <br>\(MN \parallel AC,\quad MN = \frac{1}{2}AC\)
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 145" width="200" height="135" xmlns="http://www.w3.org/2000/svg">
+                                            <polygon points="100,15 20,125 180,125" fill="#eff9ff" stroke="#70bce8" stroke-width="2.5" stroke-linejoin="round"/>
+                                            <polygon points="100,15 60,70 140,70" fill="#bce5fb" stroke="none"/>
+                                            <line x1="60" y1="70" x2="140" y2="70" stroke="#168bc9" stroke-width="2.5"/>
+                                            <g fill="#168bc9">
+                                                <circle cx="60" cy="70" r="2.5"/>
+                                                <circle cx="140" cy="70" r="2.5"/>
+                                            </g>
+                                            <g fill="#247eaf" font-size="11" font-weight="bold" font-family="Arial, sans-serif">
+                                                <text x="100" y="10" text-anchor="middle">B</text>
+                                                <text x="10" y="137">A</text>
+                                                <text x="183" y="137">C</text>
+                                                <text x="47" y="68">M</text>
+                                                <text x="145" y="68">N</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 5 -->
+                <div class="card card--pink">
+                    <div class="card-header">
+                        <h2>5. Окружность</h2>
+                        <div class="icon-circle icon-circle--blue">⭕</div>
+                    </div>
+
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li>
+                                    <strong>Вписанный и центральный угол:</strong>
+                                    Вписанный угол равен половине центрального угла,
+                                    опирающегося на ту же дугу.
+                                    <br>
+                                    \(\angle ACB = \frac{1}{2}\angle AOB\)
+
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 145" width="200" height="135"
+                                            xmlns="http://www.w3.org/2000/svg">
+
+                                            <circle cx="100" cy="70" r="52"
+                                                    fill="#eaf6ff"
+                                                    stroke="#70bce8"
+                                                    stroke-width="2.5"/>
+
+                                            <line x1="100" y1="70" x2="55" y2="44"
+                                                stroke="#168bc9" stroke-width="2"/>
+
+                                            <line x1="100" y1="70" x2="145" y2="44"
+                                                stroke="#168bc9" stroke-width="2"/>
+
+                                            <line x1="55" y1="44" x2="100" y2="122"
+                                                stroke="#70bce8" stroke-width="2.5"/>
+
+                                            <line x1="145" y1="44" x2="100" y2="122"
+                                                stroke="#70bce8" stroke-width="2.5"/>
+
+                                            <path d="M55 44 A52 52 0 0 1 145 44"
+                                                fill="none"
+                                                stroke="#168bc9"
+                                                stroke-width="3.5"/>
+
+                                            <circle cx="100" cy="70" r="3" fill="#168bc9"/>
+
+                                            <g fill="#247eaf" font-size="11"
+                                            font-weight="bold" font-family="Arial">
+                                                <text x="43" y="38">A</text>
+                                                <text x="149" y="38">B</text>
+                                                <text x="104" y="135">C</text>
+                                                <text x="107" y="68">O</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <strong>Касательная:</strong>
+                                    Радиус, проведённый в точку касания,
+                                    перпендикулярен касательной (\(90^\circ\)).
+
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 135" width="200" height="125"
+                                            xmlns="http://www.w3.org/2000/svg">
+
+                                            <circle cx="70" cy="70" r="42"
+                                                    fill="#eaf6ff"
+                                                    stroke="#70bce8"
+                                                    stroke-width="2.5"/>
+
+                                            <line x1="70" y1="70" x2="112" y2="70"
+                                                stroke="#168bc9" stroke-width="2.5"/>
+
+                                            <line x1="112" y1="12" x2="112" y2="125"
+                                                stroke="#70bce8" stroke-width="3"/>
+
+                                            <path d="M112 70 H100 V58 H112"
+                                                fill="none"
+                                                stroke="#168bc9"
+                                                stroke-width="2"/>
+
+                                            <circle cx="70" cy="70" r="3" fill="#168bc9"/>
+                                            <circle cx="112" cy="70" r="3" fill="#168bc9"/>
+
+                                            <g fill="#247eaf" font-size="11"
+                                            font-weight="bold" font-family="Arial">
+                                                <text x="55" y="64">O</text>
+                                                <text x="117" y="66">A</text>
+                                                <text x="120" y="17">l</text>
+                                                <text x="85" y="86">R</text>
+                                                <text x="122" y="103">90°</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <strong>Вписанный четырёхугольник:</strong>
+                                    Все вершины четырёхугольника лежат на окружности.
+                                    Сумма противоположных углов равна \(180^\circ\).
+
+                                    <br>
+                                    \(\angle A + \angle C = 180^\circ\)
+
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 140" width="200" height="130"
+                                            xmlns="http://www.w3.org/2000/svg">
+
+                                            <circle cx="100" cy="70" r="55"
+                                                    fill="#eaf6ff"
+                                                    stroke="#70bce8"
+                                                    stroke-width="2.5"/>
+
+                                            <polygon points="100,15 153,70 100,125 47,70"
+                                                    fill="#bce5fb"
+                                                    fill-opacity="0.55"
+                                                    stroke="#168bc9"
+                                                    stroke-width="2.5"
+                                                    stroke-linejoin="round"/>
+
+                                            <g fill="#247eaf" font-size="11"
+                                            font-weight="bold" font-family="Arial">
+                                                <text x="94" y="11">A</text>
+                                                <text x="160" y="74">B</text>
+                                                <text x="94" y="139">C</text>
+                                                <text x="31" y="74">D</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <strong>Описанный четырёхугольник:</strong>
+                                    Окружность касается всех четырёх сторон
+                                    четырёхугольника. Суммы противоположных сторон равны.
+
+                                    <br>
+                                    \(AB + CD = BC + AD\)
+
+                                    <div class="theory-figure">
+                                        <svg viewBox="0 0 200 145" width="200" height="135"
+                                            xmlns="http://www.w3.org/2000/svg">
+
+                                            <polygon points="100,10 165,72 100,134 35,72"
+                                                    fill="#eaf6ff"
+                                                    stroke="#70bce8"
+                                                    stroke-width="2.5"
+                                                    stroke-linejoin="round"/>
+
+                                            <circle cx="100" cy="72" r="43"
+                                                    fill="#bce5fb"
+                                                    fill-opacity="0.45"
+                                                    stroke="#168bc9"
+                                                    stroke-width="2.5"/>
+
+                                            <circle cx="100" cy="72" r="3"
+                                                    fill="#168bc9"/>
+
+                                            <g fill="#247eaf" font-size="11"
+                                            font-weight="bold" font-family="Arial">
+                                                <text x="94" y="9">A</text>
+                                                <text x="170" y="76">B</text>
+                                                <text x="94" y="145">C</text>
+                                                <text x="20" y="76">D</text>
+                                                <text x="105" y="68">O</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <strong>Теорема синусов:</strong>
+                                    Отношение стороны треугольника к синусу
+                                    противолежащего угла равно диаметру
+                                    описанной окружности.
+
+                                    <br>
+                                    \(\frac{a}{\sin A} = 2R\)
+
+                                    
+                                    <div class="theory-figure">
+                                    <svg viewBox="0 0 200 145" width="200" height="135" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="100" cy="72" r="55" fill="#eaf6ff" stroke="#70bce8" stroke-width="2"/>
+
+                                        <path d="M100 17 L52.4 99.5 L147.6 99.5 Z"
+                                            fill="#bce5fb" fill-opacity="0.35"
+                                            stroke="#168bc9" stroke-width="2"/>
+
+                                        <circle cx="100" cy="72" r="2.5" fill="#168bc9"/>
+                                        <line x1="100" y1="72" x2="100" y2="17"
+                                            stroke="#168bc9" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+                                        <g fill="#247eaf" font-size="11" font-weight="bold">
+                                        <text x="100" y="11" text-anchor="middle">A</text>
+                                        <text x="43" y="109">B</text>
+                                        <text x="153" y="109">C</text>
+                                        <text x="108" y="69">O</text>
+                                        <text x="106" y="42">R</text>
+                                        </g>
+
+                                        <g fill="#247eaf" font-size="10">
+                                        <text x="65" y="62">c</text>
+                                        <text x="130" y="62">b</text>
+                                        <text x="100" y="113" text-anchor="middle">a</text>
+                                        </g>
+                                    </svg>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 6 -->
+                <div class="card card--white">
+                    <div class="card-header">
+                        <h2>6. Синус, косинус, тангенс острого угла</h2>
+                        <div class="icon-circle icon-circle--yellow">📐</div>
+                    </div>
+                    
+                    <div class="theory-content-wrapper">
+                        <div class="theory-text">
+                            <ul class="theory-list">
+                                <li><strong>Синус (\(\sin\)):</strong> отношение <strong>противолежащего</strong> катета к гипотенузе. <br> \(\sin A = \frac{a}{c}\)</li>
+                                <li><strong>Косинус (\(\cos\)):</strong> отношение <strong>прилежащего</strong> катета к гипотенузе. <br> \(\cos A = \frac{b}{c}\)</li>
+                                <li><strong>Тангенс (\(\text{tg}\)):</strong> отношение <strong>противолежащего</strong> катета к <strong>прилежащему</strong>. <br> \(\text{tg} A = \frac{a}{b}\)</li>
+                                <li><strong>Основное тригонометрическое тождество:</strong> <br> \(\sin^2 A + \cos^2 A = 1\)</li>
+                            </ul>
+                            <div class="tip-box">
+                                <span class="tip-icon">💡</span>
+                                <p><strong>Как запомнить навсегда:</strong> <br>
+                                <strong>Синус (Sin)</strong> — от английского <strong>See</strong> (смотреть). «Смотрим» на угол и берем <strong>противолежащий</strong> катет.<br>
+                                <strong>Косинус (Cos)</strong> — от слова <strong>Касается</strong>. Он «касается» угла, поэтому берем <strong>прилежащий</strong> катет.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="theory-image-box">
+                            <svg viewBox="0 0 240 175" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="45,135 45,25 190,135" fill="#fffbeb" stroke="#fde49a" stroke-width="3" stroke-linejoin="round"/>
+                                <polyline points="45,115 65,115 65,135" stroke="#d6a83e" stroke-width="2.5" fill="none"/>
+                                <path d="M160 135 Q172 118 178 123" stroke="#5c8ae6" stroke-width="2.5" fill="none"/>
+                                <g fill="#334155" font-size="15" font-weight="bold" font-family="Arial">
+                                    <text x="27" y="151">C</text>
+                                    <text x="27" y="21">B</text>
+                                    <text x="197" y="151">A</text>
+                                </g>
+                                <text x="25" y="83" fill="#2563eb" font-size="16" font-weight="bold" font-family="Arial">a</text>
+                                <text x="112" y="155" fill="#16a34a" font-size="16" font-weight="bold" font-family="Arial">b</text>
+                                <text x="125" y="65" fill="#d97706" font-size="16" font-weight="bold" font-family="Arial">c</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРАКТИКА ================= -->
+            <section class="practice-section">
+                <h2 class="section-title">✍️ Практика (121 задача)</h2>
+                <p class="practice-desc">Реши задачу, введи ответ в поле и нажми «Проверить».</p>
+
+                <div class="tasks-grid">
+
+                    <!-- Задача 1 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>В треугольнике \(ABC\) угол \(A\) равен \(41^\circ\), стороны \(AC\) и \(BC\) равны. Найдите угол \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task1.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="98">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 2 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>В треугольнике \(ABC\) угол \(B\) равен \(43^\circ\), стороны \(AC\) и \(BC\) равны. Найдите угол \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task1.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="94">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 3 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(114^\circ\), стороны \(AC\) и \(BC\) равны. Найдите угол \(B\). Ответ дайте в градусах.</p>
+                            <img src="img/task1.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="33">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 4 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(116^\circ\), стороны \(AC\) и \(BC\) равны. Найдите угол \(B\). Ответ дайте в градусах.</p>
+                            <img src="img/task1.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="32">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 5 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>В треугольнике \(ABC\) стороны \(AC\) и \(BC\) равны. Внешний угол при вершине \(B\) равен \(103^\circ\). Найдите угол \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task2.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="26">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 6 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>В треугольнике \(ABC\) стороны \(AC\) и \(BC\) равны. Внешний угол при вершине \(B\) равен \(109^\circ\). Найдите угол \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task2.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="38">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 7 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>В треугольнике \(ABC\) стороны \(AC\) и \(BC\) равны, угол \(C\) равен \(168^\circ\), угол \(CBD\) внешний. Найдите величину угла \(CBD\). Ответ дайте в градусах.</p>
+                            <img src="img/task2.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="174">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 8 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>В треугольнике \(ABC\) стороны \(AC\) и \(BC\) равны, угол \(C\) равен \(148^\circ\), угол \(CBD\) внешний. Найдите величину угла \(CBD\). Ответ дайте в градусах.</p>
+                            <img src="img/task2.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="164">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 9 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>В треугольнике \(ABC\) \(CD\) – медиана, угол \(C\) равен \(90^\circ\), угол \(B\) равен \(17^\circ\). Найдите угол \(ACD\). Ответ дайте в градусах.</p>
+                            <img src="img/task3.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="73">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 10 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>В треугольнике \(ABC\) \(CD\) – медиана, угол \(C = 90^\circ\), угол \(B = 31^\circ\). Найдите угол \(ACD\). Ответ дайте в градусах.</p>
+                            <img src="img/task3.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="59">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 11 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(17^\circ\). Найдите величину угла между биссектрисой \(CD\) и медианой \(CM\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task4.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="28">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 12 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(20^\circ\). Найдите величину угла между биссектрисой \(CD\) и медианой \(CM\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task4.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 13 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>Угол между биссектрисой и медианой прямоугольного треугольника, проведёнными из вершины прямого угла, равен \(19^\circ\). Найдите меньший угол прямоугольного треугольника. Ответ дайте в градусах.</p>
+                            <img src="img/task5.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="26">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 14 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Угол между биссектрисой и медианой прямоугольного треугольника, проведёнными из вершины прямого угла, равен \(18^\circ\). Найдите меньший угол прямоугольного треугольника. Ответ дайте в градусах.</p>
+                            <img src="img/task5.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="27">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 15 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(19^\circ\). Найдите величину угла между высотой \(CH\) и биссектрисой \(CD\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task6.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="26">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 16 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(17^\circ\). Найдите величину угла между высотой \(CH\) и биссектрисой \(CD\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task6.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="28">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 17 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>В прямоугольном треугольнике угол между высотой и биссектрисой, проведёнными из вершины прямого угла, равен \(34^\circ\). Найдите меньший угол прямоугольного треугольника. Ответ дайте в градусах.</p>
+                            <img src="img/task7.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="11">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 18 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>В прямоугольном треугольнике угол между высотой и биссектрисой, проведёнными из вершины прямого угла, равен \(23^\circ\). Найдите меньший угол прямоугольного треугольника. Ответ дайте в градусах.</p>
+                            <img src="img/task7.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="22">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 19 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>Острые углы прямоугольного треугольника равны \(53^\circ\) и \(37^\circ\). Найдите угол между высотой и медианой, проведёнными из вершины прямого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task8.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="16">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 20 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>Острые углы прямоугольного треугольника равны \(87^\circ\) и \(3^\circ\). Найдите угол между высотой и медианой, проведёнными из вершины прямого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task8.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="84">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 21 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(61^\circ\). Найдите величину угла между высотой \(CH\) и медианой \(CM\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task9.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="32">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 22 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>Острый угол \(B\) прямоугольного треугольника \(ABC\) равен \(67^\circ\). Найдите величину угла между высотой \(CH\) и медианой \(CM\), проведёнными из вершины прямого угла \(C\). Ответ дайте в градусах.</p>
+                            <img src="img/task9.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="44">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 23 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(56^\circ\), \(AD\) – биссектриса, угол \(BAD\) равен \(24^\circ\). Найдите величину угла \(ADB\). Ответ дайте в градусах.</p>
+                            <img src="img/task10.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="80">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 24 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(62^\circ\), \(AD\) – биссектриса, угол \(BAD\) равен \(19^\circ\). Найдите величину угла \(ADB\). Ответ дайте в градусах.</p>
+                            <img src="img/task10.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="81">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 25 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 25</h3>
+                            <p>В треугольнике \(ABC\) \(AD\) – биссектриса, угол \(C\) равен \(68^\circ\), угол \(CAD\) равен \(44^\circ\). Найдите величину угла \(ABD\). Ответ дайте в градусах.</p>
+                            <img src="img/task10.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 26 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 26</h3>
+                            <p>В треугольнике \(ABC\) \(AD\) – биссектриса, угол \(C\) равен \(105^\circ\), угол \(CAD\) равен \(7^\circ\). Найдите угол \(B\). Ответ дайте в градусах.</p>
+                            <img src="img/task10.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="61">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 27 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 27</h3>
+                            <p>В треугольнике \(ABC\) угол \(A\) равен \(70^\circ\), углы \(B\) и \(C\) — острые, высоты \(BD\) и \(CE\) пересекаются в точке \(O\). Найдите угол \(DOE\). Ответ дайте в градусах.</p>
+                            <img src="img/task11.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="110">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 28 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 28</h3>
+                            <p>В остроугольном треугольнике \(ABC\) угол \(A\) равен \(62^\circ\), \(BD\) и \(CE\) — высоты, пересекающиеся в точке \(O\). Найдите угол \(DOE\). Ответ дайте в градусах.</p>
+                            <img src="img/task11.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="118">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 29 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 29</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(66^\circ\), биссектрисы \(AD\) и \(BE\) пересекаются в точке \(O\). Найдите угол \(AOB\). Ответ дайте в градусах.</p>
+                            <img src="img/task12.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="123">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 30 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 30</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(62^\circ\), биссектрисы \(AD\) и \(BE\) пересекаются в точке \(O\). Найдите угол \(AOB\). Ответ дайте в градусах.</p>
+                            <img src="img/task12.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="121">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 31 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 31</h3>
+                            <p>Один угол параллелограмма больше другого на \(28^\circ\). Найдите меньший угол. Ответ дайте в градусах.</p>
+                            <img src="img/task13.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="76">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 32 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 32</h3>
+                            <p>Один угол параллелограмма больше другого на \(40^\circ\). Найдите больший угол. Ответ дайте в градусах.</p>
+                            <img src="img/task13.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="110">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 33 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 33</h3>
+                            <p>В ромбе \(ABCD\) угол \(BCD\) равен \(48^\circ\). Найдите угол \(DBA\). Ответ дайте в градусах.</p>
+                            <img src="img/task14.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="66">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 34 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 34</h3>
+                            <p>В ромбе \(ABCD\) угол \(CDA\) равен \(78^\circ\). Найдите угол \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task15.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="51">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 35 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 35</h3>
+                            <p>Стороны параллелограмма равны 9 и 15. Высота, опущенная на меньшую из этих сторон, равна 10. Найдите высоту, опущенную на большую сторону параллелограмма.</p>
+                            <img src="img/task16.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="6">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 36 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 36</h3>
+                            <p>Стороны параллелограмма равны 12 и 15. Высота, опущенная на меньшую из этих сторон, равна 10. Найдите высоту, опущенную на большую сторону параллелограмма.</p>
+                            <img src="img/task16.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 37 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 37</h3>
+                            <p>Площадь параллелограмма \(ABCD\) равна 92. Точка \(F\) — середина стороны \(CD\). Найдите площадь трапеции \(ABCF\).</p>
+                            <img src="img/task17.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="69">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 38 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 38</h3>
+                            <p>Площадь параллелограмма \(ABCD\) равна 132. Точка \(G\) — середина стороны \(BC\). Найдите площадь трапеции \(ABGD\).</p>
+                            <img src="img/task18.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="99">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 39 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 39</h3>
+                            <p>Площадь параллелограмма \(ABCD\) равна 142. Точка \(H\) — середина стороны \(AB\). Найдите площадь трапеции \(AHCD\).</p>
+                            <img src="img/task19.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="106,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 40 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 40</h3>
+                            <p>Площадь параллелограмма \(ABCD\) равна 146. Точка \(E\) — середина стороны \(AD\). Найдите площадь трапеции \(BCDE\).</p>
+                            <img src="img/task20.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="109,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 41 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 41</h3>
+                            <p>Две стороны треугольника равны 20 и 35. Высота, опущенная на большую из этих сторон, равна 12. Найдите высоту, опущенную на меньшую из этих сторон треугольника.</p>
+                            <img src="img/task21.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="21">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 42 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 42</h3>
+                            <p>Две стороны треугольника равны 12 и 45. Высота, опущенная на большую из этих сторон, равна 10. Найдите высоту, опущенную на меньшую из этих сторон треугольника.</p>
+                            <img src="img/task21.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="37,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 43 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 43</h3>
+                            <p>Угол при вершине, противолежащей основанию равнобедренного треугольника, равен \(30^\circ\). Боковая сторона треугольника равна 13. Найдите площадь этого треугольника.</p>
+                            <img src="img/task22.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="42,25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 44 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 44</h3>
+                            <p>Угол при вершине, противолежащей основанию равнобедренного треугольника, равен \(30^\circ\). Боковая сторона треугольника равна 14. Найдите площадь этого треугольника.</p>
+                            <img src="img/task22.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="49">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 45 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 45</h3>
+                            <p>В равностороннем треугольнике \(ABC\) высота \(CH\) равна \(47\sqrt{3}\). Найдите \(AB\).</p>
+                            <img src="img/task23.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="94">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 46 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 46</h3>
+                            <p>В равностороннем треугольнике \(ABC\) высота \(CH\) равна \(24\sqrt{3}\). Найдите \(AB\).</p>
+                            <img src="img/task23.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="48">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 47 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 47</h3>
+                            <p>Площадь треугольника \(ABC\) равна 52, \(DE\) — средняя линия, параллельная стороне \(AB\). Найдите площадь треугольника \(CDE\).</p>
+                            <img src="img/task24.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="13">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 48 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 48</h3>
+                            <p>Площадь треугольника \(ABC\) равна 72, \(DE\) — средняя линия, параллельная стороне \(AB\). Найдите площадь треугольника \(CDE\).</p>
+                            <img src="img/task24.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="18">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 49 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 49</h3>
+                            <p>Площадь треугольника \(ABC\) равна 32, \(DE\) — средняя линия, параллельная стороне \(AB\). Найдите площадь трапеции \(ABED\).</p>
+                            <img src="img/task24.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 50 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 50</h3>
+                            <p>Площадь треугольника \(ABC\) равна 40, \(DE\) — средняя линия, параллельная стороне \(AB\). Найдите площадь трапеции \(ABED\).</p>
+                            <img src="img/task24.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="30">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 51 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 51</h3>
+                            <p>В треугольнике \(ABC\) \(EF\) — средняя линия. Площадь треугольника \(BEF\) равна 6. Найдите площадь треугольника \(ABC\).</p>
+                            <img src="img/task25.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 52 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 52</h3>
+                            <p>В треугольнике \(ABC\) \(DF\) — средняя линия. Площадь треугольника \(ADF\) равна 27. Найдите площадь треугольника \(ABC\).</p>
+                            <img src="img/task26.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="108">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 53 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 53</h3>
+                            <p>Основания трапеции равны 2 и 8. Найдите больший из отрезков, на которые делит среднюю линию этой трапеции одна из её диагоналей.</p>
+                            <img src="img/task27.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="4">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 54 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 54</h3>
+                            <p>Основания трапеции равны 1 и 17. Найдите больший из отрезков, на которые делит среднюю линию этой трапеции одна из её диагоналей.</p>
+                            <img src="img/task27.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="8,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 55 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 55</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC = 20\), \(AB = 12\). Найдите \(\cos A\).</p>
+                            <img src="img/task28.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 56 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 56</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC = 12\), \(AB = 6\). Найдите \(\cos A\).</p>
+                            <img src="img/task28.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 57 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 57</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(BC = 10\), \(\cos B = \frac{2}{5}\). Найдите \(AB\).</p>
+                            <img src="img/task29.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 58 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 58</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(BC = 18\), \(\cos B = \frac{3}{5}\). Найдите \(AB\).</p>
+                            <img src="img/task29.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="30">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 59 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 59</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AB = 10\), \(AC = \sqrt{51}\). Найдите \(\sin A\).</p>
+                            <img src="img/task30.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,7">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 60 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 60</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AB = 40\), \(AC = 4\sqrt{51}\). Найдите \(\sin A\).</p>
+                            <img src="img/task30.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,7">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 61 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 61</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AB = 5\), \(BC = 4\). Найдите \(\cos A\).</p>
+                            <img src="img/task31.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,6">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 62 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 62</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AB = 6\), \(BC = 3\sqrt{3}\). Найдите \(\cos A\).</p>
+                            <img src="img/task31.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 63 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 63</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(BC = 8\sqrt{6}\), \(AB = 20\). Найдите \(\sin B\).</p>
+                            <img src="img/task32.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 64 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 64</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(BC = 12\sqrt{3}\), \(AB = 24\). Найдите \(\sin B\).</p>
+                            <img src="img/task32.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 65 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 65</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(\sin A = 0,6\). Найдите \(\sin B\).</p>
+                            <img src="img/task33.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 66 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 66</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AC = 24\), \(\text{tg} A = \frac{15}{8}\). Найдите \(AB\).</p>
+                            <img src="img/task34.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="51">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 67 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 67</h3>
+                            <p>В треугольнике \(ABC\) угол \(C\) равен \(90^\circ\), \(AC = 6\), \(\text{tg} A = \frac{\sqrt{5}}{2}\). Найдите \(AB\).</p>
+                            <img src="img/task34.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 68 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 68</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), высота \(CH\) равна 9,6, \(\cos A = \frac{7}{25}\). Найдите \(AC\).</p>
+                            <img src="img/task35.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="10">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 69 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 69</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), высота \(CH\) равна 19,2, \(\cos A = 0,28\). Найдите \(AC\).</p>
+                            <img src="img/task35.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="20">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 70 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 70</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), высота \(CH\) равна \(2\sqrt{6}\), \(\cos A = 0,2\). Найдите \(AC\).</p>
+                            <img src="img/task35.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 71 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 71</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), \(AB = 10\), высота \(AH\) равна 3. Найдите синус угла \(BAC\).</p>
+                            <img src="img/task36.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 72 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 72</h3>
+                            <p>В треугольнике \(ABC\) \(AB = BC\), \(AC = 15\), высота \(CH\) равна 6. Найдите синус угла \(ACB\).</p>
+                            <img src="img/task37.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,4">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 73 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 73</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), \(AB = 10\), \(AH\) — высота, \(BH = 5\). Найдите косинус угла \(BAC\).</p>
+                            <img src="img/task38.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 74 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 74</h3>
+                            <p>В треугольнике \(ABC\) \(AC = BC\), \(AB = 30\), высота \(AH\) равна 18. Найдите синус угла \(BAC\).</p>
+                            <img src="img/task38.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,6">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 75 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 75</h3>
+                            <p>В треугольнике \(ABC\) \(AB = BC\), \(AC = 24\), высота \(CH\) равна 18. Найдите синус угла \(ACB\).</p>
+                            <img src="img/task39.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="0,75">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 76 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 76</h3>
+                            <p>Найдите величину центрального угла, если он на \(40^\circ\) больше острого вписанного угла, опирающегося на ту же дугу. Ответ дайте в градусах.</p>
+                            <img src="img/task40.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="80">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 77 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 77</h3>
+                            <p>Найдите величину центрального угла, если он на \(39^\circ\) больше острого вписанного угла, опирающегося на ту же дугу. Ответ дайте в градусах.</p>
+                            <img src="img/task40.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="78">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 78 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 78</h3>
+                            <p>Центральный угол на \(36^\circ\) больше острого вписанного угла, опирающегося на ту же дугу окружности. Найдите величину вписанного угла. Ответ дайте в градусах.</p>
+                            <img src="img/task40.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="36">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 79 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 79</h3>
+                            <p>Центральный угол на \(41^\circ\) больше острого вписанного угла, опирающегося на ту же дугу окружности. Найдите величину вписанного угла. Ответ дайте в градусах.</p>
+                            <img src="img/task40.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="41">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 80 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 80</h3>
+                            <p>Отрезки \(AC\) и \(BD\) — диаметры окружности с центром \(O\). Угол \(AOD\) равен \(130^\circ\). Найдите величину вписанного угла \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task41.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="25">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 81 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 81</h3>
+                            <p>Отрезки \(AC\) и \(BD\) — диаметры окружности с центром \(O\). Угол \(AOD\) равен \(72^\circ\). Найдите величину вписанного угла \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task42.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="54">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 82 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 82</h3>
+                            <p>Отрезки \(AC\) и \(BD\) — диаметры окружности с центром \(O\). Угол \(ACB\) равен \(48^\circ\). Найдите величину угла \(AOD\). Ответ дайте в градусах.</p>
+                            <img src="img/task42.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="84">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 83 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 83</h3>
+                            <p>Отрезки \(AC\) и \(BD\) — диаметры окружности с центром \(O\). Угол \(ACB\) равен \(39^\circ\). Найдите величину угла \(AOD\). Ответ дайте в градусах.</p>
+                            <img src="img/task41.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="102">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 84 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 84</h3>
+                            <p>Найдите вписанный угол, опирающийся на дугу, равную \(\frac{13}{36}\) окружности. Ответ дайте в градусах.</p>
+                            <img src="img/task43.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="65">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 85 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 85</h3>
+                            <p>Найдите вписанный угол, опирающийся на дугу, равную \(\frac{5}{12}\) окружности. Ответ дайте в градусах.</p>
+                            <img src="img/task43.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="75">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 86 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 86</h3>
+                            <p>На окружности отмечены точки \(A\), \(B\) и \(C\). Дуга окружности \(AC\), не содержащая точку \(B\), составляет \(105^\circ\). Дуга окружности \(BC\), не содержащая точку \(A\), составляет \(91^\circ\). Найдите вписанный угол \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task44.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="82">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 87 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 87</h3>
+                            <p>На окружности отмечены точки \(A\), \(B\) и \(C\). Дуга окружности \(AC\), не содержащая точку \(B\), составляет \(110^\circ\). Дуга окружности \(BC\), не содержащая точку \(A\), составляет \(88^\circ\). Найдите вписанный угол \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task44.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="81">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 88 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 88</h3>
+                            <p>Угол \(ACO\) равен \(34^\circ\). Его сторона \(CA\) касается окружности с центром в точке \(O\). Отрезок \(CO\) пересекает окружность в точке \(B\) (см. рис.). Найдите градусную меру дуги \(AB\) окружности, заключённой внутри этого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task45.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="56">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 89 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 89</h3>
+                            <p>Угол \(ACO\) равен \(58^\circ\). Его сторона \(CA\) касается окружности с центром в точке \(O\). Отрезок \(CO\) пересекает окружность в точке \(B\) (см. рис.). Найдите градусную меру дуги \(AB\) окружности, заключённой внутри этого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task46.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="32">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 90 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 90</h3>
+                            <p>Найдите величину угла \(ACO\), если его сторона \(CA\) касается окружности с центром \(O\), отрезок \(CO\) пересекает окружность в точке \(B\) (см. рис.), а дуга \(AB\) окружности, заключённая внутри этого угла, равна \(54^\circ\). Ответ дайте в градусах.</p>
+                            <img src="img/task45.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="36">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 91 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 91</h3>
+                            <p>Найдите величину угла \(ACO\), если его сторона \(CA\) касается окружности с центром \(O\), отрезок \(CO\) пересекает окружность в точке \(B\) (см. рис.), а дуга \(AB\) окружности, заключённая внутри этого угла, равна \(22^\circ\). Ответ дайте в градусах.</p>
+                            <img src="img/task46.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="68">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 92 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 92</h3>
+                            <p>Угол \(ACO\) равен \(46^\circ\). Его сторона \(CA\) касается окружности с центром в точке \(O\). Сторона \(CO\) пересекает окружность в точках \(B\) и \(D\) (см. рис.). Найдите градусную меру дуги \(AD\) окружности, заключённой внутри этого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task47.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="136">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 93 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 93</h3>
+                            <p>Угол \(ACO\) равен \(39^\circ\). Его сторона \(CA\) касается окружности с центром в точке \(O\). Сторона \(CO\) пересекает окружность в точках \(B\) и \(D\) (см. рис.). Найдите градусную меру дуги \(AD\) окружности, заключённой внутри этого угла. Ответ дайте в градусах.</p>
+                            <img src="img/task47.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="129">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 94 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 94</h3>
+                            <p>Через концы \(A\) и \(B\) дуги окружности с центром \(O\) проведены касательные \(AC\) и \(BC\). Меньшая дуга \(AB\) равна \(40^\circ\). Найдите угол \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task48.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="140">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 95 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 95</h3>
+                            <p>Через концы \(A\) и \(B\) дуги окружности с центром \(O\) проведены касательные \(AC\) и \(BC\). Меньшая дуга \(AB\) равна \(64^\circ\). Найдите угол \(ACB\). Ответ дайте в градусах.</p>
+                            <img src="img/task48.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="116">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 96 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 96</h3>
+                            <p>Угол \(ACB\) равен \(62^\circ\). Градусная мера дуги \(AB\) окружности, не содержащей точек \(D\) и \(E\), равна \(142^\circ\). Найдите угол \(DAE\). Ответ дайте в градусах.</p>
+                            <img src="img/task49.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 97 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 97</h3>
+                            <p>Угол \(ACB\) равен \(55^\circ\). Градусная мера дуги \(AB\) окружности, не содержащей точек \(D\) и \(E\), равна \(136^\circ\). Найдите угол \(DAE\). Ответ дайте в градусах.</p>
+                            <img src="img/task49.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="13">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 98 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 98</h3>
+                            <p>В четырёхугольник \(ABCD\) вписана окружность, \(AB = 20\), \(BC = 17\) и \(AD = 5\). Найдите длину четвёртой стороны четырёхугольника.</p>
+                            <img src="img/task50.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 99 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 99</h3>
+                            <p>В четырёхугольник \(ABCD\) вписана окружность, \(AB = 19\), \(BC = 7\) и \(CD = 10\). Найдите длину четвёртой стороны четырёхугольника.</p>
+                            <img src="img/task50.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="22">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 100 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 100</h3>
+                            <p>В четырёхугольник \(ABCD\) вписана окружность, \(AB = 24\), \(CD = 19\). Найдите периметр четырёхугольника \(ABCD\).</p>
+                            <img src="img/task51.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="86">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 101 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 101</h3>
+                            <p>В четырёхугольник \(ABCD\) вписана окружность, \(AB = 43\), \(CD = 22\). Найдите периметр четырёхугольника \(ABCD\).</p>
+                            <img src="img/task51.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="130">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 102 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 102</h3>
+                            <p>В четырёхугольник \(ABCD\), периметр которого равен 42, вписана окружность, \(AB = 8\). Найдите длину стороны \(CD\).</p>
+                            <img src="img/task52.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="13">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 103 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 103</h3>
+                            <p>В четырёхугольник \(ABCD\), периметр которого равен 40, вписана окружность, \(AB = 11\). Найдите длину стороны \(CD\).</p>
+                            <img src="img/task52.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="9">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 104 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 104</h3>
+                            <p>Периметр прямоугольной трапеции, описанной около окружности, равен 32, её большая боковая сторона равна 9. Найдите радиус окружности.</p>
+                            <img src="img/task53.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="3,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 105 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 105</h3>
+                            <p>Периметр прямоугольной трапеции, описанной около окружности, равен 28, её большая боковая сторона равна 11. Найдите радиус окружности.</p>
+                            <img src="img/task53.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="1,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 106 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 106</h3>
+                            <p>Боковые стороны трапеции, описанной около окружности, равны 9 и 12. Найдите среднюю линию трапеции.</p>
+                            <img src="img/task54.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="10,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 107 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 107</h3>
+                            <p>Боковые стороны трапеции, описанной около окружности, равны 10 и 19. Найдите среднюю линию трапеции.</p>
+                            <img src="img/task54.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="14,5">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 108 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 108</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABD\) равен \(68^\circ\), угол \(CAD\) равен \(44^\circ\). Найдите угол \(ABC\). Ответ дайте в градусах.</p>
+                            <img src="img/task55.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="112">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 109 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 109</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABD\) равен \(73^\circ\), угол \(CAD\) равен \(38^\circ\). Найдите угол \(ABC\). Ответ дайте в градусах.</p>
+                            <img src="img/task55.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="111">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 110 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 110</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABC\) равен \(61^\circ\), угол \(CAD\) равен \(37^\circ\). Найдите угол \(ABD\). Ответ дайте в градусах.</p>
+                            <img src="img/task55.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 111 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 111</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABC\) равен \(113^\circ\), угол \(CAD\) равен \(38^\circ\). Найдите угол \(ABD\). Ответ дайте в градусах.</p>
+                            <img src="img/task55.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="75">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 112 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 112</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABC\) равен \(98^\circ\), угол \(ABD\) равен \(64^\circ\). Найдите угол \(CAD\). Ответ дайте в градусах.</p>
+                            <img src="img/task56.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="34">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 113 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 113</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(ABC\) равен \(96^\circ\), угол \(ABD\) равен \(48^\circ\). Найдите угол \(CAD\). Ответ дайте в градусах.</p>
+                            <img src="img/task56.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="48">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 114 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 114</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(BAD\) равен \(142^\circ\). Найдите угол \(BCD\). Ответ дайте в градусах.</p>
+                            <img src="img/task57.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="38">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 115 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 115</h3>
+                            <p>Четырёхугольник \(ABCD\) вписан в окружность. Угол \(BCD\) равен \(41^\circ\). Найдите угол \(BAD\). Ответ дайте в градусах.</p>
+                            <img src="img/task57.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="139">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 116 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 116</h3>
+                            <p>Два угла вписанного в окружность четырёхугольника равны \(63^\circ\) и \(76^\circ\). Найдите меньший из оставшихся углов. Ответ дайте в градусах.</p>
+                            <img src="img/task58.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="104">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 117 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 117</h3>
+                            <p>Два угла вписанного в окружность четырёхугольника равны \(61^\circ\) и \(75^\circ\). Найдите меньший из оставшихся углов. Ответ дайте в градусах.</p>
+                            <img src="img/task58.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="105">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 118 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 118</h3>
+                            <p>Два угла вписанного в окружность четырёхугольника равны \(81^\circ\) и \(83^\circ\). Найдите больший из оставшихся углов. Ответ дайте в градусах.</p>
+                            <img src="img/task58.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="99">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 119 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 119</h3>
+                            <p>Два угла вписанного в окружность четырёхугольника равны \(77^\circ\) и \(111^\circ\). Найдите больший из оставшихся углов. Ответ дайте в градусах.</p>
+                            <img src="img/task58.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="103">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 120 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 120</h3>
+                            <p>В треугольнике \(ABC\) сторона \(AB\) равна \(2\sqrt{3}\), угол \(C\) равен \(120^\circ\). Найдите радиус описанной около этого треугольника окружности.</p>
+                            <img src="img/task59.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 121 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 121</h3>
+                            <p>В треугольнике \(ABC\) сторона \(AB\) равна \(8\sqrt{3}\), угол \(C\) равен \(120^\circ\). Найдите радиус описанной около этого треугольника окружности.</p>
+                            <img src="img/task59.png" alt="Чертеж" class="task-image" onerror="this.style.display='none';">
+                            <div class="interactive-check" data-answer="8">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task1';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none";
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.match(/\d+/)[0];
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=recordProgress'
+                + '&email=' + encodeURIComponent(email)
+                + '&taskId=' + encodeURIComponent(fullTaskId)
+                + '&callback=' + cb;
+
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=getStudentStats'
+                + '&email=' + encodeURIComponent(email)
+                + '&callback=' + cb;
+
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || [])
+                    .map(String)
+                    .filter(id => id.startsWith(prefix))
+                    .map(id => id.slice(prefix.length));
+
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var id = card.querySelector('.task-number').textContent.match(/\d+/)[0];
+                    if (serverIds.includes(String(id))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        
+                        if (msg) {
+                            msg.textContent = "Верно! 🎉";
+                            msg.className = "result-message correct";
+                        }
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) {
+                            checkBtn.style.display = "none";
+                        }
+                    }
+                });
+
+                updateProgressBar();
+            };
+
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            
+            if (!name) return; 
+
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+
+            if (!menuBtn || !menu) return;
+
+            menuBtn.addEventListener('click', () => {
+                menu.classList.add('open');
+                document.body.classList.add('menu-open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                menu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    menu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
+
+    <script>
+window.addEventListener('load', () => {
+    setTimeout(async () => {
+        const TASK_KEY = 'task1';
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) { data = JSON.parse(text); }
+            if (!data || !data.success) return;
+
+            const allowedTasks = data.access || [];
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            document.querySelectorAll('.sidebar-nav a, .mfm-item').forEach(link => {
+                const href = link.getAttribute('href') || '';
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+        } catch (error) {
+            console.error("Ошибка получения доступов:", error);
+        }
+    }, 400);
+});
+</script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+                        
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">
+                                ✈️ Telegram: @sonchesmath
+                            </a>
+                        </div>
+
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+    
+    
+
+</body>
+</html>

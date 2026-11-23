@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        } else if (localStorage.getItem('sonches_user_role') === 'teacher') {
+            window.location.href = 'homework-teacher.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Домашние задания</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hw-card { background: #fff; border: 2px solid var(--color-blue-light); border-radius: var(--radius-small); margin-bottom: 15px; overflow: hidden; transition: 0.2s; }
+        .hw-card.overdue { border-left: 6px solid #e74c3c; } .hw-card.soon { border-left: 6px solid #f1c40f; } .hw-card.fresh { border-left: 6px solid #2ecc71; }
+        .hw-card:hover { border-color: var(--color-blue); box-shadow: 0 6px 20px rgba(110, 168, 254, 0.15); }
+        .hw-header { padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .hw-title { font-family: var(--font-heading); font-size: 20px; color: var(--color-heading); margin-bottom: 8px; }
+        .hw-meta { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13px; color: #888; }
+        .hw-deadline { font-weight: 700; color: var(--color-pink); }
+        
+        .hw-actions-wrap { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .hw-score-percent {
+            font-family: var(--font-heading); font-size: 15px; font-weight: 800;
+            color: #2ecc71; background: #d4f5dd; padding: 6px 12px;
+            border-radius: 12px; white-space: nowrap;
+        }
+        .hw-open-btn {
+            background: var(--color-blue); color: #fff; border: none;
+            padding: 10px 20px; border-radius: 12px; cursor: pointer;
+            font-family: var(--font-heading); font-weight: 700; font-size: 14px;
+            transition: 0.2s; white-space: nowrap; flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(110, 168, 254, 0.3);
+        }
+        .hw-open-btn:hover { background: #4a8cdb; transform: translateY(-2px); }
+
+        /* ===== Модалка ДЗ для ученика ===== */
+        .hw-modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(30, 40, 60, 0.45);
+            z-index: 9999;
+            justify-content: center; align-items: flex-start;
+            padding: 30px 15px;
+            overflow-y: auto;
+            backdrop-filter: blur(4px);
+            -webkit-overflow-scrolling: touch;
+        }
+        .hw-modal-overlay.open { display: flex; }
+        .hw-modal {
+            background: #fff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 760px;
+            padding: 0;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: modalSlideIn 0.3s ease-out;
+            overflow: hidden;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .hw-modal__header {
+            padding: 24px 28px;
+            background: linear-gradient(135deg, #f4f8ff 0%, #e6f0ff 100%);
+            border-bottom: 2px solid var(--color-blue-light);
+            position: relative;
+        }
+        .hw-modal__close {
+            position: absolute; top: 16px; right: 16px;
+            background: #fff; border: none; width: 38px; height: 38px;
+            border-radius: 12px; font-size: 18px; color: #7a8ba3;
+            cursor: pointer; transition: 0.15s;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .hw-modal__close:hover { background: var(--color-pink-light); color: var(--color-pink); }
+        .hw-modal__title {
+            font-family: var(--font-heading); font-size: 24px;
+            color: var(--color-heading); margin-bottom: 10px;
+            padding-right: 50px; line-height: 1.2;
+        }
+        .hw-modal__meta { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13px; color: #777; }
+        .hw-modal__body { padding: 24px 28px 28px; }
+
+        /* ===== Карточка результата ===== */
+        .result-card {
+            margin-top: 25px; padding: 25px; border-radius: 20px;
+            background: linear-gradient(135deg, #f9fbfd 0%, #eef4ff 100%);
+            border: 2px solid #dceaff;
+            display: flex; align-items: center; gap: 25px;
+            animation: resultFadeIn 0.5s ease-out;
+            box-shadow: 0 8px 25px rgba(110, 168, 254, 0.12);
+        }
+        @keyframes resultFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .result-card__ring { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
+        .result-card__ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .result-card__ring-bg { fill: none; stroke: #e6f0ff; stroke-width: 10; }
+        .result-card__ring-fill {
+            fill: none; stroke: var(--color-blue); stroke-width: 10;
+            stroke-linecap: round; stroke-dasharray: 283; stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .result-card__percent {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading); font-weight: 700; font-size: 26px; color: var(--color-heading);
+        }
+        .result-card__info { flex: 1; min-width: 0; }
+        .result-card__title { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--color-heading); margin-bottom: 6px; }
+        .result-card__score { font-size: 16px; font-weight: 700; color: var(--color-text); margin-bottom: 10px; }
+        .result-card__score b { color: var(--color-heading); font-size: 18px; }
+        .result-card__message {
+            font-size: 14px; color: #777; line-height: 1.5;
+            padding: 10px 14px; background: #fff; border-radius: 10px;
+            border-left: 4px solid var(--color-blue); display: inline-block;
+        }
+        .result-card--great { background: linear-gradient(135deg, #f4fdf7 0%, #e6f9ec 100%); border-color: #b9ead0; }
+        .result-card--great .result-card__ring-fill { stroke: #2ecc71; }
+        .result-card--great .result-card__percent,
+        .result-card--great .result-card__title,
+        .result-card--great .result-card__score b { color: #1e8e3e; }
+        .result-card--great .result-card__message { border-left-color: #2ecc71; }
+        .result-card--ok { background: linear-gradient(135deg, #fffdf5 0%, #fff8e1 100%); border-color: #fde49a; }
+        .result-card--ok .result-card__ring-fill { stroke: #f1c40f; }
+        .result-card--ok .result-card__percent,
+        .result-card--ok .result-card__title,
+        .result-card--ok .result-card__score b { color: #b8860b; }
+        .result-card--ok .result-card__message { border-left-color: #f1c40f; }
+        .result-card--bad { background: linear-gradient(135deg, #fdf5f5 0%, #fdecea 100%); border-color: #f5c6c0; }
+        .result-card--bad .result-card__ring-fill { stroke: #e74c3c; }
+        .result-card--bad .result-card__percent,
+        .result-card--bad .result-card__title,
+        .result-card--bad .result-card__score b { color: #c0392b; }
+        .result-card--bad .result-card__message { border-left-color: #e74c3c; }
+
+        /* ===== Задачи внутри модалки ===== */
+        .hw-general-desc {
+            font-size: 15px; color: #555; margin-bottom: 20px;
+            padding: 15px; background: #fdf0f5; border-radius: 10px;
+            border-left: 4px solid var(--color-pink);
+        }
+        .hw-task { background: #f9fbfd; border: 1px solid #e6f0ff; border-radius: 12px; padding: 20px; margin-bottom: 15px; }
+        .hw-task-number { font-weight: 800; color: var(--color-pink); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; }
+        .hw-task-text { font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 10px; }
+        .hw-task-img { max-width: 100%; max-height: 400px; border-radius: 8px; margin-top: 10px; display: block; }
+        .task-answer-zone { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbe1fc; }
+        .task-answer-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .task-answer-input {
+            flex: 1; min-width: 150px; padding: 10px 15px;
+            border: 2px solid var(--color-blue-light); border-radius: 10px;
+            font-size: 15px; outline: none; font-family: var(--font-body);
+            transition: border-color 0.15s;
+        }
+        .task-answer-input:focus { border-color: var(--color-blue); }
+        .task-answer-input:disabled { background: #f5f5f5; }
+        .task-extended-zone { display: flex; flex-direction: column; gap: 10px; }
+        .task-upload-btn {
+            background: var(--color-blue-light); color: var(--color-heading);
+            border: 2px solid var(--color-blue-light); padding: 10px 20px;
+            border-radius: 10px; cursor: pointer; font-weight: 700;
+            width: fit-content; font-family: var(--font-heading); transition: 0.2s;
+        }
+        .task-upload-btn:hover { background: var(--color-blue); color: #fff; }
+        .task-upload-status { font-size: 13px; font-weight: 700; }
+        .task-uploaded-img { max-width: 150px; border-radius: 8px; margin-top: 10px; border: 2px solid #cbe1fc; }
+
+        .result-message { margin-top: 10px; font-weight: 700; font-size: 15px; }
+        .result-message.correct { color: #2ecc71; }
+        .result-message.incorrect { color: #e74c3c; }
+        .solution-block { margin-top: 10px; padding: 12px; background: #f9f4fd; border: 1px solid #d7bde2; border-radius: 10px; font-size: 14px; }
+        .solution-block .solution-title { font-size: 12px; color: #9b59b6; font-weight: 700; margin-bottom: 6px; }
+        .latex-solution { overflow-x: auto; line-height: 1.6; }
+
+        .submit-hw-btn {
+            display: block; width: 100%; margin-top: 20px; padding: 16px;
+            background: #2ecc71; color: #fff; font-family: var(--font-heading);
+            font-weight: 700; font-size: 18px; border: none; border-radius: 12px;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        .submit-hw-btn:hover:not(:disabled) { background: #27ae60; transform: translateY(-2px); }
+        .submit-hw-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+
+        .hw-empty { text-align: center; padding: 60px; color: #999; }
+        .hw-filter { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .hw-filter button { padding: 8px 18px; border-radius: 50px; border: 2px solid var(--color-blue-light); background: #fff; cursor: pointer; font-family: var(--font-body); font-weight: 700; font-size: 13px; color: var(--color-text); }
+        .hw-filter button.active { background: var(--color-blue); color: #fff; border-color: var(--color-blue); }
+
+        /* ===== Блок результата проверки ===== */
+                /* ===== Блок результата проверки ===== */
+        .review-block {
+            margin-top: 25px; padding: 22px 24px; border-radius: 18px;
+            background: #f9fbfd;
+            border: 1.5px solid #e0e8f3;
+        }
+        .review-block--checked  { background: #f4fdf7; border-color: #b9ead0; }
+        .review-block--revision { background: #fffbf5; border-color: #fde49a; }
+        
+        .review-block__title { 
+            font-family: var(--font-heading); font-weight: 700; font-size: 17px; 
+            color: var(--color-heading); margin-bottom: 12px; 
+        }
+        
+        .review-block__status { 
+            display: inline-block; padding: 4px 12px; border-radius: 20px; 
+            font-size: 12px; font-weight: 800; text-transform: uppercase; 
+        }
+        .review-block__status--pending  { background: #f1c40f; color: #fff; }
+        .review-block__status--checked  { background: #2ecc71; color: #fff; }
+        .review-block__status--revision { background: #e67e22; color: #fff; }
+
+        /* Блок с баллами — убираем желтый, делаем нейтрально-синим */
+        .review-block__scores {
+            margin-top: 16px; padding: 16px; background: #fff;
+            border-radius: 12px; border: 1px solid #e0e8f3;
+        }
+        .review-block__scores-title { 
+            font-size: 13px; font-weight: 800; color: var(--color-heading); 
+            margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .review-block__scores-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        
+        .review-score-chip { 
+            display: inline-block; padding: 6px 12px; 
+            background: #f4f8ff; border-radius: 10px; 
+            font-size: 14px; font-weight: 700; color: var(--color-text); 
+            border: 1px solid #dceaff;
+        }
+        .review-score-chip b { color: var(--color-heading); }
+        
+        .review-block__scores-total { 
+            margin-top: 12px; font-size: 16px; color: var(--color-text); font-weight: 700; 
+            padding-top: 12px; border-top: 1px dashed #e0e8f3;
+        }
+        .review-block__scores-total b { color: var(--color-heading); font-size: 18px; }
+        .review-block__percent { color: #2ecc71; font-weight: 800; }
+
+        /* Комментарий — тоже спокойный */
+        .review-block__comment { 
+            margin-top: 16px; padding: 14px 16px; background: #fff; 
+            border-radius: 12px; border: 1px solid #e0e8f3; 
+            font-size: 14px; line-height: 1.6; color: #333; 
+        }
+        .review-block__comment b { color: var(--color-heading); }
+        
+        .review-block__img { 
+            display: block; max-width: 100%; margin-top: 14px; 
+            border-radius: 12px; border: 1.5px solid #e0e8f3; 
+        }
+        .review-block__date { 
+            margin-top: 14px; font-size: 12px; color: #8b9aac; 
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="bg-blob bg-blob--blue"></div><div class="bg-blob bg-blob--pink"></div>
+    <button class="mobile-menu-btn" id="mobile-menu-btn"><span></span><span></span><span></span></button>
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header"><div class="mfm-logo">Sonches<span>Math</span></div><button class="mfm-close" id="mfm-close">✕</button></div>
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item active"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее</a>
+            </div>
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая</a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header"><div class="mascot"><img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот"></div><a href="index.html" class="logo">Sonches<span>Math</span></a></div>
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul><li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li><li><a href="homework-student.html" class="active"><span class="num">📚</span> Домашки</a></li></ul>
+                <p class="nav-category">Часть 1</p>
+                <ul><li><a href="index.html"><span class="num">1</span> Планиметрия</a></li><li><a href="task2.html"><span class="num">2</span> Векторы</a></li><li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li><li><a href="task4.html"><span class="num">4</span> Вероятность</a></li><li><a href="task5.html"><span class="num">5</span> Сложная вероятность</a></li><li><a href="task6.html"><span class="num">6</span> Уравнения</a></li><li><a href="task7.html"><span class="num">7</span> Вычисления</a></li><li><a href="task8.html"><span class="num">8</span> Производная</a></li><li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li><li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li><li><a href="task11.html"><span class="num">11</span> Графики функций</a></li><li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее</a></li></ul>
+                <p class="nav-category">Часть 2</p>
+                <ul><li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li><li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li><li><a href="task15.html"><span class="num">15</span> Неравенства</a></li><li><a href="task16.html"><span class="num">16</span> Экономическая</a></li><li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li><li><a href="task18.html"><span class="num">18</span> Параметры</a></li><li><a href="task19.html"><span class="num">19</span> Логическая</a></li></ul>
+            </nav>
+            <div class="sidebar-footer"><a href="index.html" class="btn-back">← На главную</a><a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a></div>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Домашние задания</div>
+                    <h1 class="page-title">Домашние<br><span>задания</span></h1>
+                </div>
+                <div class="header-illustration"><img src="https://img.icons8.com/color/144/000000/homework.png" alt="ДЗ"></div>
+            </header>
+
+            <div class="hw-filter" id="hw-filter" style="display:none;">
+                <button data-filter="all" class="active">Все</button>
+                <button data-filter="active">Активные</button>
+                <button data-filter="overdue">Просроченные</button>
+            </div>
+
+            <div id="hw-list"><div class="hw-loading">📚 Загрузка домашних заданий...</div></div>
+        </main>
+    </div>
+
+    <div class="hw-modal-overlay" id="hw-modal-overlay">
+        <div class="hw-modal" id="hw-modal">
+            <div class="hw-modal__header">
+                <button class="hw-modal__close" onclick="closeHwModal()">✕</button>
+                <div class="hw-modal__title" id="hw-modal-title">Загрузка...</div>
+                <div class="hw-modal__meta" id="hw-modal-meta"></div>
+            </div>
+            <div class="hw-modal__body" id="hw-modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        let allHomework = [], studentEmail = '', savedAnswers = {};
+        let currentOpenHwId = null;
+
+        function jsonp(url, callback) {
+            const cbName = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const script = document.createElement('script'); let finished = false;
+            const finish = (data) => { if (finished) return; finished = true; clearTimeout(timeout); delete window[cbName]; if (script.parentNode) script.remove(); callback(data); };
+            const timeout = setTimeout(() => finish({ success: false, message: 'Таймаут' }), 15000);
+            window[cbName] = (data) => finish(data);
+            script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+            script.onerror = () => finish({ success: false, message: 'Ошибка сети' });
+            document.body.appendChild(script);
+        }
+
+        function postAction(params, callback) { jsonp(SCRIPT_URL + '?' + new URLSearchParams(params).toString(), callback); }
+
+        function formatDate(iso) {
+            if (!iso) return '—';
+            try { return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return iso; }
+        }
+        function escapeHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+        function deadlineInfo(deadlineIso) {
+            if (!deadlineIso) return { text: 'Без дедлайна', cls: 'fresh', overdue: false };
+            const now = new Date(); const dl = new Date(deadlineIso); const diffMs = dl - now; const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            if (diffMs < 0) return { text: '⏰ Просрочено', cls: 'overdue', overdue: true };
+            if (diffDays <= 2) return { text: '🔥 Осталось ' + diffDays + ' дн.', cls: 'soon', overdue: false };
+            return { text: '⏳ До ' + formatDate(deadlineIso), cls: 'fresh', overdue: false };
+        }
+
+        function openHwModal(hwId) {
+            const hw = allHomework.find(h => String(h.id) === String(hwId));
+            if (!hw) return;
+
+            currentOpenHwId = hwId;
+            const info = deadlineInfo(hw.deadline);
+
+            document.getElementById('hw-modal-title').textContent = hw.title || 'Домашнее задание';
+            document.getElementById('hw-modal-meta').innerHTML = `
+                <span class="hw-deadline">${info.text}</span>
+                <span>📅 ${formatDate(hw.createdAt)}</span>
+            `;
+
+            const bodyEl = document.getElementById('hw-modal-body');
+            let tasks = [];
+            try { tasks = JSON.parse(hw.tasks || '[]'); } catch(e) {}
+
+            let html = '';
+            if (hw.description) {
+                html += `<div class="hw-general-desc">${escapeHtml(hw.description)}</div>`;
+            }
+
+            tasks.forEach((task, idx) => {
+                let interactionHtml = '';
+                if (task.type === 'test') {
+                    interactionHtml = `
+                        <div class="task-answer-zone">
+                            <label style="font-size:12px; font-weight:700; color:#555; margin-bottom:5px; display:block;">Ваш ответ:</label>
+                            <div class="task-answer-row">
+                                <input type="text" id="ans_input_${hw.id}_${idx}" class="task-answer-input" placeholder="Введите ответ...">
+                            </div>
+                            <div id="result_${hw.id}_${idx}" class="result-message" style="display:none;"></div>
+                            <div id="solution_${hw.id}_${idx}" class="solution-block" style="display:none;"></div>
+                        </div>
+                    `;
+                } else {
+                    const maxText = task.maxScore ? ` <span style="color:#b0bcc9; font-weight:600;">(макс. ${task.maxScore} б.)</span>` : '';
+                    interactionHtml = `
+                        <div class="task-answer-zone task-extended-zone">
+                            <label style="font-size:12px; font-weight:700; color:#555; margin-bottom:5px; display:block;">Прикрепите фото решения:${maxText}</label>
+                            <button class="task-upload-btn" onclick="document.getElementById('file_${hw.id}_${idx}').click()">📸 Выбрать фото</button>
+                            <input type="file" id="file_${hw.id}_${idx}" accept="image/*" style="display:none;" onchange="uploadStudentSolution(this, '${hw.id}', ${idx})">
+                            <div id="status_${hw.id}_${idx}" class="task-upload-status"></div>
+                            <div id="img_preview_${hw.id}_${idx}"></div>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="hw-task" id="task_div_${hw.id}_${idx}">
+                        <div class="hw-task-number">Задача ${idx + 1} <span style="font-size:11px; color:#999; font-weight:400; text-transform:none;">(${task.type === 'test' ? 'Часть 1' : 'Часть 2'})</span></div>
+                        <div class="hw-task-text">${task.text || ''}</div>
+                        ${task.image ? `<img src="${task.image}" class="hw-task-img">` : ''}
+                        ${interactionHtml}
+                    </div>
+                `;
+            });
+
+            html += `<div id="score_${hw.id}" style="display:none;"></div>`;
+            html += `<div id="review-block-${hw.id}"></div>`;
+            html += `<button class="submit-hw-btn" onclick="submitWholeHomework('${hw.id}', this)">📤 Отправить всё ДЗ на проверку</button>`;
+
+            bodyEl.innerHTML = html;
+
+            document.getElementById('hw-modal-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([bodyEl]).catch(() => {});
+            }
+
+            loadAnswersForHw(hwId);
+            loadReviewForHw(hwId);
+        }
+
+        function closeHwModal() {
+            document.getElementById('hw-modal-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+            currentOpenHwId = null;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('hw-modal-overlay');
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeHwModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) closeHwModal();
+            });
+        });
+
+        function loadAnswersForHw(hwId) {
+            if (savedAnswers[hwId]) return;
+            postAction({ action: 'getStudentAnswers', email: studentEmail, homeworkId: hwId }, data => {
+                if (data && data.success) {
+                    savedAnswers[hwId] = data.answers || [];
+                    const hw = allHomework.find(h => String(h.id) === String(hwId));
+                    let tasks = [];
+                    try { tasks = JSON.parse(hw.tasks || '[]'); } catch(e) {}
+
+                    const answersForShow = [];
+                    data.answers.forEach(ans => {
+                        const idx = ans.taskId;
+                        if (ans.type === 'test') {
+                            const input = document.getElementById(`ans_input_${hwId}_${idx}`);
+                            if (input) {
+                                input.value = ans.answer;
+                                input.disabled = true;
+                                if (ans.isCorrect === 'true') { input.style.background = '#e8f5e9'; input.style.color = '#2e7d32'; }
+                                else if (ans.isCorrect === 'false') { input.style.background = '#fdecea'; input.style.color = '#c0392b'; }
+                            }
+                            answersForShow.push({ taskId: idx, type: 'test', answer: ans.answer, isCorrect: ans.isCorrect });
+                        } else if (ans.type === 'extended') {
+                            const statusEl = document.getElementById(`status_${hwId}_${idx}`);
+                            const prevDiv = document.getElementById(`img_preview_${hwId}_${idx}`);
+                            if (statusEl && prevDiv && ans.answer) {
+                                statusEl.textContent = '✅ Фото прикреплено';
+                                statusEl.style.color = '#2ecc71';
+                                prevDiv.innerHTML = `<img src="${ans.answer}" class="task-uploaded-img">`;
+                                const taskDiv = document.getElementById(`task_div_${hwId}_${idx}`);
+                                if (taskDiv) taskDiv.dataset.imageUrl = ans.answer;
+                            }
+                        }
+                    });
+
+                    if (answersForShow.length > 0) {
+                        showResults(hwId, tasks, answersForShow);
+                        const submitBtn = document.querySelector(`#hw-modal-body .submit-hw-btn`);
+                        if (submitBtn) {
+                            submitBtn.textContent = '✅ ДЗ уже отправлено';
+                            submitBtn.style.background = '#4a8cdb';
+                            submitBtn.disabled = true;
+                        }
+                    }
+                }
+            });
+        }
+
+        function uploadStudentSolution(input, hwId, taskIdx) {
+            const file = input.files && input.files[0]; if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { alert('Файл слишком большой'); input.value = ''; return; }
+
+            const statusEl = document.getElementById(`status_${hwId}_${taskIdx}`);
+            statusEl.textContent = '⏳ Загрузка фото...'; statusEl.style.color = '#777';
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                fetch(SCRIPT_URL, {
+                    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'uploadHomeworkImage', studentEmail: studentEmail, fileName: 'sol_' + Date.now() + '.png', dataUrl: e.target.result })
+                }).then(r => r.json()).then(data => {
+                    input.value = '';
+                    if (data && data.success) {
+                        statusEl.textContent = '✅ Фото прикреплено'; statusEl.style.color = '#2ecc71';
+                        document.getElementById(`img_preview_${hwId}_${taskIdx}`).innerHTML = `<img src="${data.url}" class="task-uploaded-img">`;
+                        document.getElementById(`task_div_${hwId}_${taskIdx}`).dataset.imageUrl = data.url;
+                    } else { statusEl.textContent = '❌ Ошибка загрузки'; statusEl.style.color = '#e74c3c'; }
+                }).catch(() => { input.value = ''; statusEl.textContent = '❌ Сетевая ошибка'; statusEl.style.color = '#e74c3c'; });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showResults(hwId, tasks, answers) {
+            let correctCount = 0;
+            let totalTestCount = 0;
+
+            answers.forEach(ans => {
+                const task = tasks[ans.taskId];
+                if (!task || task.type !== 'test') return;
+
+                totalTestCount++;
+                const resultEl = document.getElementById(`result_${hwId}_${ans.taskId}`);
+                const solutionEl = document.getElementById(`solution_${hwId}_${ans.taskId}`);
+                if (!resultEl) return;
+
+                resultEl.style.display = 'block';
+                if (ans.isCorrect === 'true') {
+                    resultEl.textContent = '✅ Верно!';
+                    resultEl.className = 'result-message correct';
+                    correctCount++;
+                } else {
+                    resultEl.textContent = `❌ Неверно. Правильный ответ: ${task.correctAnswer || '—'}`;
+                    resultEl.className = 'result-message incorrect';
+                }
+
+                if (task.solution && solutionEl) {
+                    solutionEl.style.display = 'block';
+                    solutionEl.innerHTML = `<div class="solution-title">💡 Решение:</div><div class="latex-solution">${task.solution}</div>`;
+                    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([solutionEl]).catch(() => {});
+                }
+            });
+
+            if (totalTestCount > 0) {
+                const scoreEl = document.getElementById(`score_${hwId}`);
+                if (!scoreEl) return;
+
+                const percent = Math.round((correctCount / totalTestCount) * 100);
+                let variant = 'great', emoji = '🎉', titleText = 'Отлично!';
+                let messageText = 'Ты отлично справился с этой частью. Так держать!';
+
+                if (percent >= 70) {
+                    variant = 'great'; emoji = '🎉'; titleText = 'Отлично!';
+                    messageText = 'Ты отлично справился с этой частью. Так держать!';
+                } else if (percent >= 40) {
+                    variant = 'ok'; emoji = '👍'; titleText = 'Хорошо!';
+                    messageText = 'Неплохой результат. Обрати внимание на ошибки — и в следующий раз будет ещё лучше.';
+                } else {
+                    variant = 'bad'; emoji = '💪'; titleText = 'Есть над чем поработать';
+                    messageText = 'Не расстраивайся! Посмотри решения и попробуй ещё раз — всё получится.';
+                }
+
+                const circumference = 283;
+                const offset = circumference - (percent / 100) * circumference;
+
+                scoreEl.innerHTML = `
+                    <div class="result-card result-card--${variant}">
+                        <div class="result-card__ring">
+                            <svg viewBox="0 0 110 110">
+                                <circle class="result-card__ring-bg" cx="55" cy="55" r="45"></circle>
+                                <circle class="result-card__ring-fill" cx="55" cy="55" r="45" style="stroke-dashoffset: ${circumference};"></circle>
+                            </svg>
+                            <div class="result-card__percent">${percent}%</div>
+                        </div>
+                        <div class="result-card__info">
+                            <div class="result-card__title">${emoji} ${titleText}</div>
+                            <div class="result-card__score">Часть 1: <b>${correctCount}</b> из <b>${totalTestCount}</b> верно</div>
+                            <div class="result-card__message">${messageText}</div>
+                        </div>
+                    </div>
+                `;
+                scoreEl.style.display = 'block';
+
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        const fillEl = scoreEl.querySelector('.result-card__ring-fill');
+                        if (fillEl) fillEl.style.strokeDashoffset = offset;
+                    }, 100);
+                });
+            }
+        }
+
+        function submitWholeHomework(hwId, btn) {
+            const hw = allHomework.find(h => String(h.id) === String(hwId));
+            if (!hw) return;
+
+            let tasks = [];
+            try { tasks = JSON.parse(hw.tasks || '[]'); } catch(e) {}
+
+            let answersToSend = [];
+            let hasEmpty = false;
+
+            tasks.forEach((task, idx) => {
+                if (task.type === 'test') {
+                    const input = document.getElementById(`ans_input_${hwId}_${idx}`);
+                    const val = input ? input.value.trim() : '';
+                    if (!val) hasEmpty = true;
+                    const isCorrect = (val.toLowerCase() === String(task.correctAnswer).trim().toLowerCase());
+                    answersToSend.push({ taskId: idx, type: 'test', answer: val, isCorrect: val ? (isCorrect ? 'true' : 'false') : '' });
+                } else {
+                    const taskDiv = document.getElementById(`task_div_${hwId}_${idx}`);
+                    const imgUrl = taskDiv ? (taskDiv.dataset.imageUrl || '') : '';
+                    if (!imgUrl) hasEmpty = true;
+                    answersToSend.push({ taskId: idx, type: 'extended', answer: imgUrl, isCorrect: '' });
+                }
+            });
+
+            if (hasEmpty && !confirm('Вы ответили не на все задачи. Точно отправить?')) return;
+
+            btn.disabled = true; btn.textContent = '⏳ Отправка...';
+
+            let completed = 0;
+            function sendNext() {
+                if (completed >= answersToSend.length) {
+                    btn.textContent = '✅ ДЗ отправлено на проверку!';
+                    btn.style.background = '#4a8cdb';
+                    showResults(hwId, tasks, answersToSend.filter(a => a.type === 'test' && a.answer));
+                    savedAnswers[hwId] = answersToSend;
+
+                    postAction({ action: 'submitHomeworkForReview', email: studentEmail, homeworkId: hwId }, () => {
+                        const hwObj = allHomework.find(h => String(h.id) === String(hwId));
+                        if (hwObj) hwObj.reviewStatus = 'pending';
+                        const block = document.getElementById('review-block-' + hwId);
+                        if (block) renderReviewBlock(block, {
+                            status: 'pending', teacherComment: '', teacherImageUrl: '', checkedAt: '', scores: {}
+                        }, tasks);
+                    });
+                    return;
+                }
+                const ans = answersToSend[completed];
+                if (!ans.answer) { completed++; sendNext(); return; }
+                postAction({
+                    action: 'saveStudentAnswer', email: studentEmail, homeworkId: hwId,
+                    taskId: ans.taskId, type: ans.type, answer: ans.answer, isCorrect: ans.isCorrect
+                }, () => { completed++; sendNext(); });
+            }
+            sendNext();
+        }
+
+        function loadReviewForHw(hwId) {
+            const hw = allHomework.find(h => String(h.id) === String(hwId));
+            const block = document.getElementById('review-block-' + hwId);
+            if (!block || !hw) return;
+
+            let tasks = [];
+            try { tasks = JSON.parse(hw.tasks || '[]'); } catch (e) { tasks = []; }
+
+            if (hw.reviewStatus) {
+                renderReviewBlock(block, {
+                    status: hw.reviewStatus,
+                    teacherComment: hw.reviewComment || '',
+                    teacherImageUrl: hw.reviewImageUrl || '',
+                    checkedAt: hw.reviewedAt || '',
+                    scores: hw.reviewScores || {}
+                }, tasks);
+                return;
+            }
+
+            postAction({ action: 'getHomeworkReview', email: studentEmail, homeworkId: hwId }, data => {
+                if (!data || !data.success || !data.review) return;
+                renderReviewBlock(block, data.review, tasks);
+            });
+        }
+
+        function renderReviewBlock(block, r, tasks) {
+            let cls = '', statusText = '', statusCls = '';
+            if (r.status === 'pending')        { statusText = '⏳ На проверке';       statusCls = 'pending'; }
+            else if (r.status === 'checked')   { statusText = '✅ Проверено';        statusCls = 'checked';  cls = 'review-block--checked'; }
+            else if (r.status === 'needs_revision') { statusText = '⚠️ На доработку'; statusCls = 'revision'; cls = 'review-block--revision'; }
+            else return;
+
+            let totalGot = 0, totalMax = 0;
+            let scoresHtml = '';
+            if (r.scores && Object.keys(r.scores).length > 0) {
+                const entries = Object.entries(r.scores)
+                    .map(([k, v]) => [Number(k), v])
+                    .sort((a, b) => a[0] - b[0]);
+
+                entries.forEach(([tid, val]) => {
+                    const task = (tasks || [])[tid] || {};
+                    const maxS = Number(task.maxScore) || 0;
+                    totalGot += Number(val) || 0;
+                    totalMax += maxS;
+                });
+
+                const percent = totalMax > 0 ? Math.round((totalGot / totalMax) * 100) : 0;
+
+                scoresHtml = `
+                    <div class="review-block__scores">
+                        <div class="review-block__scores-title">⭐ Баллы за Часть 2:</div>
+                        <div class="review-block__scores-list">
+                            ${entries.map(([tid, val]) => {
+                                const task = (tasks || [])[tid] || {};
+                                const maxS = Number(task.maxScore) || 0;
+                                return `<span class="review-score-chip">Задача ${tid + 1}: <b>${val}</b>${maxS > 0 ? ` / ${maxS}` : ''}</span>`;
+                            }).join('')}
+                        </div>
+                        ${totalMax > 0 ? `
+                            <div class="review-block__scores-total">
+                                Итого: <b>${totalGot}</b> / ${totalMax} — <span class="review-block__percent">${percent}%</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            block.className = 'review-block ' + cls;
+            block.innerHTML = `
+                <div class="review-block__title">Результат проверки</div>
+                <span class="review-block__status review-block__status--${statusCls}">${statusText}</span>
+                ${scoresHtml}
+                ${r.teacherComment ? `<div class="review-block__comment"><b>💬 Комментарий учителя:</b><br>${escapeHtml(r.teacherComment)}</div>` : ''}
+                ${r.teacherImageUrl ? `<img src="${escapeHtml(r.teacherImageUrl)}" class="review-block__img" alt="Работа с исправлениями">` : ''}
+                ${r.checkedAt ? `<div class="review-block__date">Проверено: ${formatDate(r.checkedAt)}</div>` : ''}
+            `;
+        }
+
+        function renderHomework(filter) {
+            const list = document.getElementById('hw-list');
+            let items = allHomework;
+            if (filter === 'active') items = allHomework.filter(hw => !deadlineInfo(hw.deadline).overdue);
+            else if (filter === 'overdue') items = allHomework.filter(hw => deadlineInfo(hw.deadline).overdue);
+
+            if (items.length === 0) { list.innerHTML = '<div class="hw-empty"><div style="font-size:70px; margin-bottom:20px;">📭</div><h3 style="color:var(--color-heading);">Нет домашних заданий</h3></div>'; return; }
+
+            list.innerHTML = items.map(hw => {
+                const info = deadlineInfo(hw.deadline);
+                let taskCount = 0;
+                try { taskCount = JSON.parse(hw.tasks || '[]').length; } catch(e) {}
+
+                let badge = '';
+                if (hw.reviewStatus === 'pending') badge = '<span class="hw-status-badge hw-status-badge--pending">⏳ На проверке</span>';
+                else if (hw.reviewStatus === 'checked') badge = '<span class="hw-status-badge hw-status-badge--checked">✅ Проверено</span>';
+                else if (hw.reviewStatus === 'needs_revision') badge = '<span class="hw-status-badge hw-status-badge--revision">⚠️ На доработку</span>';
+
+                let percentBadge = '';
+                if (hw.scorePercent !== null && hw.scorePercent !== undefined) {
+                    percentBadge = `<span class="hw-score-percent">⭐ ${hw.scorePercent}%</span>`;
+                }
+
+                return `
+                    <div class="hw-card ${info.cls}">
+                        <div class="hw-header">
+                            <div class="hw-header-info">
+                                <div class="hw-title">${escapeHtml(hw.title)}</div>
+                                <div class="hw-meta">
+                                    <span class="hw-deadline">${info.text}</span>
+                                    <span>📅 ${formatDate(hw.createdAt)}</span>
+                                    <span>📝 ${taskCount} задач</span>
+                                    ${badge}
+                                </div>
+                            </div>
+                            <div class="hw-actions-wrap">
+                                ${percentBadge}
+                                <button class="hw-open-btn" onclick="openHwModal('${hw.id}')">📝 Открыть</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            studentEmail = localStorage.getItem('sonches_user_email');
+            if (!studentEmail) { window.location.href = 'login.html'; return; }
+
+            postAction({ action: 'getHomeworkForStudent', email: studentEmail }, data => {
+                if (!data || !data.success) { document.getElementById('hw-list').innerHTML = '<div class="hw-empty">Ошибка загрузки</div>'; return; }
+                allHomework = data.homework || [];
+                document.getElementById('hw-filter').style.display = 'flex';
+                renderHomework('all');
+            });
+
+            document.querySelectorAll('#hw-filter button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#hw-filter button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderHomework(btn.dataset.filter);
+                });
+            });
+        });
+
+        function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+    </script>
+    <script src="cookies.js"></script>
+</body>
+</html>

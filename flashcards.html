@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonches Math | Тренажер формул: Планиметрия</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .flashcards-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .fc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .fc-progress {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--color-heading);
+            font-size: 18px;
+        }
+
+        .fc-progress span {
+            color: var(--color-pink);
+        }
+
+        .fc-btn-back {
+            display: inline-block;
+            background: var(--color-blue-light);
+            color: var(--color-heading);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .fc-btn-back:hover {
+            background: var(--color-blue);
+            color: #fff;
+        }
+
+        /* Сцена с карточкой */
+        .card-scene {
+            perspective: 1500px;
+            width: 100%;
+            height: 380px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border-radius: var(--radius-large);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard.swipe-right {
+            animation: swipeRight 0.5s forwards;
+        }
+        .flashcard.swipe-left {
+            animation: swipeLeft 0.5s forwards;
+        }
+
+        @keyframes swipeRight {
+            to { transform: translateX(150%) rotate(20deg); opacity: 0; }
+        }
+        @keyframes swipeLeft {
+            to { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+        }
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: var(--radius-large);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            border: 3px solid var(--color-blue-light);
+            text-align: center;
+        }
+
+        .card-front {
+            background: #fff;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #f9fbfd 0%, #e6f0ff 100%);
+            transform: rotateY(180deg);
+            border-color: var(--color-blue);
+        }
+
+        .card-label {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b0c4de;
+            margin-bottom: 20px;
+        }
+
+        .card-question {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--color-heading);
+            line-height: 1.3;
+        }
+
+        .card-answer {
+            font-size: 22px;
+            color: var(--color-text);
+            line-height: 1.5;
+            font-weight: 600;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .card-hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 13px;
+            color: #b0c4de;
+            font-weight: 600;
+        }
+
+        /* Кнопки действий */
+        .fc-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .fc-btn {
+            padding: 20px 15px;
+            border: none;
+            border-radius: var(--radius-small);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .fc-btn-again {
+            background: var(--color-pink-light);
+            color: var(--color-pink);
+            border: 2px solid var(--color-pink);
+        }
+        .fc-btn-again:hover {
+            background: var(--color-pink);
+            color: #fff;
+        }
+
+        .fc-btn-known {
+            background: var(--color-blue-light);
+            color: var(--color-heading);
+            border: 2px solid var(--color-blue);
+        }
+        .fc-btn-known:hover {
+            background: var(--color-blue);
+            color: #fff;
+        }
+
+        /* Экран завершения */
+        .finish-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow);
+            border: 2px solid var(--color-blue-light);
+        }
+        .finish-screen.active {
+            display: block;
+        }
+        .finish-emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .finish-title {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            color: var(--color-heading);
+            margin-bottom: 15px;
+        }
+        .finish-text {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .finish-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .finish-btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 15px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .finish-btn-primary {
+            background: var(--color-blue);
+            color: #fff;
+        }
+        .finish-btn-primary:hover {
+            background: #4a8cdb;
+        }
+        .finish-btn-secondary {
+            background: var(--color-blue-light);
+            color: var(--color-heading);
+        }
+        .finish-btn-secondary:hover {
+            background: var(--color-pink-light);
+            color: var(--color-pink);
+        }
+
+        @media (max-width: 600px) {
+            .card-scene { height: 340px; }
+            .card-question { font-size: 20px; }
+            .card-answer { font-size: 18px; }
+            .card-face { padding: 30px 20px; }
+            .fc-actions { grid-template-columns: 1fr; }
+            .fc-btn { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+
+    <div class="app-wrapper" style="display: block; padding: 30px 15px; overflow-y: auto; height: 100vh;">
+        <div class="flashcards-wrapper">
+
+            <!-- Заголовок и прогресс -->
+            <div class="fc-header" id="fc-header">
+                <a href="index.html" class="fc-btn-back">← К заданию 1</a>
+                <div class="fc-progress">
+                    Осталось: <span id="fc-remaining">0</span> / <span id="fc-total">0</span>
+                </div>
+            </div>
+
+            <!-- Сцена с карточкой -->
+            <div id="fc-scene-container">
+                <div class="card-scene">
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <div class="card-face card-front">
+                            <div class="card-label">Вопрос</div>
+                            <div class="card-question" id="card-question"></div>
+                            <div class="card-hint">Нажми, чтобы увидеть ответ</div>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="card-label">Ответ</div>
+                            <div class="card-answer" id="card-answer"></div>
+                            <div class="card-hint">Ты помнил? Выбери ниже</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопки действий -->
+                <div class="fc-actions" id="fc-actions">
+                    <button class="fc-btn fc-btn-again" onclick="markCard(false)">🔁 Не помню</button>
+                    <button class="fc-btn fc-btn-known" onclick="markCard(true)">✅ Помню</button>
+                </div>
+            </div>
+
+            <!-- Экран завершения -->
+            <div class="finish-screen" id="finish-screen">
+                <div class="finish-emoji">🎉</div>
+                <h2 class="finish-title">Отлично! Все карточки пройдены</h2>
+                <p class="finish-text" id="finish-text">
+                    Ты вспомнил все формулы. Так держать!
+                </p>
+                <div class="finish-actions">
+                    <button class="finish-btn finish-btn-primary" onclick="restartDeck()">🔄 Начать заново</button>
+                    <a href="index.html" class="finish-btn finish-btn-secondary">К заданию 1</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ==== ДАННЫЕ КАРТОЧЕК (только для Задания 1: Планиметрия) ====
+        const FLASHCARDS = [
+            // --- Блок 1: Треугольники, углы, равнобедренный ---
+            { question: "Сумма углов треугольника", answer: "\\( \\angle A + \\angle B + \\angle C = 180^\\circ \\)" },
+            { question: "Внешний угол треугольника", answer: "Равен сумме двух внутренних углов, не смежных с ним" },
+            { question: "Углы при основании равнобедренного треугольника", answer: "Равны: \\( \\angle A = \\angle B \\) (если \\( AC = BC \\))" },
+            { question: "Сумма острых углов прямоугольного треугольника", answer: "\\( \\angle A + \\angle B = 90^\\circ \\)" },
+
+            // --- Блок 2: Прямоугольный треугольник: медиана, высота, биссектриса ---
+            { question: "Медиана прямоугольного треугольника к гипотенузе", answer: "Равна половине гипотенузы: \\( CM = \\dfrac{1}{2} AB \\)" },
+          
+
+            // --- Блок 4: Четырёхугольники (параллелограмм, ромб) ---
+            { question: "Сумма углов четырёхугольника", answer: "\\( 360^\\circ \\)" },
+            { question: "Свойство углов параллелограмма", answer: "Противоположные углы равны; сумма соседних = \\( 180^\\circ \\)" },
+            { question: "Свойство диагоналей ромба", answer: "Перпендикулярны и делят углы пополам" },
+
+            // --- Блок 5: Площади и подобие ---
+            { question: "Площадь параллелограмма", answer: "\\( S = a \\cdot h_a \\)" },
+            { question: "Площадь треугольника через основание и высоту", answer: "\\( S = \\dfrac{1}{2} a \\cdot h_a \\)" },
+            { question: "Площадь треугольника через две стороны и угол", answer: "\\( S = \\dfrac{1}{2} a b \\sin \\gamma \\)" },
+            { question: "Площадь равнобедренного треугольника через боковую сторону и угол при вершине", answer: "\\( S = \\dfrac{1}{2} a^2 \\sin \\gamma \\)" },
+            { question: "Средняя линия треугольника", answer: "Параллельна третьей стороне и равна её половине" },
+            { question: "Средняя линия трапеции", answer: "\\( m = \\dfrac{a + b}{2} \\)" },
+            { question: "Диагональ трапеции делит среднюю линию на отрезки…", answer: "…равные половинам оснований" },
+            { question: "Теорема Пифагора", answer: "\\( c^2 = a^2 + b^2 \\)" },
+
+            // --- Блок 6: Тригонометрия острого угла ---
+            { question: "Синус острого угла в прямоугольном треугольнике", answer: "\\( \\sin A = \\dfrac{\\text{противолежащий катет}}{\\text{гипотенуза}} \\)" },
+            { question: "Косинус острого угла в прямоугольном треугольнике", answer: "\\( \\cos A = \\dfrac{\\text{прилежащий катет}}{\\text{гипотенуза}} \\)" },
+            { question: "Тангенс острого угла", answer: "\\( \\text{tg} A = \\dfrac{\\text{противолежащий катет}}{\\text{прилежащий катет}} \\)" },
+            { question: "Основное тригонометрическое тождество", answer: "\\( \\sin^2 A + \\cos^2 A = 1 \\)" },
+           
+            // --- Блок 7: Окружность: углы, касательная ---
+            { question: "Вписанный угол", answer: "Равен половине центрального угла, опирающегося на ту же дугу: \\( \\angle ACB = \\dfrac{1}{2} \\angle AOB \\)" },
+            { question: "Угол между касательной и хордой", answer: "Равен половине дуги, заключённой между ними" },
+            { question: "Касательная к окружности", answer: "Перпендикулярна радиусу, проведённому в точку касания" },
+            { question: "Отрезки касательных из одной точки", answer: "Равны" },
+
+            // --- Блок 8: Вписанная и описанная окружность (четырёхугольники) ---
+            { question: "Сумма противоположных углов вписанного четырёхугольника", answer: "\\( \\angle A + \\angle C = 180^\\circ \\)" },
+            { question: "Суммы противоположных сторон описанного четырёхугольника", answer: "\\( AB + CD = BC + AD \\)" },
+            { question: "Условие вписанной окружности в трапецию", answer: "Сумма оснований равна сумме боковых сторон" },
+
+            // --- Блок 9: Расширенная теорема синусов ---
+            { question: "Теорема синусов (расширенная)", answer: "\\( \\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B} = \\dfrac{c}{\\sin C} = 2R \\)" }
+        ];
+
+        // ==== СОСТОЯНИЕ ====
+        let deck = [];        // текущая колода (индексы оставшихся карточек)
+        let totalCount = 0;   // общее число карточек (для прогресса)
+        let currentIndex = null;
+
+        const cardEl = document.getElementById('flashcard');
+        const questionEl = document.getElementById('card-question');
+        const answerEl = document.getElementById('card-answer');
+        const remainingEl = document.getElementById('fc-remaining');
+        const totalEl = document.getElementById('fc-total');
+        const sceneContainer = document.getElementById('fc-scene-container');
+        const finishScreen = document.getElementById('finish-screen');
+
+        // ==== ФУНКЦИИ ====
+
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function startDeck() {
+            deck = shuffle(FLASHCARDS.map((_, i) => i));
+            totalCount = deck.length;
+            totalEl.textContent = totalCount;
+            finishScreen.classList.remove('active');
+            sceneContainer.style.display = 'block';
+            document.getElementById('fc-header').style.display = 'flex';
+            showNextCard();
+        }
+
+        function showNextCard() {
+            // Сброс анимации и флипа
+            cardEl.classList.remove('flipped', 'swipe-left', 'swipe-right');
+            cardEl.style.animation = 'none';
+            // Принудительный reflow
+            void cardEl.offsetWidth;
+            cardEl.style.animation = '';
+
+            if (deck.length === 0) {
+                finishDeck();
+                return;
+            }
+
+            currentIndex = deck[0];
+            const card = FLASHCARDS[currentIndex];
+            questionEl.innerHTML = card.question;
+            answerEl.innerHTML = card.answer;
+
+            remainingEl.textContent = deck.length;
+
+            // Перерендерить MathJax
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([questionEl, answerEl]).catch(err => console.log(err));
+            }
+        }
+
+        function flipCard() {
+            cardEl.classList.toggle('flipped');
+        }
+
+        function markCard(known) {
+            // Если карточка ещё не перевёрнута — сначала перевернём, чтобы человек увидел ответ
+            if (!cardEl.classList.contains('flipped')) {
+                cardEl.classList.add('flipped');
+                return;
+            }
+
+            if (known) {
+                // Убираем из колоды
+                cardEl.classList.add('swipe-right');
+                setTimeout(() => {
+                    deck.shift();
+                    showNextCard();
+                }, 500);
+            } else {
+                // Отправляем в конец колоды
+                cardEl.classList.add('swipe-left');
+                setTimeout(() => {
+                    const first = deck.shift();
+                    deck.push(first);
+                    showNextCard();
+                }, 500);
+            }
+        }
+
+        function finishDeck() {
+            sceneContainer.style.display = 'none';
+            document.getElementById('fc-header').style.display = 'none';
+            finishScreen.classList.add('active');
+            document.getElementById('finish-text').textContent =
+                `Ты прошёл все ${totalCount} карточек. Отличная работа!`;
+        }
+
+        function restartDeck() {
+            startDeck();
+        }
+
+        // ==== СТАРТ ====
+        document.addEventListener('DOMContentLoaded', () => {
+            startDeck();
+        });
+    </script>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script src="cookies.js"></script>
+</body>
+</html>

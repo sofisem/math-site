@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script>
+        // Проверка авторизации
+        if (!localStorage.getItem('sonches_user_role')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Sonches Math | Задание 5. Теоремы о вероятностях</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-blob bg-blob--blue"></div>
+    <div class="bg-blob bg-blob--pink"></div>
+    
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="mobile-fullscreen-menu" id="mobile-fullscreen-menu">
+        <div class="mfm-header">
+            <div class="mfm-logo">Sonches<span>Math</span></div>
+            <button class="mfm-close" id="mfm-close" aria-label="Закрыть">✕</button>
+        </div>
+
+        <div class="mfm-content">
+            <p class="mfm-category">Профиль</p>
+            <div class="mfm-grid">
+                <a href="dashboard.html" class="mfm-item"><span class="mfm-num">📊</span> Статистика</a>
+                <a href="homework-student.html" class="mfm-item"><span class="mfm-num">📚</span> Домашки</a>
+            </div>
+
+            <p class="mfm-category">Часть 1</p>
+            <div class="mfm-grid">
+                <a href="index.html" class="mfm-item"><span class="mfm-num">1</span> Планиметрия</a>
+                <a href="task2.html" class="mfm-item"><span class="mfm-num">2</span> Векторы</a>
+                <a href="task3.html" class="mfm-item"><span class="mfm-num">3</span> Стереометрия</a>
+                <a href="task4.html" class="mfm-item"><span class="mfm-num">4</span> Вероятность</a>
+                <a href="task5.html" class="mfm-item active"><span class="mfm-num">5</span> Сложная вероятность</a>
+                <a href="task6.html" class="mfm-item"><span class="mfm-num">6</span> Уравнения</a>
+                <a href="task7.html" class="mfm-item"><span class="mfm-num">7</span> Вычисления</a>
+                <a href="task8.html" class="mfm-item"><span class="mfm-num">8</span> Производная</a>
+                <a href="task9.html" class="mfm-item"><span class="mfm-num">9</span> Прикладные задачи</a>
+                <a href="task10.html" class="mfm-item"><span class="mfm-num">10</span> Текстовые задачи</a>
+                <a href="task11.html" class="mfm-item"><span class="mfm-num">11</span> Графики функций</a>
+                <a href="task12.html" class="mfm-item"><span class="mfm-num">12</span> Наибольшее/наименьшее значение</a>
+            </div>
+
+            <p class="mfm-category">Часть 2</p>
+            <div class="mfm-grid">
+                <a href="task13.html" class="mfm-item"><span class="mfm-num">13</span> Тригонометрия</a>
+                <a href="task14.html" class="mfm-item"><span class="mfm-num">14</span> Планиметрия</a>
+                <a href="task15.html" class="mfm-item"><span class="mfm-num">15</span> Неравенства</a>
+                <a href="task16.html" class="mfm-item"><span class="mfm-num">16</span> Экономическая задача</a>
+                <a href="task17.html" class="mfm-item"><span class="mfm-num">17</span> Стереометрия</a>
+                <a href="task18.html" class="mfm-item"><span class="mfm-num">18</span> Параметры</a>
+                <a href="task19.html" class="mfm-item"><span class="mfm-num">19</span> Логическая задача</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-wrapper">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mascot">
+                    <img src="https://img.icons8.com/color/96/000000/robot-2.png" alt="Робот-помощник Sonches">
+                </div>
+                <a href="index.html" class="logo">Sonches<span>Math</span></a>
+                <p class="sidebar-subtitle">школа математики для будущих студентов</p>
+            </div>
+
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Поиск по заданиям...">
+            </div>
+
+            <nav class="sidebar-nav">
+                <p class="nav-category">Профиль</p>
+                <ul>
+                    <li><a href="dashboard.html"><span class="num">📊</span> Статистика</a></li>
+                    <li><a href="homework-student.html"><span class="num">📚</span> Домашки</a></li>
+                </ul>
+
+                <p class="nav-category">Часть 1</p>
+                <ul>
+                    <li><a href="index.html"><span class="num">1</span> Планиметрия</a></li>
+                    <li><a href="task2.html"><span class="num">2</span> Векторы</a></li>
+                    <li><a href="task3.html"><span class="num">3</span> Стереометрия</a></li>
+                    <li><a href="task4.html"><span class="num">4</span> Вероятность</a></li>
+                    <li><a href="task5.html" class="active"><span class="num">5</span> Сложная вероятность</a></li>
+                    <li><a href="task6.html"><span class="num">6</span> Уравнения</a></li>
+                    <li><a href="task7.html"><span class="num">7</span> Вычисления</a></li>
+                    <li><a href="task8.html"><span class="num">8</span> Производная</a></li>
+                    <li><a href="task9.html"><span class="num">9</span> Прикладные задачи</a></li>
+                    <li><a href="task10.html"><span class="num">10</span> Текстовые задачи</a></li>
+                    <li><a href="task11.html"><span class="num">11</span> Графики функций</a></li>
+                    <li><a href="task12.html"><span class="num">12</span> Наибольшее/наименьшее значение</a></li>
+                </ul>
+
+                <p class="nav-category">Часть 2</p>
+                <ul>
+                    <li><a href="task13.html"><span class="num">13</span> Тригонометрия</a></li>
+                    <li><a href="task14.html"><span class="num">14</span> Планиметрия</a></li>
+                    <li><a href="task15.html"><span class="num">15</span> Неравенства</a></li>
+                    <li><a href="task16.html"><span class="num">16</span> Экономическая задача</a></li>
+                    <li><a href="task17.html"><span class="num">17</span> Стереометрия</a></li>
+                    <li><a href="task18.html"><span class="num">18</span> Параметры</a></li>
+                    <li><a href="task19.html"><span class="num">19</span> Логическая задача</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="#" class="btn-back" onclick="logout()" style="color: var(--color-pink);">Выйти</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            
+            <header class="content-header">
+                <div class="header-content">
+                    <div class="breadcrumbs">Главная / Часть 1 / Задание 5</div>
+                    <h1 class="page-title">Задание №5<br><span>Теоремы вероятностей</span></h1>
+                    <p class="page-description">
+                        Здесь мы разберем сложение и умножение вероятностей, независимые события и условную вероятность. Погнали! 🎲
+                    </p>
+                </div>
+                <div class="header-illustration">
+                    <img src="https://img.icons8.com/color/144/000000/probability.png" alt="Вероятность">
+                </div>
+            </header>
+
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-title">Твой прогресс:</span>
+                    <span class="progress-text" id="progress-text">0 / 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <section class="theory-section">
+                <h2 class="section-title">📖 Теория</h2>
+
+                <div class="card card--blue">
+                    <div class="card-header">
+                        <h2>Сложение вероятностей</h2>
+                        <div class="icon-circle icon-circle--pink">➕</div>
+                    </div>
+                    
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            Вероятность суммы двух событий равна сумме их вероятностей минус вероятность их совместного наступления:
+                        </p>
+                        <div class="formula-box" style="margin-bottom: 20px;">
+                            <div class="formula" style="text-align: center; font-size: 20px;">
+                                \(P(A + B) = P(A) + P(B) - P(AB)\)
+                            </div>
+                        </div>
+                        <ul class="theory-list">
+                            <li>Если события <strong>несовместны</strong> (не могут произойти одновременно), то \(P(AB) = 0\), и формула упрощается: \(P(A+B) = P(A) + P(B)\).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card--pink">
+                    <div class="card-header">
+                        <h2>Умножение вероятностей</h2>
+                        <div class="icon-circle icon-circle--blue">✖️</div>
+                    </div>
+                    
+                    <div class="theory-text" style="width: 100%;">
+                        <p style="font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            Вероятность произведения двух <strong>независимых</strong> событий равна произведению их вероятностей:
+                        </p>
+                        <div class="formula-box" style="margin-bottom: 20px;">
+                            <div class="formula" style="text-align: center; font-size: 20px;">
+                                \(P(AB) = P(A) \cdot P(B)\)
+                            </div>
+                        </div>
+                        <div class="tip-box">
+                            <span class="tip-icon">💡</span>
+                            <p><strong>Лайфхак для «хотя бы один»:</strong> \(P(\text{хотя бы один}) = 1 - P(\text{ни одного})\). Это правило работает для лампочек, выстрелов и т.д.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice-section">
+                <h2 class="section-title">✍️ Практика: Теоремы вероятностей</h2>
+                <p class="practice-desc">Реши задачу, введи ответ в поле и нажми «Проверить».</p>
+
+                <div class="tasks-grid">
+
+                    <!-- Задача 1 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 1</h3>
+                            <p>Вероятность того, что это вопрос на тему «Тригонометрия», равна 0,25. Вероятность того, что это вопрос на тему «Параллелограмм», равна 0,35. Вопросов, которые одновременно относятся к этим двум темам, нет. Найдите вероятность того, что на экзамене школьнику достанется вопрос по одной из этих двух тем.</p>
+                            <div class="interactive-check" data-answer="0.6">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 2 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 2</h3>
+                            <p>Вероятность того, что это вопрос на тему «Площадь», равна 0,45. Вероятность того, что это вопрос на тему «Углы», равна 0,45. Вопросов, которые одновременно относятся к этим двум темам, нет. Найдите вероятность того, что на экзамене школьнику достанется вопрос по одной из этих двух тем.</p>
+                            <div class="interactive-check" data-answer="0.9">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 3 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 3</h3>
+                            <p>Вероятность того, что в случайный момент времени температура тела здорового человека окажется ниже 36,8°С, равна 0,94. Найдите вероятность того, что в случайный момент времени у здорового человека температура тела окажется 36,8°С или выше.</p>
+                            <div class="interactive-check" data-answer="0.06">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 4 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 4</h3>
+                            <p>Вероятность того, что в случайный момент времени температура тела здорового человека окажется ниже 36,8°С, равна 0,91. Найдите вероятность того, что в случайный момент времени у здорового человека температура тела окажется 36,8°С или выше.</p>
+                            <div class="interactive-check" data-answer="0.09">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 5 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 5</h3>
+                            <p>Вероятность того, что на тестировании по физике учащийся А. верно решит больше 6 задач, равна 0,77. Вероятность того, что А. верно решит больше 5 задач, равна 0,83. Найдите вероятность того, что А. верно решит ровно 6 задач.</p>
+                            <div class="interactive-check" data-answer="0.06">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 6 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 6</h3>
+                            <p>Вероятность того, что на тестировании по физике учащийся А. верно решит больше 6 задач, равна 0,61. Вероятность того, что А. верно решит больше 5 задач, равна 0,66. Найдите вероятность того, что А. верно решит ровно 6 задач.</p>
+                            <div class="interactive-check" data-answer="0.05">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 7 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 7</h3>
+                            <p>Вероятность того, что новый тостер прослужит больше года, равна 0,93. Вероятность того, что он прослужит больше двух лет, равна 0,82. Найдите вероятность того, что он прослужит меньше двух лет, но больше года.</p>
+                            <div class="interactive-check" data-answer="0.11">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 8 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 8</h3>
+                            <p>Вероятность того, что новый пылесос прослужит больше года, равна 0,9. Вероятность того, что он прослужит больше двух лет, равна 0,8. Найдите вероятность того, что он прослужит более 1 года, но не более 2 лет.</p>
+                            <div class="interactive-check" data-answer="0.1">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 9 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 9</h3>
+                            <p>Вероятность того, что в понедельник в автобусе окажется меньше 20 пассажиров, равна 0,79. Вероятность того, что окажется меньше 11 пассажиров, равна 0,61. Найдите вероятность того, что число пассажиров будет от 11 до 19 включительно.</p>
+                            <div class="interactive-check" data-answer="0.18">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 10 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 10</h3>
+                            <p>Вероятность того, что масса окажется меньше 810 г, равна 0,98. Вероятность того, что масса окажется больше 790 г, равна 0,83. Найдите вероятность того, что масса буханки больше 790 г, но меньше 810 г.</p>
+                            <div class="interactive-check" data-answer="0.81">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 11 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 11</h3>
+                            <p>Вероятность того, что масса окажется меньше 805 г, равна 0,95. Вероятность того, что масса окажется больше 795 г, равна 0,81. Найдите вероятность того, что масса буханки больше 795 г, но меньше 805 г.</p>
+                            <div class="interactive-check" data-answer="0.76">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 12 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 12</h3>
+                            <p>В торговом центре два одинаковых автомата продают кофе. Вероятность того, что к концу дня в первом автомате закончится кофе, равна 0,1. Вероятность того, что кофе закончится во втором автомате, такая же. Вероятность того, что кофе закончится в двух автоматах равна 0,05. Найдите вероятность того, что к концу дня кофе останется в обоих автоматах.</p>
+                            <div class="interactive-check" data-answer="0.85">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 13 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 13</h3>
+                            <p>В торговом центре два одинаковых автомата продают кофе. Вероятность того, что к концу дня в первом автомате закончится кофе, равна 0,2. Вероятность того, что кофе закончится во втором автомате, такая же. Вероятность того, что кофе закончится в двух автоматах равна 0,06. Найдите вероятность того, что к концу дня кофе останется в обоих автоматах.</p>
+                            <div class="interactive-check" data-answer="0.66">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 14 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 14</h3>
+                            <p>Игральную кость бросили два раза. Известно, что шесть очков не выпало ни разу. Найдите при этом условии вероятность события «сумма очков равна 9».</p>
+                            <div class="interactive-check" data-answer="0.08">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 15 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 15</h3>
+                            <p>Игральную кость бросили два раза. Известно, что шесть очков не выпало ни разу. Найдите при этом условии вероятность события «сумма очков равна 10».</p>
+                            <div class="interactive-check" data-answer="0.04">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 16 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 16</h3>
+                            <p>Если шахматист А. играет белыми фигурами, то он выигрывает у шахматиста Б. с вероятностью 0,6. Если А. играет чёрными, то А. выигрывает у Б. с вероятностью 0,45. Шахматисты А. и Б. играют две партии, причём во второй партии меняют цвет фигур. Найдите вероятность того, что А. выиграет оба раза.</p>
+                            <div class="interactive-check" data-answer="0.27">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 17 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 17</h3>
+                            <p>Если шахматист А. играет белыми фигурами, то он выигрывает у шахматиста Б. с вероятностью 0,6. Если А. играет чёрными, то А. выигрывает у Б. с вероятностью 0,4. Шахматисты А. и Б. играют две партии, причём во второй партии меняют цвет фигур. Найдите вероятность того, что А. выиграет оба раза.</p>
+                            <div class="interactive-check" data-answer="0.24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 18 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 18</h3>
+                            <p>Стрелок стреляет по одному разу в каждую из четырёх мишеней. Вероятность попадания в мишень при каждом отдельном выстреле равна 0,8. Найдите вероятность того, что стрелок попадёт в первую мишень и не попадёт в три последние.</p>
+                            <div class="interactive-check" data-answer="0.0064">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 19 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 19</h3>
+                            <p>Стрелок стреляет по одному разу в каждую из четырёх мишеней. Вероятность попадания в мишень при каждом отдельном выстреле равна 0,7. Найдите вероятность того, что стрелок попадёт в две первые мишени и не попадёт в две последние.</p>
+                            <div class="interactive-check" data-answer="0.0441">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 20 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 20</h3>
+                            <p>Помещение освещается тремя лампами. Вероятность перегорания каждой лампы в течение года равна 0,9. Лампы перегорают независимо друг от друга. Найдите вероятность того, что в течение года хотя бы одна лампа не перегорит.</p>
+                            <div class="interactive-check" data-answer="0.271">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 21 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 21</h3>
+                            <p>Помещение освещается тремя лампами. Вероятность перегорания каждой лампы в течение года равна 0,6. Лампы перегорают независимо друг от друга. Найдите вероятность того, что в течение года хотя бы одна лампа не перегорит.</p>
+                            <div class="interactive-check" data-answer="0.784">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 22 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 22</h3>
+                            <p>В коробке 12 синих, 6 красных и 7 зелёных фломастеров. Случайным образом выбирают два фломастера. Найдите вероятность того, что окажутся выбраны один синий и один красный фломастеры.</p>
+                            <div class="interactive-check" data-answer="0.24">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 23 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 23</h3>
+                            <p>В коробке 12 синих, 4 красных и 9 зелёных фломастеров. Случайным образом выбирают два фломастера. Найдите вероятность того, что окажутся выбраны один синий и один красный фломастеры.</p>
+                            <div class="interactive-check" data-answer="0.16">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 24 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 24</h3>
+                            <p>Чтобы пройти в следующий круг соревнований, футбольной команде нужно набрать хотя бы 4 очка в двух играх. Если команда выигрывает, она получает 3 очка, в случае ничьей – 1 очко, если проигрывает – 0 очков. Найдите вероятность того, что команде удастся выйти в следующий круг соревнований. Считайте, что в каждой игре вероятности выигрыша и проигрыша одинаковы и равны 0,4.</p>
+                            <div class="interactive-check" data-answer="0.32">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 25 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 25</h3>
+                            <p>Чтобы пройти в следующий круг соревнований, футбольной команде нужно набрать хотя бы 4 очка в двух играх. Если команда выигрывает, она получает 3 очка, в случае ничьей – 1 очко, если проигрывает – 0 очков. Найдите вероятность того, что команде удастся выйти в следующий круг соревнований. Считайте, что в каждой игре вероятности выигрыша и проигрыша одинаковы и равны 0,1.</p>
+                            <div class="interactive-check" data-answer="0.17">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 26 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 26</h3>
+                            <p>Автоматическая линия изготавливает батарейки. Вероятность того, что готовая батарейка неисправна, равна 0,01. Перед упаковкой каждая батарейка проходит систему контроля качества. Вероятность того, что система забракует неисправную батарейку, равна 0,95. Вероятность того, что система по ошибке забракует исправную батарейку, равна 0,05. Найдите вероятность того, что случайно выбранная изготовленная батарейка будет забракована системой контроля.</p>
+                            <div class="interactive-check" data-answer="0.059">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 27 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 27</h3>
+                            <p>Автоматическая линия изготавливает батарейки. Вероятность того, что готовая батарейка неисправна, равна 0,02. Перед упаковкой каждая батарейка проходит систему контроля качества. Вероятность того, что система забракует неисправную батарейку, равна 0,98. Вероятность того, что система по ошибке забракует исправную батарейку, равна 0,03. Найдите вероятность того, что случайно выбранная изготовленная батарейка будет забракована системой контроля.</p>
+                            <div class="interactive-check" data-answer="0.049">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 28 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 28</h3>
+                            <p>Автоматическая линия изготавливает батарейки. Вероятность того, что готовая батарейка неисправна, равна 0,03. Перед упаковкой каждая батарейка проходит систему контроля качества. Вероятность того, что система забракует неисправную батарейку, равна 0,91. Вероятность того, что система по ошибке забракует исправную батарейку, равна 0,01. Найдите вероятность того, что случайно выбранная изготовленная батарейка будет забракована системой контроля.</p>
+                            <div class="interactive-check" data-answer="0.037">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 29 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 29</h3>
+                            <p>В городе 46% взрослого населения – мужчины. Пенсионеры составляют 17,3% взрослого населения, причём доля пенсионеров среди женщин равна 15%. Для социологического опроса выбран случайным образом мужчина, проживающий в этом городе. Найдите вероятность события «выбранный мужчина является пенсионером».</p>
+                            <div class="interactive-check" data-answer="0.2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 30 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 30</h3>
+                            <p>В городе 46% взрослого населения – мужчины. Пенсионеры составляют 16,3% взрослого населения, причём доля пенсионеров среди женщин равна 14%. Для социологического опроса выбран случайным образом мужчина, проживающий в этом городе. Найдите вероятность события «выбранный мужчина является пенсионером».</p>
+                            <div class="interactive-check" data-answer="0.19">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 31 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 31</h3>
+                            <p>Стрелок при каждом выстреле поражает мишень с вероятностью 0,4, независимо от результатов предыдущих выстрелов. Какова вероятность того, что он поразит мишень, сделав не более 3 выстрелов?</p>
+                            <div class="interactive-check" data-answer="0.784">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 32 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 32</h3>
+                            <p>Стрелок при каждом выстреле поражает мишень с вероятностью 0,8, независимо от результатов предыдущих выстрелов. Какова вероятность того, что он поразит мишень, сделав не более 2 выстрелов?</p>
+                            <div class="interactive-check" data-answer="0.96">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 33 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 33</h3>
+                            <p>Стрелок в тире стреляет по мишени до тех пор, пока не поразит её. Известно, что он попадает в цель с вероятностью 0,5 при каждом отдельном выстреле. Какое наименьшее количество патронов нужно дать стрелку, чтобы он поразил цель с вероятностью не меньше 0,8?</p>
+                            <div class="interactive-check" data-answer="3">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Задача 34 -->
+                    <div class="task-card">
+                        <div class="task-content">
+                            <h3 class="task-number">Задача 34</h3>
+                            <p>Стрелок в тире стреляет по мишени до тех пор, пока не поразит её. Известно, что он попадает в цель с вероятностью 0,6 при каждом отдельном выстреле. Какое наименьшее количество патронов нужно дать стрелку, чтобы он поразил цель с вероятностью не меньше 0,8?</p>
+                            <div class="interactive-check" data-answer="2">
+                                <div class="input-group">
+                                    <input type="text" class="answer-input" placeholder="Твой ответ">
+                                    <button class="btn-check" onclick="checkAnswer(this)">Проверить</button>
+                                </div>
+                                <div class="result-message"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        const TASK_KEY = 'task5';
+
+        function checkAnswer(btn) {
+            var container = btn.closest('.interactive-check');
+            var correctAnswer = container.getAttribute('data-answer').replace(/,/g, '.').trim();
+            var inputElement = container.querySelector('.answer-input');
+            var userAnswer = inputElement.value.replace(/,/g, '.').trim();
+            var resultMsg = container.querySelector('.result-message');
+
+            if (userAnswer === correctAnswer && userAnswer !== "") {
+                resultMsg.textContent = "Верно! 🎉";
+                resultMsg.className = "result-message correct";
+
+                inputElement.value = correctAnswer;
+                inputElement.disabled = true;
+                inputElement.style.backgroundColor = "#e8f5e9";
+                inputElement.style.color = "#2e7d32";
+                btn.style.display = "none";
+
+                var taskCard = container.closest('.task-card');
+                if (!taskCard.classList.contains('is-solved')) {
+                    taskCard.classList.add('is-solved');
+                    updateProgressBar();
+                    
+                    var taskNumberText = taskCard.querySelector('.task-number').textContent;
+                    var taskId = taskNumberText.match(/\d+/)[0];
+                    sendProgressToServer(TASK_KEY + '_' + taskId);
+                }
+            } else {
+                resultMsg.textContent = "Неверно. Попробуй еще раз! ❌";
+                resultMsg.className = "result-message incorrect";
+            }
+        }
+
+        function updateProgressBar() {
+            var allTasks = document.querySelectorAll('.task-card');
+            var solvedTasks = document.querySelectorAll('.task-card.is-solved');
+            var total = allTasks.length;
+            var solved = solvedTasks.length;
+            
+            var textElement = document.getElementById('progress-text');
+            var fillElement = document.getElementById('progress-fill');
+
+            if (textElement && fillElement) {
+                textElement.textContent = solved + " / " + total;
+                var percent = total === 0 ? 0 : (solved / total) * 100;
+                fillElement.style.width = percent + "%";
+            }
+        }
+
+        function sendProgressToServer(fullTaskId) {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=recordProgress'
+                + '&email=' + encodeURIComponent(email)
+                + '&taskId=' + encodeURIComponent(fullTaskId)
+                + '&callback=' + cb;
+
+            window[cb] = () => { delete window[cb]; };
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = localStorage.getItem('sonches_user_email');
+            if (!email) return;
+
+            const cb = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
+            const url = SCRIPT_URL
+                + '?action=getStudentStats'
+                + '&email=' + encodeURIComponent(email)
+                + '&callback=' + cb;
+
+            window[cb] = data => {
+                delete window[cb];
+                if (!data || !data.success) return;
+
+                const prefix = TASK_KEY + '_';
+                const serverIds = (data.solvedTasks || [])
+                    .map(String)
+                    .filter(id => id.startsWith(prefix))
+                    .map(id => id.slice(prefix.length));
+
+                document.querySelectorAll('.task-card').forEach(card => {
+                    var id = card.querySelector('.task-number').textContent.match(/\d+/)[0];
+                    if (serverIds.includes(String(id))) {
+                        card.classList.add('is-solved');
+                        var msg = card.querySelector('.result-message');
+                        var inputEl = card.querySelector('.answer-input');
+                        var checkBtn = card.querySelector('.btn-check');
+                        
+                        if (msg) {
+                            msg.textContent = "Верно! 🎉";
+                            msg.className = "result-message correct";
+                        }
+                        if (inputEl) {
+                            inputEl.disabled = true;
+                            inputEl.style.backgroundColor = "#e8f5e9";
+                            inputEl.style.color = "#2e7d32";
+                            if (!inputEl.value) {
+                                var correctAnswer = card.querySelector('.interactive-check').getAttribute('data-answer').replace(/,/g, '.').trim();
+                                inputEl.value = correctAnswer;
+                            }
+                        }
+                        if (checkBtn) {
+                            checkBtn.style.display = "none";
+                        }
+                    }
+                });
+
+                updateProgressBar();
+            };
+
+            const s = document.createElement('script');
+            s.src = url;
+            s.onerror = () => { delete window[cb]; };
+            document.body.appendChild(s);
+        });
+    </script>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('sonches_user_role');
+            localStorage.removeItem('sonches_user_email');
+            localStorage.removeItem('sonches_user_name');
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            
+            if (!name) return; 
+
+            const header = document.querySelector('.content-header');
+            if (!header) return;
+
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+
+            const badge = document.createElement('div');
+            badge.className = 'user-badge';
+            badge.innerHTML = `
+                <div class="user-badge__avatar">${initial}</div>
+                <div>
+                    <div>${name}</div>
+                    <div class="user-badge__role">${roleLabel}</div>
+                </div>
+                <button class="user-badge__logout" onclick="logout()">Выйти</button>
+            `;
+
+            header.parentNode.insertBefore(badge, header);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+
+            if (!menuBtn || !menu) return;
+
+            menuBtn.addEventListener('click', () => {
+                menu.classList.add('open');
+                document.body.classList.add('menu-open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                menu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    menu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const TASK_KEY = 'task5'; 
+
+        const role = localStorage.getItem('sonches_user_role');
+        if (role === 'teacher') return;
+
+        const email = localStorage.getItem('sonches_user_email');
+        if (!email) return;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
+        
+        try {
+            const response = await fetch(SCRIPT_URL + '?action=getUserAccess&email=' + encodeURIComponent(email));
+            const text = await response.text();
+            
+            let data;
+            try {
+                const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?$/, '');
+                data = JSON.parse(jsonStr);
+            } catch (e) {
+                data = JSON.parse(text);
+            }
+            
+            if (!data || !data.success) return;
+            
+            const allowedTasks = data.access || [];
+            
+            if (!allowedTasks.includes(TASK_KEY)) {
+                alert('Это задание пока недоступно. Свяжитесь с учителем.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            const menuLinks = document.querySelectorAll('.sidebar-nav a, .mfm-item');
+            menuLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                
+                let taskKey = null;
+                if (href === 'index.html' || href === 'task1.html') taskKey = 'task1';
+                else if (href === 'task2.html') taskKey = 'task2';
+                else if (href === 'task3.html') taskKey = 'task3';
+                else if (href === 'task4.html') taskKey = 'task4';
+                else if (href === 'task5.html') taskKey = 'task5';
+                else if (href === 'task6.html') taskKey = 'task6';
+                else if (href === 'task7.html') taskKey = 'task7';
+                else if (href === 'task8.html') taskKey = 'task8';
+                else if (href === 'task9.html') taskKey = 'task9';
+                else if (href === 'task10.html') taskKey = 'task10';
+                else if (href === 'task11.html') taskKey = 'task11';
+                else if (href === 'task12.html') taskKey = 'task12';
+                else if (href === 'task13.html') taskKey = 'task13';
+                else if (href === 'task14.html') taskKey = 'task14';
+                else if (href === 'task15.html') taskKey = 'task15';
+                else if (href === 'task16.html') taskKey = 'task16';
+                else if (href === 'task17.html') taskKey = 'task17';
+                else if (href === 'task18.html') taskKey = 'task18';
+                else if (href === 'task19.html') taskKey = 'task19';
+
+                if (taskKey && !allowedTasks.includes(taskKey)) {
+                    link.style.opacity = '0.4';
+                    link.style.pointerEvents = 'none';
+                    link.title = 'Задание пока недоступно';
+                    link.classList.add('mfm-item--disabled');
+                }
+            });
+
+        } catch (error) {
+            console.error("Ошибка получения доступов: ", error);
+            document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                 if (!a.href.includes('index.html') && !a.href.includes('dashboard.html')) {
+                     a.style.opacity = '0.4';
+                     a.style.pointerEvents = 'none';
+                 }
+            });
+        }
+    });
+    </script>
+    <script>
+        // Автоматическая вставка подвала
+        document.addEventListener("DOMContentLoaded", () => {
+            const mainContent = document.querySelector('.content');
+            if (mainContent && !document.querySelector('.site-footer')) {
+                const footerHTML = `
+                    <footer class="site-footer">
+                        <a href="index.html" class="footer-logo">Sonches<span>Math</span></a>
+                        <p class="footer-desc">
+                            Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
+                        </p>
+                        
+                        <div class="footer-socials">
+                            <a href="https://t.me/sonchesmath" target="_blank">
+                                ✈️ Telegram: @sonchesmath
+                            </a>
+                        </div>
+
+                        <div class="footer-links">
+                            <a href="index.html">На главную</a>
+
+                            <a href="dashboard.html">Моя статистика</a>
+                            <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+                            <a href="#" onclick="logout()">Выйти</a>
+                        </div>
+
+                        <div class="footer-copyright">
+                            &copy; 2026 Sonches Math. Все права защищены.<br>
+                            Сделано с любовью ❤️ для учеников и учителей.
+                        </div>
+                    </footer>
+                `;
+                mainContent.insertAdjacentHTML('beforeend', footerHTML);
+            }
+        });
+    </script>
+    <script src="cookies.js"></script>
+
+</body>
+</html>
