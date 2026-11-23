@@ -825,5 +825,32 @@
         function logout() { localStorage.clear(); window.location.href = 'login.html'; }
     </script>
     <script src="cookies.js"></script>
+    <script>
+        // Мобильное меню
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-fullscreen-menu');
+            const closeBtn = document.getElementById('mfm-close');
+
+            if (!menuBtn || !menu) return;
+
+            menuBtn.addEventListener('click', () => {
+                menu.classList.add('open');
+                document.body.classList.add('menu-open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                menu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    menu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
