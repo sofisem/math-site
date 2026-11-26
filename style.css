@@ -1675,7 +1675,7 @@ html {
 :root {
     --bg-body: #fcfcfc; 
     --bg-stripes: #f7f0fc; 
-    --bg-card: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.78);;
     
     --color-blue: #6ea8fe; 
     --color-blue-light: #e6f0ff;
@@ -1878,3 +1878,4 @@ body.dark-theme button.btn-download-pdf:hover {
         align-items: flex-start !important;
     }
 }
+
