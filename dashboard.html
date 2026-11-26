@@ -555,8 +555,9 @@
 
                     fetch(SCRIPT_URL, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: new URLSearchParams({
+                        // Важно: используем text/plain, чтобы избежать проблем с CORS в Google Apps Script
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
                             action: 'setStudentAccess',
                             teacherEmail: currentAccessStudent.teacherEmail,
                             studentEmail: currentAccessStudent.studentEmail,
@@ -1122,11 +1123,6 @@
                             Школа математики для будущих студентов. Готовим к ЕГЭ по профильной математике с заботой и вниманием к каждому.
                         </p>
 
-                        <div class="footer-socials">
-                            <a href="https://t.me/sonchesmath" target="_blank">
-                                ✈️ Telegram: @sonchesmath
-                            </a>
-                        </div>
 
                         <div class="footer-links">
                             <a href="index.html">На главную</a>
