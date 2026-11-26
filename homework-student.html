@@ -29,7 +29,7 @@
         .hw-meta { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13px; color: #888; }
         .hw-deadline { font-weight: 700; color: var(--color-pink); }
 
-        /* Базовые стили для бейджей статуса (раньше отсутствовали) */
+        /* Базовые стили для бейджей статуса */
         .hw-status-badge {
             display: inline-block;
             padding: 3px 10px;
@@ -48,6 +48,11 @@
             font-family: var(--font-heading); font-size: 15px; font-weight: 800;
             color: #2ecc71; background: #d4f5dd; padding: 6px 12px;
             border-radius: 12px; white-space: nowrap;
+        }
+        .hw-score-percent--exam {
+            color: var(--color-pink);
+            background: #fdf0f5;
+            border: 1px solid #fbd2dc;
         }
         .hw-open-btn {
             background: var(--color-blue); color: #fff; border: none;
@@ -214,81 +219,19 @@
 
         /* ===== Блок результата проверки ===== */
         .review-block {
-            margin-top: 25px; padding: 22px 24px; border-radius: 18px;
-            background: #f9fbfd;
-            border: 1.5px solid #e0e8f3;
-        }
-        .review-block--checked  { background: #f4fdf7; border-color: #b9ead0; }
-        .review-block--revision { background: #fffbf5; border-color: #fde49a; }
-
-        .review-block__title {
-            font-family: var(--font-heading); font-weight: 700; font-size: 17px;
-            color: var(--color-heading); margin-bottom: 12px;
-        }
-
-        .review-block__status {
-            display: inline-block; padding: 4px 12px; border-radius: 20px;
-            font-size: 12px; font-weight: 800; text-transform: uppercase;
-        }
-        .review-block__status--pending  { background: #f1c40f; color: #fff; }
-        .review-block__status--checked  { background: #2ecc71; color: #fff; }
-        .review-block__status--revision { background: #e67e22; color: #fff; }
-
-        .review-block__scores {
-            margin-top: 16px; padding: 16px; background: #fff;
-            border-radius: 12px; border: 1px solid #e0e8f3;
-        }
-        .review-block__scores-title {
-            font-size: 13px; font-weight: 800; color: var(--color-heading);
-            margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .review-block__scores-list { display: flex; flex-wrap: wrap; gap: 8px; }
-
-        .review-score-chip {
-            display: inline-block; padding: 6px 12px;
-            background: #f4f8ff; border-radius: 10px;
-            font-size: 14px; font-weight: 700; color: var(--color-text);
-            border: 1px solid #dceaff;
-        }
-        .review-score-chip b { color: var(--color-heading); }
-
-        .review-block__scores-total {
-            margin-top: 12px; font-size: 16px; color: var(--color-text); font-weight: 700;
-            padding-top: 12px; border-top: 1px dashed #e0e8f3;
-        }
-        .review-block__scores-total b { color: var(--color-heading); font-size: 18px; }
-        .review-block__percent { color: #2ecc71; font-weight: 800; }
-
-        .review-block__comment {
-            margin-top: 16px; padding: 14px 16px; background: #fff;
-            border-radius: 12px; border: 1px solid #e0e8f3;
-            font-size: 14px; line-height: 1.6; color: #333;
-        }
-        .review-block__comment b { color: var(--color-heading); }
-
-        .review-block__img {
-            display: block; max-width: 100%; margin-top: 14px;
-            border-radius: 12px; border: 1.5px solid #e0e8f3;
-        }
-        .review-block__date {
-            margin-top: 14px; font-size: 12px; color: #8b9aac;
-        }
-
-        /* ===== Минималистичный блок проверки ===== */
-        .review-block {
             margin-top: 30px; padding: 24px; border-radius: 16px;
             background: #ffffff;
             border: 1px solid #e5e9f0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
-
-        .review-block__title {
-            font-family: var(--font-heading); font-weight: 700; font-size: 18px;
-            color: var(--color-heading); margin-bottom: 16px;
+        
+        .review-block__title { 
+            font-family: var(--font-heading); font-weight: 700; font-size: 18px; 
+            color: var(--color-heading); margin-bottom: 16px; 
         }
-
-        .review-block__status {
-            display: inline-block; padding: 4px 10px; border-radius: 6px;
+        
+        .review-block__status { 
+            display: inline-block; padding: 4px 10px; border-radius: 6px; 
             font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .review-block__status--pending  { background: #f4f8ff; color: #4a8cdb; }
@@ -310,11 +253,11 @@
         .minimal-score-card--warning .minimal-score-card__got { color: #d35400; }
         .minimal-score-card--danger  .minimal-score-card__got { color: #e74c3c; }
         .minimal-score-card--neutral .minimal-score-card__got { color: var(--color-heading); }
-
+        
         .minimal-score-card__max { font-size: 16px; font-weight: 600; color: #8b9aac; }
-
+        
         .minimal-score-card__label { font-size: 13px; font-weight: 700; color: #7a8ba3; text-transform: uppercase; letter-spacing: 0.5px; }
-
+        
         .minimal-score-card__percent { font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: #8b9aac; }
         .minimal-score-card--success .minimal-score-card__percent { color: #27ae60; }
         .minimal-score-card--warning .minimal-score-card__percent { color: #d35400; }
@@ -335,7 +278,7 @@
             border: 1px solid #e5e9f0; margin-top: 16px;
         }
         .minimal-comment__label {
-            font-size: 11px; font-weight: 800; color: #8b9aac;
+            font-size: 11px; font-weight: 800; color: #8b9aac; 
             text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
         }
         .minimal-comment__text {
@@ -350,104 +293,109 @@
         .minimal-date {
             margin-top: 20px; font-size: 12px; color: #b0bcc9; font-weight: 600;
         }
-        .hw-score-percent--exam {
-            color: var(--color-pink);
-            background: #fdf0f5;
-            border: 1px solid #fbd2dc;
-        }
 
         /* ============================================= */
-/* ===== МОБИЛЬНАЯ ВЕРСИЯ: КАРТОЧКИ ДЗ ===== */
-/* ============================================= */
+        /* ===== РАДИКАЛЬНОЕ ИСПРАВЛЕНИЕ КАРТОЧЕК ===== */
+        /* ============================================= */
         @media (max-width: 640px) {
             .hw-card {
                 margin-bottom: 12px;
                 border-radius: 16px;
+                background: #fff !important;
             }
 
-            /* Шапка карточки */
             .hw-header {
-                padding: 16px !important; /* Уменьшаем отступ */
-                flex-direction: column;
-                align-items: stretch;
-                gap: 14px;
+                padding: 16px !important;
+                display: block !important; /* Блочный поток, никакого flex */
             }
 
             .hw-header-info {
-                min-width: 0;
-                width: 100%;
+                display: block !important;
+                width: 100% !important;
+                min-width: 0 !important;
             }
 
             .hw-title {
                 font-size: 18px;
                 line-height: 1.3;
-                margin-bottom: 10px;
+                margin-bottom: 12px;
                 word-break: break-word;
+                display: block;
             }
 
-            /* Мета-информация переведена на flex */
+            /* Мета-информация - строго БЛОЧНЫЙ поток */
             .hw-meta {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                gap: 6px 12px; /* Отступы между строкой и элементами */
-                font-size: 12px;
-                line-height: 1.4;
-                color: #888;
-            }
-
-            /* Дедлайн на всю ширину */
-            .hw-meta .hw-deadline {
-                flex: 0 0 100%;
+                display: block !important; /* Отключаем flex и grid */
                 font-size: 13px;
-                margin-bottom: 2px;
+                line-height: 1.6;
+                color: #666;
+                background: transparent !important;
             }
 
-            /* Остальные элементы (дата, задачи, статус) идут в ряд */
-            .hw-meta span {
-                display: inline-flex;
-                align-items: center;
-                gap: 4px;
+            /* Элементы внутри меты */
+            .hw-meta > span {
+                display: inline-block !important;
+                margin-right: 12px;
+                margin-bottom: 4px;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
             }
 
+            /* Дедлайн */
+            .hw-meta .hw-deadline {
+                display: block !important;
+                font-size: 14px;
+                margin-bottom: 6px;
+                margin-right: 0;
+            }
+
+            /* Бейдж статуса */
             .hw-meta .hw-status-badge {
-                margin-top: 4px;
+                display: inline-block !important;
+                margin-top: 6px;
+                margin-right: 0;
+                margin-bottom: 0;
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 700;
+                white-space: nowrap;
             }
 
             /* Нижняя панель с баллами и кнопкой */
             .hw-actions-wrap {
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-                display: flex;
+                display: flex !important;
                 align-items: center;
                 justify-content: space-between;
-                flex-wrap: nowrap;
-                gap: 10px;
-                padding-top: 14px;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 12px;
+                padding-top: 12px;
                 border-top: 1px dashed #e6f0ff;
-                overflow: hidden;
+                background: transparent !important;
+                gap: 10px;
             }
 
-            /* Бейдж с баллами */
+            /* Баллы */
             .hw-score-percent {
-                flex: 0 1 auto;
-                min-width: 0;
-                font-size: 14px; /* Чуть крупнее для читаемости */
-                padding: 6px 12px;
-                border-radius: 12px;
+                flex: 0 1 auto !important;
+                min-width: 0 !important;
+                font-size: 14px !important;
+                padding: 6px 12px !important;
+                border-radius: 10px !important;
+                white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
             }
 
-            /* Кнопка "Открыть" */
+            /* Кнопка */
             .hw-open-btn {
-                flex: 0 0 auto;
-                max-width: 100%;
-                padding: 10px 18px;
-                font-size: 14px;
-                border-radius: 12px;
+                flex: 0 0 auto !important;
+                padding: 10px 16px !important;
+                font-size: 14px !important;
+                border-radius: 10px !important;
+                margin: 0 !important;
             }
 
             /* Фильтры */
@@ -462,32 +410,25 @@
             }
         }
 
-        /* Очень узкие экраны (iPhone SE и т.д.) */
+        /* Очень узкие экраны */
         @media (max-width: 380px) {
             .hw-header {
                 padding: 14px !important;
             }
 
             .hw-actions-wrap {
-                flex-wrap: wrap;
+                flex-direction: column-reverse !important;
+                align-items: stretch !important;
                 gap: 8px;
             }
-            
-            /* Если не влезает в одну строку, кнопка растягивается */
-            .hw-open-btn { 
-                width: 100%; 
-                max-width: 100%; 
-                padding: 11px 12px; 
+            .hw-score-percent {
+                text-align: center;
+                width: 100% !important;
+            }
+            .hw-open-btn {
+                width: 100% !important;
                 text-align: center;
                 justify-content: center;
-            }
-            
-            .hw-score-percent { 
-                width: 100%;
-                text-align: center;
-                font-size: 13px; 
-                padding: 8px 12px; 
-                margin-bottom: 4px;
             }
         }
 
@@ -685,24 +626,6 @@
                 padding: 12px;
                 font-size: 13px;
             }
-        }
-
-        @media (max-width: 380px) {
-            .hw-header {
-                padding: 14px 12px;
-            }
-
-            .hw-modal__body {
-                padding: 14px 12px 90px;
-            }
-
-            .hw-task {
-                padding: 14px 12px;
-            }
-
-            .hw-actions-wrap { flex-wrap: wrap; }
-            .hw-open-btn { width: 100%; max-width: 100%; padding: 10px 12px; font-size: 13px; }
-            .hw-score-percent { font-size: 12px; padding: 4px 8px; }
         }
 
         body.modal-open { overflow: hidden; }
@@ -1040,9 +963,9 @@
 
         function showResults(hwId, tasks, answers, revealCorrectAnswers = false) {
             let correctCount = 0;
-
+            
             const allTestTasks = tasks.filter(t => t.type === 'test');
-            const totalTestCount = allTestTasks.length;
+            const totalTestCount = allTestTasks.length; 
 
             answers.forEach(ans => {
                 const task = tasks[ans.taskId];
@@ -1322,7 +1245,7 @@
 
                 ${r.checkedAt ? `<div class="minimal-date">Проверено: ${formatDate(r.checkedAt)}</div>` : ''}
             `;
-
+            
             if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([block]).catch(() => {});
         }
 
