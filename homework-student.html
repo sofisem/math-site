@@ -21,6 +21,25 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Плашка пользователя по центру */
+        .user-badge {
+            margin: 0 auto 25px auto !important;
+            width: fit-content;
+        }
+
+        /* ЖЕСТКОЕ ИСПРАВЛЕНИЕ КНОПОК ФИЛЬТРА */
+        .hw-filter button {
+            background-color: #ffffff !important;
+            color: var(--color-text) !important;
+            border: 2px solid var(--color-blue-light) !important;
+        }
+
+        .hw-filter button.active {
+            background-color: var(--color-blue) !important;
+            color: #ffffff !important;
+            border-color: var(--color-blue) !important;
+        }
+
         .hw-card { background: #fff; border: 2px solid var(--color-blue-light); border-radius: var(--radius-small); margin-bottom: 15px; overflow: hidden; transition: 0.2s; }
         .hw-card.overdue { border-left: 6px solid #e74c3c; } .hw-card.soon { border-left: 6px solid #f1c40f; } .hw-card.fresh { border-left: 6px solid #2ecc71; }
         .hw-card:hover { border-color: var(--color-blue); box-shadow: 0 6px 20px rgba(110, 168, 254, 0.15); }
@@ -305,6 +324,10 @@
             .hw-filter button {
                 background-color: #ffffff !important;
             }
+            .hw-filter button.active {
+                background-color: var(--color-blue) !important;
+                color: #ffffff !important;
+            }
 
             .hw-card {
                 margin-bottom: 12px;
@@ -418,9 +441,10 @@
             
             /* Плашка пользователя на мобильных */
             .user-badge {
-                margin: 0 10px 15px 10px !important;
+                margin: 0 auto 20px auto !important;
                 font-size: 13px !important;
-                padding: 6px 14px !important;
+                padding: 8px 16px !important;
+                justify-content: center !important;
             }
             .user-badge__avatar {
                 width: 28px !important; height: 28px !important; font-size: 12px !important;
