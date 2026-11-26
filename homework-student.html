@@ -357,19 +357,20 @@
         }
 
         /* ============================================= */
-        /* ===== МОБИЛЬНАЯ ВЕРСИЯ: КАРТОЧКИ ДЗ ===== */
-        /* ============================================= */
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ: КАРТОЧКИ ДЗ ===== */
+/* ============================================= */
         @media (max-width: 640px) {
             .hw-card {
                 margin-bottom: 12px;
                 border-radius: 16px;
             }
 
+            /* Шапка карточки */
             .hw-header {
-                padding: 16px 16px;
+                padding: 16px !important; /* Уменьшаем отступ */
                 flex-direction: column;
                 align-items: stretch;
-                gap: 12px;
+                gap: 14px;
             }
 
             .hw-header-info {
@@ -378,31 +379,42 @@
             }
 
             .hw-title {
-                font-size: 17px;
+                font-size: 18px;
                 line-height: 1.3;
-                margin-bottom: 8px;
+                margin-bottom: 10px;
                 word-break: break-word;
             }
 
-            /* flex вместо grid — не остаётся пустых ячеек */
+            /* Мета-информация переведена на flex */
             .hw-meta {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 6px 10px;
+                align-items: center;
+                gap: 6px 12px; /* Отступы между строкой и элементами */
                 font-size: 12px;
                 line-height: 1.4;
+                color: #888;
             }
 
+            /* Дедлайн на всю ширину */
             .hw-meta .hw-deadline {
                 flex: 0 0 100%;
                 font-size: 13px;
+                margin-bottom: 2px;
+            }
+
+            /* Остальные элементы (дата, задачи, статус) идут в ряд */
+            .hw-meta span {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
             }
 
             .hw-meta .hw-status-badge {
-                flex: 0 0 auto;
+                margin-top: 4px;
             }
 
-            /* Кнопка и балл — в своей строке, не вылезают */
+            /* Нижняя панель с баллами и кнопкой */
             .hw-actions-wrap {
                 width: 100%;
                 max-width: 100%;
@@ -412,42 +424,70 @@
                 justify-content: space-between;
                 flex-wrap: nowrap;
                 gap: 10px;
-                padding-top: 10px;
+                padding-top: 14px;
                 border-top: 1px dashed #e6f0ff;
                 overflow: hidden;
             }
 
+            /* Бейдж с баллами */
             .hw-score-percent {
                 flex: 0 1 auto;
                 min-width: 0;
-                font-size: 13px;
-                padding: 5px 10px;
-                border-radius: 10px;
+                font-size: 14px; /* Чуть крупнее для читаемости */
+                padding: 6px 12px;
+                border-radius: 12px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
 
+            /* Кнопка "Открыть" */
             .hw-open-btn {
                 flex: 0 0 auto;
                 max-width: 100%;
-                padding: 10px 14px;
-                font-size: 13px;
+                padding: 10px 18px;
+                font-size: 14px;
                 border-radius: 12px;
             }
 
+            /* Фильтры */
             .hw-filter {
                 gap: 8px;
                 margin-bottom: 18px;
             }
 
             .hw-filter button {
-                padding: 7px 14px;
-                font-size: 12px;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Очень узкие экраны (iPhone SE и т.д.) */
+        @media (max-width: 380px) {
+            .hw-header {
+                padding: 14px !important;
             }
 
-            .hw-empty {
-                padding: 40px 20px;
+            .hw-actions-wrap {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            /* Если не влезает в одну строку, кнопка растягивается */
+            .hw-open-btn { 
+                width: 100%; 
+                max-width: 100%; 
+                padding: 11px 12px; 
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .hw-score-percent { 
+                width: 100%;
+                text-align: center;
+                font-size: 13px; 
+                padding: 8px 12px; 
+                margin-bottom: 4px;
             }
         }
 
