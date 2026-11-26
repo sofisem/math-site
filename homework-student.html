@@ -236,11 +236,13 @@
         .solution-block .solution-title { font-size: 12px; color: #9b59b6; font-weight: 700; margin-bottom: 6px; }
         .latex-solution { overflow-x: auto; line-height: 1.6; }
 
+        /* ===== Кнопка отправки ДЗ — обычный блок внизу ===== */
         .submit-hw-btn {
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 12px;
-            margin-top: 16px;
+            display: block; width: 100%; margin-top: 20px; padding: 16px;
+            background: #2ecc71; color: #fff; font-family: var(--font-heading);
+            font-weight: 700; font-size: 18px; border: none; border-radius: 12px;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+            position: static !important; /* защита от внешнего sticky/fixed */
         }
         .submit-hw-btn:hover:not(:disabled) { background: #27ae60; transform: translateY(-2px); }
         .submit-hw-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
@@ -540,7 +542,7 @@
             }
 
             .hw-modal__body {
-                padding: 16px 16px 90px;
+                padding: 16px 16px 24px; /* было 90px — убираем запас под sticky-кнопку */
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 flex: 1;
@@ -600,13 +602,13 @@
                 max-width: 120px;
             }
 
+            /* Кнопка отправки — обычный блок внизу, без sticky/fixed */
             .submit-hw-btn {
                 padding: 15px;
                 font-size: 16px;
                 border-radius: 12px;
                 margin-top: 16px;
-                position: sticky;
-                bottom: 0;
+                position: static !important;
             }
 
             .result-card {
