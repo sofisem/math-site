@@ -105,7 +105,7 @@
         .field-with-icon { display: flex; gap: 12px; align-items: flex-start; background: #f4fdf7; border: 1.5px solid #b9ead0; border-radius: 12px; padding: 12px 14px; margin-top: 10px; }
         .field-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; background: #fff; box-shadow: 0 2px 6px rgba(46, 204, 113, 0.2); }
         .field-content { flex: 1; min-width: 0; }
-        .field-content input[type="text"] { width: 100%; padding: 9px 12px; border: 1.5px solid #b9ead0; border-radius: 8px; font-family: var(--font-body); font-size: 14px; outline: none; box-sizing: border-box; background: #fff; }
+        .field-content input[type="text"], .field-content input[type="number"] { width: 100%; padding: 9px 12px; border: 1.5px solid #b9ead0; border-radius: 8px; font-family: var(--font-body); font-size: 14px; outline: none; box-sizing: border-box; background: #fff; }
         .solution-accordion { margin-top: 10px; border: 1.5px solid #e8d5f0; border-radius: 12px; overflow: hidden; background: #fdfaff; }
         .solution-toggle { width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: transparent; border: none; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: #9b59b6; transition: 0.15s; text-align: left; }
         .solution-toggle__text { flex: 1; }
@@ -115,7 +115,7 @@
         .solution-body textarea { width: 100%; min-height: 60px; padding: 10px 12px; border: 1.5px solid #d7bde2; border-radius: 10px; font-family: var(--font-body); font-size: 14px; outline: none; box-sizing: border-box; background: #fff; resize: vertical; margin-bottom: 0; }
         .task-preview-wrapper { margin-top: 10px; }
         .task-preview-label { display: block; font-size: 11px; font-weight: 800; color: #8b9aac; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-        .task-preview-new { background: #fdf0f5; border: 1.5px solid #fbd2dc; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.6; min-height: 40px; color: #333; }
+        .task-preview-new { background: #fdf0f5; border: 1.5px solid #fbd2dc; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.6; min-height: 40px; color: #333; white-space: pre-wrap; }
         .task-preview-new:empty::before { content: 'Здесь появится предпросмотр...'; color: #d18aa3; font-style: italic; }
         .task-img-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
         .task-img-btn { background: #eef4ff; color: var(--color-heading); border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 12px; font-family: var(--font-body); transition: 0.15s; }
@@ -196,7 +196,7 @@
         .preview-hw-general-desc { font-size: 15px; color: #555; margin-bottom: 20px; padding: 15px; background: #fdf0f5; border-radius: 10px; border-left: 4px solid var(--color-pink); }
         .preview-task { background: #f9fbfd; border: 1px solid #e6f0ff; border-radius: 12px; padding: 20px; margin-bottom: 15px; }
         .preview-task-number { font-weight: 800; color: var(--color-pink); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; }
-        .preview-task-text { font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 10px; }
+        .preview-task-text { font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 10px; white-space: pre-wrap; }
         .preview-task-img { max-width: 100%; max-height: 400px; border-radius: 8px; margin-top: 10px; display: block; }
         .preview-answer-zone { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbe1fc; }
         .preview-answer-label { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 5px; display: block; }
@@ -208,6 +208,7 @@
         .preview-result.incorrect { color: #e74c3c; }
         .preview-solution { margin-top: 10px; padding: 12px; background: #fdfaff; border: 1px solid #e8d5f0; border-radius: 10px; font-size: 14px; }
         .preview-solution-title { font-size: 11px; font-weight: 800; color: #9b59b6; margin-bottom: 6px; text-transform: uppercase; }
+        .preview-solution-content { white-space: pre-wrap; line-height: 1.6; }
         .preview-upload-btn { background: var(--color-blue-light); color: var(--color-heading); border: 2px solid var(--color-blue-light); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 700; width: fit-content; font-family: var(--font-heading); }
         .preview-empty-hint { font-size: 12px; color: #8b9aac; font-style: italic; }
 
@@ -243,7 +244,6 @@
         .review-score-input { width: 60px; padding: 4px 8px; border: 1.5px solid #e0e8f3; border-radius: 6px; font-family: var(--font-body); font-size: 14px; text-align: center; font-weight: 700; outline: none; }
         .review-score-input:focus { border-color: var(--color-blue); }
 
-        /* ===== Вкладка "Сданные ДЗ" ===== */
         .submissions-toolbar { background: #fff; border-radius: var(--radius-small); border: 1px solid #e8eef6; padding: 12px 16px; margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         .submissions-filters { display: flex; gap: 6px; flex-wrap: wrap; }
         .submissions-filter { background: #fff; border: 1.5px solid #e0e8f3; color: #7a8ba3; padding: 8px 14px; border-radius: 10px; font-family: var(--font-body); font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 6px; }
@@ -277,6 +277,12 @@
 
         .submission-empty { padding: 50px 20px; text-align: center; color: #8b9aac; font-size: 14px; }
         .submission-empty__emoji { font-size: 48px; margin-bottom: 10px; }
+
+        /* === Пробник: бейдж и поле итогового балла === */
+        .hw-type-badge { display: inline-flex; align-items: center; gap: 4px; background: #fdf0f5; color: var(--color-pink); padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 800; }
+        .exam-score-input { border-color: var(--color-pink) !important; }
+        .exam-score-input:focus { box-shadow: 0 0 0 3px rgba(240, 120, 160, 0.15); }
+        .exam-score-summary { color: var(--color-pink); font-weight: 800; }
     </style>
 </head>
 <body>
@@ -355,6 +361,16 @@
                                 <select id="hw-target"><option value="all">Всем</option><option value="specific">Выбранным</option></select>
                             </div>
                         </div>
+
+                        <!-- Тип ДЗ -->
+                        <div class="form-row">
+                            <label>Тип ДЗ</label>
+                            <div class="type-switch" id="hw-type-switch" style="margin-bottom:0;">
+                                <button type="button" class="type-switch__btn active" data-hw-type="regular" onclick="setHomeworkType('regular')">📚 Обычное ДЗ</button>
+                                <button type="button" class="type-switch__btn" data-hw-type="exam" onclick="setHomeworkType('exam')">🎯 Пробник (100 баллов)</button>
+                            </div>
+                        </div>
+
                         <div class="form-row" id="hw-target-emails-box" style="display:none;">
                             <label>Выберите учеников</label>
                             <div class="student-dropdown">
@@ -457,6 +473,7 @@
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxedXeIVz4Q7dWSE0k49LUQD6d_VQgn1S8M_D6sACMePJwhGk7qoUCFfQUsHYfhqMZ_/exec';
         let allHomework = [], teacherEmail = '', taskCounter = 0, previewTimers = {};
         let previewTasks = [];
+        let currentHomeworkType = 'regular';
 
         let allStudentsList = [];
         let selectedEmailsCreate = new Set();
@@ -466,6 +483,16 @@
 
         let submissionsCache = [];
         let submissionsFilter = 'pending';
+
+        // ============================================================
+        // ГЛОБАЛЬНЫЙ ПЕРЕХВАТ ОШИБОК
+        // ============================================================
+        window.addEventListener('error', (e) => {
+            console.error('[GLOBAL ERROR]', e.message, 'at', (e.filename || '?') + ':' + (e.lineno || '?'));
+        });
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('[UNHANDLED PROMISE]', e.reason);
+        });
 
         function showToast(msg, type = 'info') {
             const c = document.getElementById('toast-container');
@@ -478,6 +505,7 @@
         }
 
         function switchTab(tab) {
+            console.log(`[switchTab] → ${tab}`);
             const tabs = ['create', 'list', 'submissions'];
             tabs.forEach(t => {
                 const isActive = t === tab;
@@ -487,18 +515,72 @@
             if (tab === 'submissions') loadSubmissions();
         }
 
+        // ===== Тип ДЗ =====
+        function setHomeworkType(type) {
+            currentHomeworkType = type;
+            console.log(`[setHomeworkType] → ${type}`);
+            document.querySelectorAll('#hw-type-switch .type-switch__btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.hwType === type);
+            });
+        }
+
+        function getHomeworkType(hw) {
+            return (hw && hw.homeworkType) ? hw.homeworkType : 'regular';
+        }
+
+        // ============================================================
+        // JSONP с логированием и защитой от поздних ответов
+        // ============================================================
         function jsonp(url, callback) {
             const cbName = 'sonchesCallback_' + Date.now() + Math.floor(Math.random() * 1000);
-            const script = document.createElement('script'); let finished = false;
-            const finish = (data) => { if (finished) return; finished = true; clearTimeout(timeout); delete window[cbName]; if (script.parentNode) script.remove(); callback(data); };
-            const timeout = setTimeout(() => finish({ success: false, message: 'Таймаут' }), 20000);
-            window[cbName] = (data) => finish(data);
+            const script = document.createElement('script');
+            let finished = false;
+
+            console.log(`[JSONP] → Callback: ${cbName}`);
+            console.log(`[JSONP] → URL length: ${url.length}`);
+            const startTime = Date.now();
+
+            window[cbName] = (data) => {
+                if (finished) {
+                    console.warn(`[JSONP] ⚠️ Поздний ответ (игнорируем):`, data);
+                    return;
+                }
+                console.log(`[JSONP] ✅ Ответ за ${Date.now() - startTime}ms:`, data);
+                finish(data);
+            };
+
+            const finish = (data) => {
+                if (finished) return;
+                finished = true;
+                clearTimeout(timeout);
+                // Не удаляем коллбэк сразу — поздний ответ не должен падать с ReferenceError
+                setTimeout(() => { try { delete window[cbName]; } catch (e) {} }, 60000);
+                if (script.parentNode) script.remove();
+                callback(data);
+            };
+
+            const timeout = setTimeout(() => {
+                console.error(`[JSONP] ❌ ТАЙМАУТ 25 сек. Callback: ${cbName}`);
+                finish({ success: false, message: 'Таймаут: Apps Script не ответил за 25 сек. Проверьте деплой.' });
+            }, 25000);
+
             script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
-            script.onerror = () => finish({ success: false, message: 'Сетевая ошибка' });
+            script.onerror = () => {
+                console.error(`[JSONP] ❌ Сетевая ошибка при загрузке: ${script.src}`);
+                finish({ success: false, message: 'Сетевая ошибка загрузки скрипта' });
+            };
             document.body.appendChild(script);
         }
 
-        function postAction(params, callback) { jsonp(SCRIPT_URL + '?' + new URLSearchParams(params).toString(), callback); }
+        function postAction(params, callback) {
+            console.log(`[postAction] 📤 action="${params.action}"`, params);
+            const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
+            console.log(`[postAction] 🔗 Длина URL: ${url.length} символов`);
+            if (url.length > 2000) {
+                console.warn(`[postAction] ⚠️ URL длиннее 2000 символов — Google может обрезать!`);
+            }
+            jsonp(url, callback);
+        }
 
         function formatDate(iso) {
             if (!iso) return '—';
@@ -522,6 +604,26 @@
             return m;
         }
 
+        // ===== Поле итогового балла для пробника =====
+        function examScoreFieldHtml(hw, currentScores) {
+            if (getHomeworkType(hw) !== 'exam') return '';
+            const val = (currentScores && currentScores.examScore != null) ? currentScores.examScore : '';
+            return `
+                <div class="review-form__row">
+                    <label>🎯 Итоговый балл по 100-балльной шкале</label>
+                    <div class="review-scores">
+                        <div class="review-scores__item" style="border-color: var(--color-pink);">
+                            <span class="review-scores__label" style="color: var(--color-pink);">Балл</span>
+                            <input type="number" min="0" max="100" step="1"
+                                   class="review-score-input exam-score-input"
+                                   value="${val}" placeholder="0">
+                            <span class="review-scores__max">/ 100</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         // ============================================================
         // ДРОПДАУН
         // ============================================================
@@ -529,14 +631,17 @@
             if (studentsLoaded) { renderCurrentList(); return; }
             const listEl = document.querySelector(`[data-list="${activeContext}"]`);
             if (listEl) listEl.innerHTML = '<div class="student-dropdown__loading">Загрузка учеников...</div>';
+            console.log('[loadStudents] 📥 Загружаем список учеников...');
 
             postAction({ action: 'getAllStudents', email: teacherEmail }, data => {
                 if (!data || !data.success) {
+                    console.error('[loadStudents] ❌ Ошибка:', data);
                     if (listEl) listEl.innerHTML = '<div class="student-dropdown__empty">❌ Не удалось загрузить</div>';
                     return;
                 }
                 allStudentsList = (data.students || []).map(s => ({ name: s.name || 'Без имени', email: s.email })).filter(s => s.email);
                 studentsLoaded = true;
+                console.log(`[loadStudents] ✅ Загружено учеников: ${allStudentsList.length}`);
                 renderCurrentList();
             });
         }
@@ -681,6 +786,7 @@
         function addTaskBlock() {
             taskCounter++;
             const id = 'task_' + taskCounter;
+            console.log(`[addTaskBlock] ➕ Задача ${taskCounter} (${id})`);
             const block = document.createElement('div');
             block.className = 'task-card-new type-test';
             block.id = id;
@@ -705,7 +811,7 @@
                         <div class="field-icon field-icon--green">✅</div>
                         <div class="field-content">
                             <label class="task-field-label task-field-label--green">Правильный ответ</label>
-                            <input type="text" class="task-answer-input" placeholder="Например: 12" oninput="document.getElementById('${id}').dataset.correctAnswer = this.value.trim()">
+                            <input type="text" class="task-answer-input" placeholder="Например: 12">
                         </div>
                     </div>
                 </div>
@@ -714,7 +820,7 @@
                         <div class="field-icon" style="color:#9b59b6; box-shadow: 0 2px 6px rgba(155,89,182,.2);">⭐</div>
                         <div class="field-content">
                             <label class="task-field-label" style="color:#9b59b6;">Максимум баллов за задачу</label>
-                            <input type="number" min="1" step="1" class="task-answer-input" placeholder="Например: 2" style="border-color:#d7bde2;" oninput="document.getElementById('${id}').dataset.maxScore = this.value.trim()">
+                            <input type="number" min="1" step="1" class="task-answer-input maxscore-input" placeholder="Например: 2" style="border-color:#d7bde2;">
                         </div>
                     </div>
                 </div>
@@ -725,7 +831,11 @@
                         <span class="solution-toggle__chevron">▼</span>
                     </button>
                     <div class="solution-body" id="solution_body_${id}" style="display:none;">
-                        <textarea class="solution-input" oninput="document.getElementById('${id}').dataset.solution = this.value.trim()"></textarea>
+                        <textarea class="solution-input" placeholder="Введите решение задачи (поддерживается LaTeX: $x^2$)" oninput="debouncedUpdateSolutionPreview('${id}')"></textarea>
+                        <div class="task-preview-wrapper">
+                            <label class="task-preview-label">Предпросмотр решения</label>
+                            <div class="task-preview-new" id="solution_preview_${id}"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="task-img-row">
@@ -738,7 +848,11 @@
             document.getElementById('tasks-container').appendChild(block);
         }
 
-        function removeTask(id) { const el = document.getElementById(id); if (el) el.remove(); }
+        function removeTask(id) {
+            console.log(`[removeTask] 🗑 ${id}`);
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
         function toggleSolution(id) {
             const body = document.getElementById('solution_body_' + id);
             const acc = document.getElementById('solution_acc_' + id);
@@ -747,6 +861,7 @@
             acc.classList.toggle('open', !isOpen);
         }
         function setTaskType(id, type) {
+            console.log(`[setTaskType] ${id} → ${type}`);
             const block = document.getElementById(id);
             if (!block) return;
             block.dataset.type = type;
@@ -759,7 +874,6 @@
             if (maxScoreBlock) maxScoreBlock.style.display = type === 'extended' ? 'block' : 'none';
             const solutionAcc = document.getElementById('solution_acc_' + id);
             if (solutionAcc) solutionAcc.style.display = type === 'test' ? 'block' : 'none';
-            if (type === 'test') { block.dataset.maxScore = ''; }
         }
         function debouncedUpdatePreview(id) { clearTimeout(previewTimers[id]); previewTimers[id] = setTimeout(() => updatePreview(id), 300); }
         function updatePreview(id) {
@@ -768,42 +882,87 @@
             const text = block.querySelector('.task-text').value;
             const preview = document.getElementById('preview_' + id);
             if (!text.trim()) { preview.innerHTML = ''; return; }
-            preview.innerHTML = text;
+            preview.innerHTML = text.replace(/\n/g, '<br>');
             if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([preview]).catch(() => {});
         }
+
+        function debouncedUpdateSolutionPreview(id) {
+            clearTimeout(previewTimers['sol_' + id]);
+            previewTimers['sol_' + id] = setTimeout(() => updateSolutionPreview(id), 300);
+        }
+        function updateSolutionPreview(id) {
+            const block = document.getElementById(id);
+            if (!block) return;
+            const textarea = block.querySelector('.solution-input');
+            const preview = document.getElementById('solution_preview_' + id);
+            if (!preview || !textarea) return;
+            const text = textarea.value;
+            if (!text.trim()) { preview.innerHTML = ''; return; }
+            preview.innerHTML = `<div class="preview-solution-title">💡 Решение</div><div class="preview-solution-content">${text.replace(/\n/g, '<br>')}</div>`;
+            if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([preview]).catch(() => {});
+        }
+
         function uploadTaskImage(input, taskId) {
             const file = input.files && input.files[0]; if (!file) return;
+            console.log(`[uploadTaskImage] 📸 Файл: ${file.name}, ${(file.size/1024).toFixed(1)} КБ, тип: ${file.type}`);
             if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) { showToast('Картинка до 5 МБ', 'error'); input.value = ''; return; }
             const statusEl = document.getElementById('img_status_' + taskId);
             statusEl.textContent = '⏳ Загрузка...';
             const reader = new FileReader();
             reader.onload = function (e) {
+                console.log(`[uploadTaskImage] 🔄 POST → uploadHomeworkImage`);
                 fetch(SCRIPT_URL, {
                     method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: 'uploadHomeworkImage', teacherEmail, fileName: 'hw_' + Date.now() + '.png', dataUrl: e.target.result })
-                }).then(r => r.json()).then(data => {
+                }).then(r => {
+                    console.log(`[uploadTaskImage] 📥 HTTP ${r.status}`);
+                    return r.json();
+                }).then(data => {
+                    console.log(`[uploadTaskImage] 📥 Ответ:`, data);
                     input.value = '';
                     if (data && data.success) {
                         statusEl.textContent = '✅';
                         document.getElementById(taskId).dataset.imageUrl = data.url;
                         document.getElementById('img_preview_' + taskId).innerHTML = `<img src="${data.url}" style="max-height: 100px; border-radius: 8px;">`;
                     } else { statusEl.textContent = '❌'; }
-                }).catch(() => { input.value = ''; statusEl.textContent = '❌'; });
+                }).catch(err => {
+                    console.error(`[uploadTaskImage] ❌ Ошибка:`, err);
+                    input.value = ''; statusEl.textContent = '❌';
+                });
             };
             reader.readAsDataURL(file);
         }
+
+        // ============================================================
+        // СБОР ЗАДАЧ
+        // ============================================================
         function collectTasks() {
             const taskBlocks = document.querySelectorAll('.task-card-new');
             const tasksArr = [];
             taskBlocks.forEach(block => {
                 const type = block.dataset.type || 'test';
-                const text = block.querySelector('.task-text').value.trim();
+                const textEl = block.querySelector('.task-text');
+                const text = textEl ? textEl.value.trim() : '';
                 const image = block.dataset.imageUrl || '';
-                const correctAnswer = type === 'test' ? (block.dataset.correctAnswer || '') : '';
-                const solution = block.dataset.solution || '';
-                const maxScore = type === 'extended' ? (Number(block.dataset.maxScore) || 0) : 0;
+                
+                let correctAnswer = '';
+                if (type === 'test') {
+                    const ansEl = block.querySelector('.task-answer-input');
+                    correctAnswer = ansEl ? ansEl.value.trim() : '';
+                }
+                
+                const solutionEl = block.querySelector('.solution-input');
+                const solution = solutionEl ? solutionEl.value.trim() : '';
+                
+                let maxScore = 0;
+                if (type === 'extended') {
+                    const maxEl = block.querySelector('.maxscore-block .task-answer-input');
+                    maxScore = maxEl ? (Number(maxEl.value) || 0) : 0;
+                }
+                
                 if (text || image) tasksArr.push({ type, text, image, correctAnswer, solution, maxScore });
             });
+            console.log(`[collectTasks] 📋 Собрано задач: ${tasksArr.length}`);
             return tasksArr;
         }
 
@@ -820,7 +979,6 @@
             const tasksArr = collectTasks();
             if (tasksArr.length === 0) { status.textContent = '❌ Добавьте задачу'; status.className = 'create-status err'; return; }
 
-            // Валидация maxScore для extended-задач
             let maxScoreError = false;
             tasksArr.forEach((t, idx) => {
                 if (t.type === 'extended' && (!t.maxScore || t.maxScore < 1)) {
@@ -836,13 +994,38 @@
                 targetEmails = Array.from(selectedEmailsCreate).join(',');
             }
             btn.disabled = true; status.textContent = '⏳ Создаём...';
-            postAction({
-                action: 'createHomework', teacherEmail, title, description,
+
+            const params = {
+                action: 'createHomework', 
+                teacherEmail, 
+                title, 
+                description,
                 deadline: deadlineInput ? new Date(deadlineInput).toISOString() : '',
-                tasks: JSON.stringify(tasksArr), targetEmails, class: ''
-            }, data => {
+                tasks: JSON.stringify(tasksArr), 
+                targetEmails, 
+                class: '',
+                homeworkType: currentHomeworkType
+            };
+
+            console.log('[createHomework] 📤 Отправляем (POST):', {
+                title, description, deadlineInput, targetMode,
+                homeworkType: currentHomeworkType,
+                tasksCount: tasksArr.length,
+                targetEmails
+            });
+
+            // Используем POST вместо JSONP (GET)
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(params)
+            })
+            .then(r => r.json())
+            .then(data => {
                 btn.disabled = false;
+                console.log('[createHomework] 📥 Ответ (POST):', data);
                 if (data && data.success) {
+                    console.log('[createHomework] ✅ Успех, id=' + data.id);
                     status.textContent = '✅ ДЗ создано!'; status.className = 'create-status ok';
                     showToast('ДЗ создано', 'success');
                     document.getElementById('hw-title').value = '';
@@ -851,13 +1034,21 @@
                     document.getElementById('hw-target').value = 'all';
                     document.getElementById('hw-target-emails-box').style.display = 'none';
                     selectedEmailsCreate.clear();
+                    setHomeworkType('regular');
                     document.getElementById('tasks-container').innerHTML = '';
                     taskCounter = 0; addTaskBlock();
                     loadHomework();
                 } else {
+                    console.error('[createHomework] ❌ Ошибка:', data);
                     status.textContent = '❌ ' + (data?.message || 'Ошибка');
                     status.className = 'create-status err';
                 }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                console.error('[createHomework] ❌ Сеть/парсинг:', err);
+                status.textContent = '❌ Сетевая ошибка. Проверьте консоль.';
+                status.className = 'create-status err';
             });
         }
 
@@ -875,6 +1066,7 @@
             const hw = allHomework.find(h => String(h.id) === String(hwId));
             if (!hw) return;
             try { previewTasks = typeof hw.tasks === 'string' ? JSON.parse(hw.tasks || '[]') : (hw.tasks || []); } catch (e) { previewTasks = []; }
+            currentHomeworkType = getHomeworkType(hw);
             const deadlineText = hw.deadline ? '⏳ До ' + formatDate(hw.deadline) : 'Без дедлайна';
             renderHomeworkPreview(hw.title || '', hw.description || '', deadlineText, previewTasks);
         }
@@ -900,12 +1092,24 @@
                     const maxScoreText = task.maxScore ? ` · макс. ${task.maxScore} б.` : '';
                     interactionHtml = `<div class="preview-answer-zone"><label class="preview-answer-label">Прикрепите фото:${maxScoreText}</label><button class="preview-upload-btn" onclick="showToast('Недоступно в предпросмотре')">📸 Выбрать</button></div>`;
                 }
+                
+                let solutionHtml = '';
+                if (task.solution) {
+                    solutionHtml = `
+                        <div class="preview-solution" style="display:block; margin-top:10px;">
+                            <div class="preview-solution-title">💡 Решение</div>
+                            <div class="preview-solution-content">${task.solution.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `;
+                }
+
                 tasksHtml += `
                     <div class="preview-task">
                         <div class="preview-task-number">Задача ${idx + 1} (${task.type === 'test' ? 'Часть 1' : 'Часть 2'})</div>
-                        <div class="preview-task-text">${escapeHtml(task.text || '')}</div>
+                        <div class="preview-task-text">${escapeHtml(task.text || '').replace(/\n/g, '<br>')}</div>
                         ${task.image ? `<img src="${escapeHtml(task.image)}" class="preview-task-img">` : ''}
                         ${interactionHtml}
+                        ${solutionHtml}
                     </div>
                 `;
             });
@@ -913,7 +1117,11 @@
                 <div class="preview-hw-card">
                     <div class="preview-hw-header">
                         <div class="preview-hw-title">${escapeHtml(title)}</div>
-                        <div class="preview-hw-meta"><span class="preview-hw-deadline">${deadlineText}</span><span>📝 ${tasks.length} задач</span></div>
+                        <div class="preview-hw-meta">
+                            <span class="preview-hw-deadline">${deadlineText}</span>
+                            <span>📝 ${tasks.length} задач</span>
+                            ${currentHomeworkType === 'exam' ? '<span>🎯 Пробник (100 б.)</span>' : ''}
+                        </div>
                     </div>
                     <div class="preview-hw-body">
                         ${description ? `<div class="preview-hw-general-desc">${escapeHtml(description)}</div>` : ''}
@@ -930,16 +1138,31 @@
             const correctAnswer = String(task.correctAnswer || '').trim();
             const input = document.getElementById('prev_ans_' + idx);
             const result = document.getElementById('prev_result_' + idx);
+            const solutionDiv = document.getElementById('prev_solution_' + idx);
             const val = input.value.trim();
             if (!val) { result.textContent = 'Введите ответ'; result.className = 'preview-result incorrect'; return; }
             if (val.toLowerCase() === correctAnswer.toLowerCase()) {
                 result.textContent = '✅ Верно!'; result.className = 'preview-result correct'; input.disabled = true;
+                if (task.solution) {
+                    solutionDiv.innerHTML = `<div class="preview-solution-title">💡 Решение</div><div class="preview-solution-content">${task.solution.replace(/\n/g, '<br>')}</div>`;
+                    solutionDiv.style.display = 'block';
+                    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([solutionDiv]).catch(() => {});
+                }
             } else {
-                result.textContent = '❌ Неверно. Правильный: ' + correctAnswer; result.className = 'preview-result incorrect';
+                result.textContent = '❌ Неверно. Правильный: ' + correctAnswer;
+                result.className = 'preview-result incorrect';
+                if (task.solution) {
+                    solutionDiv.innerHTML = `<div class="preview-solution-title">💡 Решение</div><div class="preview-solution-content">${task.solution.replace(/\n/g, '<br>')}</div>`;
+                    solutionDiv.style.display = 'block';
+                    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([solutionDiv]).catch(() => {});
+                }
             }
         }
 
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModal(id) {
+            console.log(`[closeModal] ${id}`);
+            document.getElementById(id).style.display = 'none';
+        }
 
         // ============================================================
         // СПИСОК ДЗ
@@ -947,9 +1170,15 @@
         function loadHomework() {
             const list = document.getElementById('hw-list');
             list.innerHTML = '<div style="padding:40px; text-align:center; color:#8b9aac;">Загрузка...</div>';
+            console.log('[loadHomework] 📚 Загружаем список ДЗ...');
             postAction({ action: 'getAllHomework', teacherEmail }, data => {
-                if (!data || !data.success) { list.innerHTML = '<div style="padding:40px; text-align:center; color:#e74c3c;">Ошибка</div>'; return; }
+                if (!data || !data.success) {
+                    console.error('[loadHomework] ❌ Ошибка:', data);
+                    list.innerHTML = '<div style="padding:40px; text-align:center; color:#e74c3c;">Ошибка</div>';
+                    return;
+                }
                 allHomework = data.homework || [];
+                console.log(`[loadHomework] ✅ Получено ДЗ: ${allHomework.length}`);
                 document.getElementById('hw-count').textContent = allHomework.filter(h => String(h.active).toUpperCase() === 'TRUE').length;
                 renderHomeworkList();
             });
@@ -965,10 +1194,14 @@
                 let taskCount = 0; try { taskCount = JSON.parse(hw.tasks || '[]').length; } catch(e){}
                 const targetEmails = hw.targetEmails || 'all';
                 const recipientsLabel = targetEmails === 'all' ? 'Всем' : targetEmails.split(',').length + ' уч.';
+                const isExam = getHomeworkType(hw) === 'exam';
                 return `
                     <div class="hw-list-new__item ${isArchived ? 'archived' : ''}">
                         <div class="hw-list-new__info">
-                            <div class="hw-list-new__title">${escapeHtml(hw.title)}</div>
+                            <div class="hw-list-new__title">
+                                ${escapeHtml(hw.title)}
+                                ${isExam ? '<span class="hw-type-badge">🎯 Пробник</span>' : ''}
+                            </div>
                             <div class="hw-list-new__meta">
                                 <span>📝 ${taskCount} задач</span>
                                 <span>⏳ ${hw.deadline ? formatDate(hw.deadline) : 'Без срока'}</span>
@@ -1001,10 +1234,16 @@
 
         function archiveHomework(id) {
             if (!confirm('Убрать в архив?')) return;
-            postAction({ action: 'deleteHomework', teacherEmail, id }, () => { showToast('В архиве', 'success'); loadHomework(); });
+            console.log(`[archiveHomework] 🗄 ${id}`);
+            postAction({ action: 'deleteHomework', teacherEmail, id }, data => {
+                console.log('[archiveHomework] 📥', data);
+                showToast('В архиве', 'success');
+                loadHomework();
+            });
         }
 
         function openAssignModal(hwId) {
+            console.log(`[openAssignModal] 👥 ${hwId}`);
             const hw = allHomework.find(h => String(h.id) === String(hwId));
             if (!hw) return;
             selectedEmailsAssign = new Set();
@@ -1089,7 +1328,9 @@
                 if (currentTarget === 'all') targetEmails = 'all';
                 else targetEmails = Array.from(new Set([...currentTarget.split(',').map(e => e.trim()).filter(Boolean), ...Array.from(selectedEmailsAssign)])).join(',');
             }
+            console.log(`[applyAssign] 👥 ${hwId} mode=${mode} → ${targetEmails}`);
             postAction({ action: 'updateHomeworkTargets', teacherEmail, homeworkId: hwId, targetEmails }, data => {
+                console.log('[applyAssign] 📥', data);
                 if (data && data.success) { showToast('Обновлено', 'success'); closeModal('assign-modal'); loadHomework(); }
                 else showToast('❌ ' + (data?.message || 'Ошибка'), 'error');
             });
@@ -1099,6 +1340,7 @@
         // МОДАЛКА "РАБОТЫ"
         // ============================================================
         function openAnswersModal(hwId, hwTitle) {
+            console.log(`[openAnswersModal] 📝 ${hwId} — ${hwTitle}`);
             document.getElementById('modal-hw-title').textContent = 'Сданные работы: ' + hwTitle;
             document.getElementById('answers-modal').style.display = 'flex';
             document.getElementById('modal-answers-list').innerHTML = '<div style="padding:30px; text-align:center; color:#8b9aac;">Загрузка...</div>';
@@ -1114,7 +1356,9 @@
                 if (data && data.success && data.students) data.students.forEach(s => studentsMap[s.email.toLowerCase()] = s.name);
 
                 postAction({ action: 'getHomeworkAnswers', teacherEmail, homeworkId: hwId }, ansData => {
+                    console.log('[openAnswersModal] 📥 Ответ:', ansData);
                     if (!ansData || !ansData.success) {
+                        console.error('[openAnswersModal] ❌', ansData);
                         document.getElementById('modal-answers-list').innerHTML = '<div style="color:#e74c3c;">Ошибка</div>';
                         return;
                     }
@@ -1136,9 +1380,20 @@
                     for (const [email, dataGroup] of Object.entries(grouped)) {
                         const name = studentsMap[email] || email;
                         const tasks = dataGroup.tasks.sort((a,b) => a.taskId - b.taskId);
-                        const testTasks = tasks.filter(t => t.type === 'test');
-                        const okCount = testTasks.filter(t => t.isCorrect === 'true').length;
-                        const totalTest = testTasks.length;
+
+                        // ИСПРАВЛЕНО: Берем ВСЕ тестовые задачи из ДЗ
+                        const testTasksFromHW = hwTasks.filter(t => t.type === 'test');
+                        const totalTest = testTasksFromHW.length;
+                        
+                        // ИСПРАВЛЕНО: Считаем верные из всех задач
+                        let okCount = 0;
+                        testTasksFromHW.forEach((hwTask, index) => {
+                            const studentAnswer = tasks.find(t => String(t.taskId) === String(index));
+                            if (studentAnswer && studentAnswer.type === 'test' && studentAnswer.isCorrect === 'true') {
+                                okCount++;
+                            }
+                        });
+
                         const review = reviewsMap[email] || null;
                         const currentScores = (review && review.scores) || {};
                         const formKey = email.replace(/[^a-z0-9]/gi, '') + '_' + hwId;
@@ -1152,7 +1407,6 @@
                         } else if (tasks.length > 0) headerStatus = 'Сдал';
                         else headerStatus = 'Не сдал';
 
-                        // Считаем процент по extended
                         let totalGot = 0, totalMax = 0;
                         extIdx.forEach(i => {
                             totalGot += Number(currentScores[i]) || 0;
@@ -1161,13 +1415,18 @@
                         const scorePercent = totalMax > 0 ? Math.round((totalGot / totalMax) * 100) : 0;
                         const scoreLabel = totalMax > 0 ? ` · ${totalGot}/${totalMax} (${scorePercent}%)` : '';
 
+                        let examLabel = '';
+                        if (getHomeworkType(hw) === 'exam' && currentScores.examScore != null) {
+                            examLabel = ` · 🎯 ${currentScores.examScore}/100`;
+                        }
+
                         html += `
                             <div class="student-accordion">
                                 <div class="student-accordion__header" onclick="this.parentElement.classList.toggle('open')">
                                     <div class="student-accordion__name">🎓 ${escapeHtml(name)}</div>
                                     <div class="student-accordion__status">
                                         ${totalTest > 0 ? `<span class="ok">${okCount}/${totalTest} ✅</span>` : ''}
-                                        <span>${headerStatus}${scoreLabel}</span>
+                                        <span>${headerStatus}${scoreLabel}${examLabel}</span>
                                         <span>${formatDate(dataGroup.date)}</span>
                                         <span class="student-accordion__toggle">▼</span>
                                     </div>
@@ -1226,6 +1485,8 @@
                             `;
                         }
 
+                        const examHtml = examScoreFieldHtml(hw, currentScores);
+
                         html += `
                             <div class="review-form" id="revform_${formKey}">
                                 <div class="review-form__title">✍️ Проверка</div>
@@ -1238,6 +1499,7 @@
                                     </select>
                                 </div>
                                 ${scoresHtml}
+                                ${examHtml}
                                 <div class="review-form__row">
                                     <label>Комментарий</label>
                                     <textarea class="review-comment">${escapeHtml(rComment)}</textarea>
@@ -1266,6 +1528,7 @@
 
         function uploadReviewImage(input, studentEmail, hwId) {
             const file = input.files && input.files[0]; if (!file) return;
+            console.log(`[uploadReviewImage] 📸 ${file.name}, ${(file.size/1024).toFixed(1)} КБ`);
             if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) { showToast('Фото до 5 МБ', 'error'); input.value = ''; return; }
             const formKey = studentEmail.replace(/[^a-z0-9]/gi, '') + '_' + hwId;
             const preview = document.getElementById('rev_prev_' + formKey);
@@ -1275,12 +1538,16 @@
                     method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: 'uploadHomeworkImage', teacherEmail, fileName: 'review_' + Date.now() + '.png', dataUrl: e.target.result })
                 }).then(r => r.json()).then(data => {
+                    console.log('[uploadReviewImage] 📥', data);
                     input.value = '';
                     if (data && data.success) {
                         preview.innerHTML = `<img src="${data.url}" alt=""><input type="hidden" class="review-img-url" value="${data.url}">`;
                         showToast('Фото загружено', 'success');
                     } else showToast('Ошибка', 'error');
-                }).catch(() => { input.value = ''; showToast('Сеть', 'error'); });
+                }).catch(err => {
+                    console.error('[uploadReviewImage] ❌', err);
+                    input.value = ''; showToast('Сеть', 'error');
+                });
             };
             reader.readAsDataURL(file);
         }
@@ -1294,11 +1561,24 @@
             const teacherImageUrl = imgInput ? imgInput.value : '';
 
             const scores = {};
-            form.querySelectorAll('.review-score-input').forEach(inp => {
+            form.querySelectorAll('.review-score-input[data-task-id]').forEach(inp => {
                 const tid = inp.getAttribute('data-task-id');
                 const val = inp.value.trim();
                 if (val !== '') scores[tid] = Number(val);
             });
+
+            const examInput = form.querySelector('.exam-score-input');
+            if (examInput) {
+                const ev = examInput.value.trim();
+                if (ev !== '') {
+                    let n = Number(ev);
+                    if (isNaN(n)) n = 0;
+                    n = Math.max(0, Math.min(100, Math.round(n)));
+                    scores.examScore = n;
+                }
+            }
+
+            console.log('[saveReview] 📤 Отправляем:', { studentEmail, hwId, status, comment, scores, teacherImageUrl });
 
             const msg = document.getElementById('rev_msg_' + formKey);
             btn.disabled = true;
@@ -1310,6 +1590,7 @@
                 status, teacherComment: comment, teacherImageUrl,
                 scores: JSON.stringify(scores)
             }, data => {
+                console.log('[saveReview] 📥 Ответ:', data);
                 btn.disabled = false;
                 if (data && data.success) {
                     msg.textContent = '✅ Сохранено';
@@ -1329,9 +1610,11 @@
         function loadSubmissions(silent) {
             const container = document.getElementById('submissions-list');
             if (!silent) container.innerHTML = '<div style="padding:40px; text-align:center; color:#8b9aac;">Загрузка...</div>';
+            console.log(`[loadSubmissions] 📥 silent=${silent}`);
 
             postAction({ action: 'getHomeworkSubmissionsForTeacher', teacherEmail }, data => {
                 if (!data || !data.success) {
+                    console.error('[loadSubmissions] ❌ Ошибка:', data);
                     container.innerHTML = '<div style="color:#e74c3c; padding:30px; text-align:center;">Ошибка загрузки</div>';
                     return;
                 }
@@ -1341,11 +1624,13 @@
                         submissionsCache.push({
                             hwId: hw.id,
                             hwTitle: hw.title,
+                            homeworkType: hw.homeworkType,
                             deadline: hw.deadline,
                             ...sub
                         });
                     });
                 });
+                console.log(`[loadSubmissions] ✅ Всего сдач: ${submissionsCache.length}`);
 
                 const cnt = { pending: 0, checked: 0, needs_revision: 0, all: submissionsCache.length };
                 submissionsCache.forEach(s => {
@@ -1398,6 +1683,7 @@
                 const safeTitle = escapeHtml(s.hwTitle).replace(/'/g, "\\'");
 
                 const hwObj = allHomework.find(h => String(h.id) === String(s.hwId));
+                const hwForType = hwObj || { homeworkType: s.homeworkType };
                 const extIdx = getExtendedTaskIndexes(hwObj ? hwObj.tasks : '[]');
                 const maxScoreByTask = getMaxScoresMap(hwObj ? hwObj.tasks : '[]');
                 const currentScores = s.scores || {};
@@ -1420,7 +1706,8 @@
                     `;
                 }
 
-                // Считаем процент
+                const examHtml = examScoreFieldHtml(hwForType, currentScores);
+
                 let totalGot = 0, totalMax = 0;
                 extIdx.forEach(i => {
                     totalGot += Number(currentScores[i]) || 0;
@@ -1431,17 +1718,25 @@
                     ? `<span>⭐ ${totalGot} / ${totalMax} (${scorePercent}%)</span>`
                     : '';
 
+                let examSummary = '';
+                if (getHomeworkType(hwForType) === 'exam' && currentScores.examScore != null) {
+                    examSummary = `<span class="exam-score-summary">🎯 ${currentScores.examScore} / 100</span>`;
+                }
+
+                const examBadge = getHomeworkType(hwForType) === 'exam' ? '<span class="hw-type-badge">🎯 Пробник</span>' : '';
+
                 return `
                     <div class="submission-card ${isUnchecked ? 'submission-card--unchecked' : 'submission-card--checked'}" id="subcard_${formKey}">
                         <div class="submission-card__head">
                             <div>
                                 <div class="submission-card__student">${escapeHtml(s.studentName || s.studentEmail)}</div>
-                                <div class="submission-card__hw">📚 <b>${escapeHtml(s.hwTitle)}</b></div>
+                                <div class="submission-card__hw">📚 <b>${escapeHtml(s.hwTitle)}</b> ${examBadge}</div>
                                 <div class="submission-card__meta">
                                     ${s.submittedAt ? `<span>📤 ${formatDate(s.submittedAt)}</span>` : '<span>📤 Не отправлял</span>'}
                                     ${s.checkedAt ? `<span>✅ ${formatDate(s.checkedAt)}</span>` : ''}
-                                    ${s.answeredCount ? `<span>📝 ${s.answeredCount} отв.</span>` : ''}
+                                    ${s.answeredCount ? `<span>📝 ${s.correctCount != null ? s.correctCount : s.answeredCount} / ${hwObj ? (JSON.parse(hwObj.tasks || '[]').filter(t => t.type === 'test').length) : '?'} ✅</span>` : ''}
                                     ${scoreSummary}
+                                    ${examSummary}
                                 </div>
                             </div>
                             <div class="submission-card__label ${isUnchecked ? 'submission-card__label--unchecked' : 'submission-card__label--checked'}">
@@ -1466,6 +1761,7 @@
                                     </select>
                                 </div>
                                 ${scoresHtml}
+                                ${examHtml}
                                 <div class="review-form__row">
                                     <label>Комментарий ученику</label>
                                     <textarea class="review-comment" placeholder="Что верно, что исправить...">${escapeHtml(s.teacherComment || '')}</textarea>
@@ -1514,6 +1810,7 @@
                 const btn = e.target.closest('.submissions-filter');
                 if (!btn) return;
                 submissionsFilter = btn.dataset.filter;
+                console.log(`[submissionsFilter] → ${submissionsFilter}`);
                 document.querySelectorAll('.submissions-filter').forEach(b => b.classList.toggle('active', b === btn));
                 renderSubmissions();
             });
@@ -1524,7 +1821,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             teacherEmail = localStorage.getItem('sonches_user_email') || '';
+            console.log('[INIT] 👤 Teacher email:', teacherEmail);
+            console.log('[INIT] 🔗 SCRIPT_URL:', SCRIPT_URL);
             if (!teacherEmail) { window.location.href = 'login.html'; return; }
+            console.log('[INIT] ✅ Запуск приложения');
 
             document.getElementById('hw-target').addEventListener('change', function() {
                 const box = document.getElementById('hw-target-emails-box');

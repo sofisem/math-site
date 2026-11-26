@@ -262,6 +262,90 @@
         .review-block__date { 
             margin-top: 14px; font-size: 12px; color: #8b9aac; 
         }
+                /* ===== Минималистичный блок проверки ===== */
+        .review-block {
+            margin-top: 30px; padding: 24px; border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e5e9f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+        
+        .review-block__title { 
+            font-family: var(--font-heading); font-weight: 700; font-size: 18px; 
+            color: var(--color-heading); margin-bottom: 16px; 
+        }
+        
+        .review-block__status { 
+            display: inline-block; padding: 4px 10px; border-radius: 6px; 
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .review-block__status--pending  { background: #f4f8ff; color: #4a8cdb; }
+        .review-block__status--checked  { background: #eefdf3; color: #27ae60; }
+        .review-block__status--revision { background: #fff4e5; color: #d35400; }
+
+        /* Главная карточка с баллом */
+        .minimal-score-card {
+            display: flex; align-items: baseline; justify-content: space-between;
+            padding: 20px 24px; border-radius: 12px; margin-bottom: 20px;
+            border: 1px solid #e5e9f0; background: #fafbfc;
+        }
+        .minimal-score-card--success { background: #f4fdf7; border-color: #c8ebd6; }
+        .minimal-score-card--warning { background: #fffbf5; border-color: #fce8c8; }
+        .minimal-score-card--danger  { background: #fdf5f5; border-color: #f6d4d0; }
+
+        .minimal-score-card__numbers { display: flex; align-items: baseline; gap: 6px; }
+        .minimal-score-card__got { font-family: var(--font-heading); font-size: 32px; font-weight: 800; line-height: 1; }
+        .minimal-score-card--success .minimal-score-card__got { color: #27ae60; }
+        .minimal-score-card--warning .minimal-score-card__got { color: #d35400; }
+        .minimal-score-card--danger  .minimal-score-card__got { color: #e74c3c; }
+        .minimal-score-card--neutral .minimal-score-card__got { color: var(--color-heading); }
+        
+        .minimal-score-card__max { font-size: 16px; font-weight: 600; color: #8b9aac; }
+        
+        .minimal-score-card__label { font-size: 13px; font-weight: 700; color: #7a8ba3; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .minimal-score-card__percent { font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: #8b9aac; }
+        .minimal-score-card--success .minimal-score-card__percent { color: #27ae60; }
+        .minimal-score-card--warning .minimal-score-card__percent { color: #d35400; }
+        .minimal-score-card--danger  .minimal-score-card__percent { color: #e74c3c; }
+
+        /* Список задач */
+        .minimal-task-list {
+            border-top: 1px solid #f0f3f8; margin-top: 10px; margin-bottom: 20px;
+        }
+        .minimal-task-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid #f0f3f8;
+            font-size: 14px; color: var(--color-text); font-weight: 600;
+        }
+        .minimal-task-row b { color: var(--color-heading); font-size: 15px; }
+
+        /* Комментарий */
+        .minimal-comment {
+            background: #f9fbfd; padding: 16px; border-radius: 10px;
+            border: 1px solid #e5e9f0; margin-top: 16px;
+        }
+        .minimal-comment__label {
+            font-size: 11px; font-weight: 800; color: #8b9aac; 
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+        }
+        .minimal-comment__text {
+            font-size: 14px; line-height: 1.6; color: #333;
+        }
+
+        .minimal-img {
+            display: block; max-width: 100%; margin-top: 16px;
+            border-radius: 12px; border: 1px solid #e5e9f0;
+        }
+
+        .minimal-date {
+            margin-top: 20px; font-size: 12px; color: #b0bcc9; font-weight: 600;
+        }
+                .hw-score-percent--exam {
+            color: var(--color-pink);
+            background: #fdf0f5;
+            border: 1px solid #fbd2dc;
+        }
         
     </style>
 </head>
@@ -397,8 +481,15 @@
             const bodyEl = document.getElementById('hw-modal-body');
             let tasks = [];
             try { tasks = JSON.parse(hw.tasks || '[]'); } catch(e) {}
+            const isLocked = ['pending', 'checked'].includes(String(hw.reviewStatus || '').toLowerCase());
+            const isChecked = String(hw.reviewStatus || '').toLowerCase() === 'checked';
 
             let html = '';
+            if (isChecked) {
+                html += '<div class="hw-general-desc">✅ Работа проверена. Повторное решение недоступно. Ниже показаны ваши ответы и правильные ответы.</div>';
+            } else if (isLocked) {
+                html += '<div class="hw-general-desc">⏳ Работа отправлена и ожидает проверки. Изменить ответы нельзя.</div>';
+            }
             if (hw.description) {
                 html += `<div class="hw-general-desc">${escapeHtml(hw.description)}</div>`;
             }
@@ -410,7 +501,7 @@
                         <div class="task-answer-zone">
                             <label style="font-size:12px; font-weight:700; color:#555; margin-bottom:5px; display:block;">Ваш ответ:</label>
                             <div class="task-answer-row">
-                                <input type="text" id="ans_input_${hw.id}_${idx}" class="task-answer-input" placeholder="Введите ответ...">
+                                <input type="text" id="ans_input_${hw.id}_${idx}" class="task-answer-input" placeholder="Введите ответ..." ${isLocked ? 'disabled' : ''}>
                             </div>
                             <div id="result_${hw.id}_${idx}" class="result-message" style="display:none;"></div>
                             <div id="solution_${hw.id}_${idx}" class="solution-block" style="display:none;"></div>
@@ -420,9 +511,9 @@
                     const maxText = task.maxScore ? ` <span style="color:#b0bcc9; font-weight:600;">(макс. ${task.maxScore} б.)</span>` : '';
                     interactionHtml = `
                         <div class="task-answer-zone task-extended-zone">
-                            <label style="font-size:12px; font-weight:700; color:#555; margin-bottom:5px; display:block;">Прикрепите фото решения:${maxText}</label>
-                            <button class="task-upload-btn" onclick="document.getElementById('file_${hw.id}_${idx}').click()">📸 Выбрать фото</button>
-                            <input type="file" id="file_${hw.id}_${idx}" accept="image/*" style="display:none;" onchange="uploadStudentSolution(this, '${hw.id}', ${idx})">
+                            <label style="font-size:12px; font-weight:700; color:#555; margin-bottom:5px; display:block;">${isLocked ? 'Прикреплённое решение:' : 'Прикрепите фото решения:'}${maxText}</label>
+                            ${isLocked ? '' : `<button class="task-upload-btn" onclick="document.getElementById('file_${hw.id}_${idx}').click()">📸 Выбрать фото</button>
+                            <input type="file" id="file_${hw.id}_${idx}" accept="image/*" style="display:none;" onchange="uploadStudentSolution(this, '${hw.id}', ${idx})">`}
                             <div id="status_${hw.id}_${idx}" class="task-upload-status"></div>
                             <div id="img_preview_${hw.id}_${idx}"></div>
                         </div>
@@ -441,7 +532,7 @@
 
             html += `<div id="score_${hw.id}" style="display:none;"></div>`;
             html += `<div id="review-block-${hw.id}"></div>`;
-            html += `<button class="submit-hw-btn" onclick="submitWholeHomework('${hw.id}', this)">📤 Отправить всё ДЗ на проверку</button>`;
+            if (!isLocked) html += `<button class="submit-hw-btn" onclick="submitWholeHomework('${hw.id}', this)">📤 Отправить всё ДЗ на проверку</button>`;
 
             bodyEl.innerHTML = html;
 
@@ -488,7 +579,9 @@
                             const input = document.getElementById(`ans_input_${hwId}_${idx}`);
                             if (input) {
                                 input.value = ans.answer;
-                                input.disabled = true;
+                                const currentHw = allHomework.find(h => String(h.id) === String(hwId));
+                                const locked = currentHw && ['pending', 'checked'].includes(String(currentHw.reviewStatus || '').toLowerCase());
+                                input.disabled = !!locked;
                                 if (ans.isCorrect === 'true') { input.style.background = '#e8f5e9'; input.style.color = '#2e7d32'; }
                                 else if (ans.isCorrect === 'false') { input.style.background = '#fdecea'; input.style.color = '#c0392b'; }
                             }
@@ -507,9 +600,11 @@
                     });
 
                     if (answersForShow.length > 0) {
-                        showResults(hwId, tasks, answersForShow);
+                        const currentHw = allHomework.find(h => String(h.id) === String(hwId));
+                        const isChecked = currentHw && String(currentHw.reviewStatus || '').toLowerCase() === 'checked';
+                        if (isChecked) showResults(hwId, tasks, answersForShow, true);
                         const submitBtn = document.querySelector(`#hw-modal-body .submit-hw-btn`);
-                        if (submitBtn) {
+                        if (submitBtn && currentHw && ['pending', 'checked'].includes(String(currentHw.reviewStatus || '').toLowerCase())) {
                             submitBtn.textContent = '✅ ДЗ уже отправлено';
                             submitBtn.style.background = '#4a8cdb';
                             submitBtn.disabled = true;
@@ -543,40 +638,68 @@
             reader.readAsDataURL(file);
         }
 
-        function showResults(hwId, tasks, answers) {
+        function showResults(hwId, tasks, answers, revealCorrectAnswers = false) {
             let correctCount = 0;
-            let totalTestCount = 0;
+            
+            // 1. Берем ОБЩЕЕ количество тестовых задач (Часть 1) из самого ДЗ
+            const allTestTasks = tasks.filter(t => t.type === 'test');
+            const totalTestCount = allTestTasks.length; 
 
+            // 2. Отрисовываем результаты по тем задачам, на которые даны ответы
             answers.forEach(ans => {
                 const task = tasks[ans.taskId];
                 if (!task || task.type !== 'test') return;
 
-                totalTestCount++;
                 const resultEl = document.getElementById(`result_${hwId}_${ans.taskId}`);
                 const solutionEl = document.getElementById(`solution_${hwId}_${ans.taskId}`);
                 if (!resultEl) return;
 
                 resultEl.style.display = 'block';
                 if (ans.isCorrect === 'true') {
-                    resultEl.textContent = '✅ Верно!';
+                    resultEl.textContent = revealCorrectAnswers
+                        ? `✅ Верно. Правильный ответ: ${task.correctAnswer || '—'}`
+                        : '✅ Ответ сохранён.';
                     resultEl.className = 'result-message correct';
                     correctCount++;
                 } else {
-                    resultEl.textContent = `❌ Неверно. Правильный ответ: ${task.correctAnswer || '—'}`;
+                    resultEl.textContent = revealCorrectAnswers
+                        ? `❌ Неверно. Правильный ответ: ${task.correctAnswer || '—'}`
+                        : '❌ Неверно. Правильный ответ будет доступен после проверки учителем.';
                     resultEl.className = 'result-message incorrect';
                 }
 
-                if (task.solution && solutionEl) {
+                if (revealCorrectAnswers && task.solution && solutionEl) {
                     solutionEl.style.display = 'block';
                     solutionEl.innerHTML = `<div class="solution-title">💡 Решение:</div><div class="latex-solution">${task.solution}</div>`;
                     if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([solutionEl]).catch(() => {});
                 }
             });
 
+            // После проверки показываем ключ и решение также для пропущенных тестовых задач.
+            if (revealCorrectAnswers) {
+                allTestTasks.forEach((task, idx) => {
+                    const wasAnswered = answers.some(ans => Number(ans.taskId) === idx && ans.type === 'test');
+                    if (wasAnswered) return;
+                    const resultEl = document.getElementById(`result_${hwId}_${idx}`);
+                    const solutionEl = document.getElementById(`solution_${hwId}_${idx}`);
+                    if (resultEl) {
+                        resultEl.style.display = 'block';
+                        resultEl.textContent = `Правильный ответ: ${task.correctAnswer || '—'}`;
+                        resultEl.className = 'result-message';
+                    }
+                    if (task.solution && solutionEl) {
+                        solutionEl.style.display = 'block';
+                        solutionEl.innerHTML = `<div class="solution-title">💡 Решение:</div><div class="latex-solution">${task.solution}</div>`;
+                    }
+                });
+            }
+
+            // 3. Показываем общий итог (зеленый/желтый/красный блок)
             if (totalTestCount > 0) {
                 const scoreEl = document.getElementById(`score_${hwId}`);
                 if (!scoreEl) return;
 
+                // Считаем процент от ОБЩЕГО количества тестовых задач в ДЗ
                 const percent = Math.round((correctCount / totalTestCount) * 100);
                 let variant = 'great', emoji = '🎉', titleText = 'Отлично!';
                 let messageText = 'Ты отлично справился с этой частью. Так держать!';
@@ -625,6 +748,10 @@
         function submitWholeHomework(hwId, btn) {
             const hw = allHomework.find(h => String(h.id) === String(hwId));
             if (!hw) return;
+            if (['pending', 'checked'].includes(String(hw.reviewStatus || '').toLowerCase())) {
+                alert(hw.reviewStatus === 'checked' ? 'Это задание уже проверено. Повторное решение недоступно.' : 'Работа уже отправлена и ожидает проверки.');
+                return;
+            }
 
             let tasks = [];
             try { tasks = JSON.parse(hw.tasks || '[]'); } catch(e) {}
@@ -656,12 +783,19 @@
                 if (completed >= answersToSend.length) {
                     btn.textContent = '✅ ДЗ отправлено на проверку!';
                     btn.style.background = '#4a8cdb';
-                    showResults(hwId, tasks, answersToSend.filter(a => a.type === 'test' && a.answer));
                     savedAnswers[hwId] = answersToSend;
 
-                    postAction({ action: 'submitHomeworkForReview', email: studentEmail, homeworkId: hwId }, () => {
+                    postAction({ action: 'submitHomeworkForReview', email: studentEmail, homeworkId: hwId }, data => {
+                        if (!data || !data.success) {
+                            alert((data && data.message) || 'Не удалось отправить работу. Обновите страницу и попробуйте ещё раз.');
+                            btn.disabled = false;
+                            btn.textContent = '📤 Повторить отправку';
+                            return;
+                        }
                         const hwObj = allHomework.find(h => String(h.id) === String(hwId));
                         if (hwObj) hwObj.reviewStatus = 'pending';
+                        document.querySelectorAll(`#hw-modal-body .task-answer-input`).forEach(input => input.disabled = true);
+                        document.querySelectorAll(`#hw-modal-body .task-upload-btn, #hw-modal-body input[type="file"]`).forEach(el => el.remove());
                         const block = document.getElementById('review-block-' + hwId);
                         if (block) renderReviewBlock(block, {
                             status: 'pending', teacherComment: '', teacherImageUrl: '', checkedAt: '', scores: {}
@@ -703,58 +837,109 @@
                 renderReviewBlock(block, data.review, tasks);
             });
         }
-
         function renderReviewBlock(block, r, tasks) {
-            let cls = '', statusText = '', statusCls = '';
-            if (r.status === 'pending')        { statusText = '⏳ На проверке';       statusCls = 'pending'; }
-            else if (r.status === 'checked')   { statusText = '✅ Проверено';        statusCls = 'checked';  cls = 'review-block--checked'; }
-            else if (r.status === 'needs_revision') { statusText = '⚠️ На доработку'; statusCls = 'revision'; cls = 'review-block--revision'; }
-            else return;
+            if (!r.status) return;
 
-            let totalGot = 0, totalMax = 0;
-            let scoresHtml = '';
-            if (r.scores && Object.keys(r.scores).length > 0) {
-                const entries = Object.entries(r.scores)
-                    .map(([k, v]) => [Number(k), v])
-                    .sort((a, b) => a[0] - b[0]);
+            let statusText = '⏳ На проверке', statusCls = 'pending';
+            if (r.status === 'checked') { statusText = '✅ Проверено'; statusCls = 'checked'; }
+            else if (r.status === 'needs_revision') { statusText = '⚠️ На доработку'; statusCls = 'revision'; }
 
-                entries.forEach(([tid, val]) => {
-                    const task = (tasks || [])[tid] || {};
-                    const maxS = Number(task.maxScore) || 0;
-                    totalGot += Number(val) || 0;
-                    totalMax += maxS;
+            // 1. Считаем максимум по ВСЕМ задачам Части 2 из ДЗ
+            let totalMax = 0;
+            (tasks || []).forEach(t => {
+                if (t.type === 'extended' && t.maxScore) totalMax += Number(t.maxScore);
+            });
+
+            // 2. Собираем выставленные баллы
+            let totalGot = 0;
+            let taskScores = [];
+
+            if (r.scores) {
+                Object.entries(r.scores)
+                    .filter(([k]) => k !== 'examScore')
+                    .forEach(([k, v]) => {
+                        const tid = Number(k);
+                        const task = (tasks || [])[tid] || {};
+                        const val = Number(v) || 0;
+                        totalGot += val;
+                        taskScores.push({
+                            title: `Задача ${tid + 1}`,
+                            got: val,
+                            max: Number(task.maxScore) || 0
+                        });
+                    });
+                // Сортируем по номеру задачи
+                taskScores.sort((a, b) => {
+                    const numA = parseInt(a.title.replace(/\D/g,''));
+                    const numB = parseInt(b.title.replace(/\D/g,''));
+                    return numA - numB;
                 });
-
-                const percent = totalMax > 0 ? Math.round((totalGot / totalMax) * 100) : 0;
-
-                scoresHtml = `
-                    <div class="review-block__scores">
-                        <div class="review-block__scores-title">⭐ Баллы за Часть 2:</div>
-                        <div class="review-block__scores-list">
-                            ${entries.map(([tid, val]) => {
-                                const task = (tasks || [])[tid] || {};
-                                const maxS = Number(task.maxScore) || 0;
-                                return `<span class="review-score-chip">Задача ${tid + 1}: <b>${val}</b>${maxS > 0 ? ` / ${maxS}` : ''}</span>`;
-                            }).join('')}
-                        </div>
-                        ${totalMax > 0 ? `
-                            <div class="review-block__scores-total">
-                                Итого: <b>${totalGot}</b> / ${totalMax} — <span class="review-block__percent">${percent}%</span>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
             }
 
-            block.className = 'review-block ' + cls;
+            const examScore = (r.scores && r.scores.examScore != null) ? Number(r.scores.examScore) : null;
+            const isExam = examScore !== null;
+
+            // Главный итог (для пробника — по 100-балльной шкале, для обычного ДЗ — по сумме баллов за задачи)
+            const mainGot = isExam ? examScore : totalGot;
+            const mainMax = isExam ? 100 : totalMax;
+            const percent = mainMax > 0 ? Math.round((mainGot / mainMax) * 100) : 0;
+
+            // Цвет для акцента
+            let colorClass = 'neutral';
+            if (mainMax > 0) {
+                if (percent >= 70) colorClass = 'success';
+                else if (percent >= 40) colorClass = 'warning';
+                else colorClass = 'danger';
+            }
+
+            // Формируем верстку
+            block.className = 'review-block';
             block.innerHTML = `
-                <div class="review-block__title">Результат проверки</div>
-                <span class="review-block__status review-block__status--${statusCls}">${statusText}</span>
-                ${scoresHtml}
-                ${r.teacherComment ? `<div class="review-block__comment"><b>💬 Комментарий учителя:</b><br>${escapeHtml(r.teacherComment)}</div>` : ''}
-                ${r.teacherImageUrl ? `<img src="${escapeHtml(r.teacherImageUrl)}" class="review-block__img" alt="Работа с исправлениями">` : ''}
-                ${r.checkedAt ? `<div class="review-block__date">Проверено: ${formatDate(r.checkedAt)}</div>` : ''}
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div class="review-block__title" style="margin: 0;">Результат проверки</div>
+                    <span class="review-block__status review-block__status--${statusCls}">${statusText}</span>
+                </div>
+
+                <!-- Главный балл (Часть 2) -->
+                ${mainMax > 0 ? `
+                    <div class="minimal-score-card minimal-score-card--${colorClass}">
+                        <div class="minimal-score-card__numbers">
+                            <span class="minimal-score-card__got">${mainGot}</span>
+                            <span class="minimal-score-card__max">/ ${mainMax}</span>
+                        </div>
+                        <div class="minimal-score-card__label">${isExam ? 'Итоговый балл (Пробник)' : 'Баллы за Часть 2'}</div>
+                        <div class="minimal-score-card__percent">${percent}%</div>
+                    </div>
+                ` : ''}
+
+                <!-- Детализация по задачам (показываем всегда, если есть баллы) -->
+                ${taskScores.length > 0 ? `
+                    <div class="minimal-task-list" style="margin-top: 20px;">
+                        ${taskScores.map(ts => `
+                            <div class="minimal-task-row">
+                                <span>${ts.title}</span>
+                                <span><b>${ts.got}</b> / ${ts.max}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                <!-- Комментарий -->
+                ${r.teacherComment ? `
+                    <div class="minimal-comment">
+                        <div class="minimal-comment__label">Комментарий учителя</div>
+                        <div class="minimal-comment__text">${escapeHtml(r.teacherComment)}</div>
+                    </div>
+                ` : ''}
+
+                <!-- Фото от учителя -->
+                ${r.teacherImageUrl ? `<img src="${escapeHtml(r.teacherImageUrl)}" class="minimal-img" alt="Работа с исправлениями">` : ''}
+
+                <!-- Дата -->
+                ${r.checkedAt ? `<div class="minimal-date">Проверено: ${formatDate(r.checkedAt)}</div>` : ''}
             `;
+            
+            if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([block]).catch(() => {});
         }
 
         function renderHomework(filter) {
@@ -776,7 +961,11 @@
                 else if (hw.reviewStatus === 'needs_revision') badge = '<span class="hw-status-badge hw-status-badge--revision">⚠️ На доработку</span>';
 
                 let percentBadge = '';
-                if (hw.scorePercent !== null && hw.scorePercent !== undefined) {
+                if (hw.homeworkType === 'exam' && hw.examScore != null) {
+                    // Для пробника показываем итоговый балл
+                    percentBadge = `<span class="hw-score-percent hw-score-percent--exam">🎯 ${hw.examScore} / 100</span>`;
+                } else if (hw.scorePercent !== null && hw.scorePercent !== undefined) {
+                    // Для обычного ДЗ показываем процент
                     percentBadge = `<span class="hw-score-percent">⭐ ${hw.scorePercent}%</span>`;
                 }
 
