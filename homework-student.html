@@ -298,10 +298,17 @@
         /* ===== РАДИКАЛЬНОЕ ИСПРАВЛЕНИЕ КАРТОЧЕК ===== */
         /* ============================================= */
         @media (max-width: 640px) {
+            /* Убираем прозрачность карточек на телефоне, чтобы не было "белых квадратов" */
+            .hw-card,
+            .hw-modal,
+            .content-header,
+            .hw-filter button {
+                background-color: #ffffff !important;
+            }
+
             .hw-card {
                 margin-bottom: 12px;
                 border-radius: 16px;
-                background: #fff !important;
             }
 
             .hw-header {
@@ -407,6 +414,16 @@
             .hw-filter button {
                 padding: 8px 16px;
                 font-size: 13px;
+            }
+            
+            /* Плашка пользователя на мобильных */
+            .user-badge {
+                margin: 0 10px 15px 10px !important;
+                font-size: 13px !important;
+                padding: 6px 14px !important;
+            }
+            .user-badge__avatar {
+                width: 28px !important; height: 28px !important; font-size: 12px !important;
             }
         }
 
@@ -626,66 +643,6 @@
                 padding: 12px;
                 font-size: 13px;
             }
-            /* Основные карточки остаются белыми */
-            .hw-card {
-                background: #fff !important;
-                border-color: var(--color-blue-light);
-            }
-
-            /* Убираем дополнительные светлые контейнеры */
-            .review-block,
-            .minimal-score-card,
-            .minimal-comment,
-            .hw-task,
-            .result-card__message {
-                background: transparent !important;
-                box-shadow: none;
-            }
-
-            /* Окно с заданием тоже остаётся белым */
-            .hw-modal {
-                background: #fff !important;
-            }
-
-            .hw-meta {
-                color: var(--color-text);
-            }
-
-            /* Мобильная версия */
-            @media (max-width: 640px) {
-                .hw-card,
-                .hw-modal {
-                    background: #fff !important;
-                }
-            }
-
-            /* Убираем белый прямоугольник вокруг списка ДЗ и фильтров */
-            #hw-list, 
-            .hw-filter,
-            .content > div:not(.content-header) {
-                background: transparent !important;
-                box-shadow: none !important;
-                border: none !important;
-            }
-
-            @media (max-width: 640px) {
-            /* Убираем прозрачный/белый фон у контейнера списка */
-            #hw-list {
-                background: transparent !important;
-                padding: 0 !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
-            }
-
-            /* Сами карточки делаем сплошными белыми */
-            .hw-card {
-                background-color: #ffffff !important; 
-                /* и добавляем легкую тень, чтобы они выделялись на фоне полосок */
-                box-shadow: 0 4px 15px rgba(110, 168, 254, 0.1) !important;
-            }
-        }
-
-                        
         }
 
         body.modal-open { overflow: hidden; }
@@ -746,6 +703,9 @@
         </aside>
 
         <main class="content">
+            <!-- Плашка пользователя -->
+            <div id="user-badge-placeholder"></div>
+
             <header class="content-header">
                 <div class="header-content">
                     <div class="breadcrumbs">Главная / Домашние задания</div>
@@ -1404,6 +1364,29 @@
                     document.body.classList.remove('menu-open');
                 }
             });
+        });
+
+        // ====== ПЛАШКА ПОЛЬЗОВАТЕЛЯ ======
+        document.addEventListener('DOMContentLoaded', () => {
+            const name = localStorage.getItem('sonches_user_name');
+            const role = localStorage.getItem('sonches_user_role');
+            const placeholder = document.getElementById('user-badge-placeholder');
+            
+            if (!name || !placeholder) return;
+
+            const initial = name.charAt(0).toUpperCase();
+            const roleLabel = role === 'teacher' ? '👩‍🏫 Учитель' : '🎓 Ученик';
+            
+            placeholder.innerHTML = `
+                <div class="user-badge">
+                    <div class="user-badge__avatar">${initial}</div>
+                    <div>
+                        <div>${name}</div>
+                        <div class="user-badge__role">${roleLabel}</div>
+                    </div>
+                    <button class="user-badge__logout" onclick="logout()">Выйти</button>
+                </div>
+            `;
         });
     </script>
 </body>
