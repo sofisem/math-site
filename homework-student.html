@@ -626,6 +626,40 @@
                 padding: 12px;
                 font-size: 13px;
             }
+            /* Основные карточки остаются белыми */
+            .hw-card {
+                background: #fff !important;
+                border-color: var(--color-blue-light);
+            }
+
+            /* Убираем дополнительные светлые контейнеры */
+            .review-block,
+            .minimal-score-card,
+            .minimal-comment,
+            .hw-task,
+            .result-card__message {
+                background: transparent !important;
+                box-shadow: none;
+            }
+
+            /* Окно с заданием тоже остаётся белым */
+            .hw-modal {
+                background: #fff !important;
+            }
+
+            .hw-meta {
+                color: var(--color-text);
+            }
+
+            /* Мобильная версия */
+            @media (max-width: 640px) {
+                .hw-card,
+                .hw-modal {
+                    background: #fff !important;
+                }
+            }
+
+            
         }
 
         body.modal-open { overflow: hidden; }
