@@ -199,7 +199,6 @@
         .hw-filter button.active { background: var(--color-blue); color: #fff; border-color: var(--color-blue); }
 
         /* ===== Блок результата проверки ===== */
-                /* ===== Блок результата проверки ===== */
         .review-block {
             margin-top: 25px; padding: 22px 24px; border-radius: 18px;
             background: #f9fbfd;
@@ -221,7 +220,6 @@
         .review-block__status--checked  { background: #2ecc71; color: #fff; }
         .review-block__status--revision { background: #e67e22; color: #fff; }
 
-        /* Блок с баллами — убираем желтый, делаем нейтрально-синим */
         .review-block__scores {
             margin-top: 16px; padding: 16px; background: #fff;
             border-radius: 12px; border: 1px solid #e0e8f3;
@@ -247,7 +245,6 @@
         .review-block__scores-total b { color: var(--color-heading); font-size: 18px; }
         .review-block__percent { color: #2ecc71; font-weight: 800; }
 
-        /* Комментарий — тоже спокойный */
         .review-block__comment { 
             margin-top: 16px; padding: 14px 16px; background: #fff; 
             border-radius: 12px; border: 1px solid #e0e8f3; 
@@ -262,7 +259,8 @@
         .review-block__date { 
             margin-top: 14px; font-size: 12px; color: #8b9aac; 
         }
-                /* ===== Минималистичный блок проверки ===== */
+
+        /* ===== Минималистичный блок проверки ===== */
         .review-block {
             margin-top: 30px; padding: 24px; border-radius: 16px;
             background: #ffffff;
@@ -283,7 +281,6 @@
         .review-block__status--checked  { background: #eefdf3; color: #27ae60; }
         .review-block__status--revision { background: #fff4e5; color: #d35400; }
 
-        /* Главная карточка с баллом */
         .minimal-score-card {
             display: flex; align-items: baseline; justify-content: space-between;
             padding: 20px 24px; border-radius: 12px; margin-bottom: 20px;
@@ -309,7 +306,6 @@
         .minimal-score-card--warning .minimal-score-card__percent { color: #d35400; }
         .minimal-score-card--danger  .minimal-score-card__percent { color: #e74c3c; }
 
-        /* Список задач */
         .minimal-task-list {
             border-top: 1px solid #f0f3f8; margin-top: 10px; margin-bottom: 20px;
         }
@@ -320,7 +316,6 @@
         }
         .minimal-task-row b { color: var(--color-heading); font-size: 15px; }
 
-        /* Комментарий */
         .minimal-comment {
             background: #f9fbfd; padding: 16px; border-radius: 10px;
             border: 1px solid #e5e9f0; margin-top: 16px;
@@ -341,12 +336,311 @@
         .minimal-date {
             margin-top: 20px; font-size: 12px; color: #b0bcc9; font-weight: 600;
         }
-                .hw-score-percent--exam {
+        .hw-score-percent--exam {
             color: var(--color-pink);
             background: #fdf0f5;
             border: 1px solid #fbd2dc;
         }
-        
+
+        /* ============================================= */
+        /* ===== МОБИЛЬНАЯ ВЕРСИЯ: КАРТОЧКИ ДЗ ===== */
+        /* ============================================= */
+        @media (max-width: 640px) {
+            .hw-card {
+                margin-bottom: 12px;
+                border-radius: 16px;
+            }
+
+            .hw-header {
+                padding: 16px 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .hw-header-info {
+                min-width: 0;
+            }
+
+            .hw-title {
+                font-size: 17px;
+                line-height: 1.3;
+                margin-bottom: 8px;
+                word-break: break-word;
+            }
+
+            .hw-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px 10px;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+            .hw-meta .hw-deadline {
+                grid-column: 1 / -1;
+                font-size: 13px;
+            }
+
+            .hw-meta .hw-status-badge {
+                grid-column: 1 / -1;
+                justify-self: start;
+            }
+
+            .hw-actions-wrap {
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
+                padding-top: 10px;
+                border-top: 1px dashed #e6f0ff;
+            }
+
+            .hw-score-percent {
+                font-size: 13px;
+                padding: 5px 10px;
+                border-radius: 10px;
+            }
+
+            .hw-open-btn {
+                flex: 1;
+                max-width: 160px;
+                padding: 11px 16px;
+                font-size: 14px;
+                border-radius: 12px;
+            }
+
+            .hw-filter {
+                gap: 8px;
+                margin-bottom: 18px;
+            }
+
+            .hw-filter button {
+                padding: 7px 14px;
+                font-size: 12px;
+            }
+
+            .hw-empty {
+                padding: 40px 20px;
+            }
+        }
+
+        /* ============================================= */
+        /* ===== МОБИЛЬНАЯ ВЕРСИЯ: МОДАЛКА ДЗ ===== */
+        /* ============================================= */
+        @media (max-width: 640px) {
+            .hw-modal-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
+
+            .hw-modal {
+                max-width: 100%;
+                border-radius: 22px 22px 0 0;
+                margin-bottom: 0;
+                max-height: 92vh;
+                display: flex;
+                flex-direction: column;
+                animation: modalSlideUpMobile 0.3s ease-out;
+            }
+
+            @keyframes modalSlideUpMobile {
+                from { opacity: 0; transform: translateY(100%); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+
+            .hw-modal__header {
+                padding: 18px 18px 16px;
+                border-radius: 22px 22px 0 0;
+                flex-shrink: 0;
+            }
+
+            .hw-modal__close {
+                top: 12px;
+                right: 12px;
+                width: 34px;
+                height: 34px;
+                border-radius: 10px;
+                font-size: 16px;
+            }
+
+            .hw-modal__title {
+                font-size: 19px;
+                padding-right: 44px;
+                line-height: 1.25;
+                margin-bottom: 8px;
+                word-break: break-word;
+            }
+
+            .hw-modal__meta {
+                font-size: 12px;
+                gap: 10px;
+            }
+
+            .hw-modal__body {
+                padding: 16px 16px 90px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                flex: 1;
+                min-height: 0;
+            }
+
+            .hw-general-desc {
+                font-size: 14px;
+                padding: 12px 14px;
+                margin-bottom: 16px;
+                border-radius: 10px;
+            }
+
+            .hw-task {
+                padding: 16px 14px;
+                border-radius: 12px;
+                margin-bottom: 12px;
+            }
+
+            .hw-task-number {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .hw-task-text {
+                font-size: 15px;
+                line-height: 1.55;
+            }
+
+            .hw-task-img {
+                max-height: 260px;
+                border-radius: 8px;
+            }
+
+            .task-answer-zone {
+                margin-top: 12px;
+                padding-top: 12px;
+            }
+
+            .task-answer-input {
+                width: 100%;
+                min-width: 0;
+                padding: 12px 14px;
+                font-size: 16px;
+                border-radius: 10px;
+            }
+
+            .task-upload-btn {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 14px;
+                text-align: center;
+                border-radius: 10px;
+            }
+
+            .task-uploaded-img {
+                max-width: 120px;
+            }
+
+            .submit-hw-btn {
+                padding: 15px;
+                font-size: 16px;
+                border-radius: 12px;
+                margin-top: 16px;
+                position: sticky;
+                bottom: 0;
+            }
+
+            .result-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px 16px;
+                gap: 16px;
+                border-radius: 16px;
+            }
+
+            .result-card__ring {
+                width: 96px;
+                height: 96px;
+            }
+
+            .result-card__percent {
+                font-size: 22px;
+            }
+
+            .result-card__title {
+                font-size: 18px;
+            }
+
+            .result-card__score {
+                font-size: 15px;
+            }
+
+            .result-card__message {
+                font-size: 13px;
+                display: block;
+                text-align: left;
+            }
+
+            .review-block {
+                padding: 18px 16px;
+                border-radius: 14px;
+            }
+
+            .minimal-score-card {
+                padding: 16px 16px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .minimal-score-card__got {
+                font-size: 28px;
+            }
+
+            .minimal-score-card__label {
+                font-size: 11px;
+            }
+
+            .minimal-score-card__percent {
+                font-size: 18px;
+            }
+
+            .minimal-task-row {
+                font-size: 13px;
+                padding: 10px 0;
+            }
+
+            .minimal-comment {
+                padding: 14px;
+            }
+
+            .minimal-comment__text {
+                font-size: 13px;
+            }
+
+            .solution-block {
+                padding: 12px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hw-header {
+                padding: 14px 12px;
+            }
+
+            .hw-modal__body {
+                padding: 14px 12px 90px;
+            }
+
+            .hw-task {
+                padding: 14px 12px;
+            }
+
+            .hw-open-btn {
+                max-width: 130px;
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+        }
+
+        body.modal-open { overflow: hidden; }
     </style>
 </head>
 <body>
@@ -538,6 +832,7 @@
 
             document.getElementById('hw-modal-overlay').classList.add('open');
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('modal-open');
 
             if (window.MathJax && MathJax.typesetPromise) {
                 MathJax.typesetPromise([bodyEl]).catch(() => {});
@@ -550,6 +845,7 @@
         function closeHwModal() {
             document.getElementById('hw-modal-overlay').classList.remove('open');
             document.body.style.overflow = '';
+            document.body.classList.remove('modal-open');
             currentOpenHwId = null;
         }
 
@@ -561,6 +857,45 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && overlay.classList.contains('open')) closeHwModal();
             });
+
+            // Свайп вниз для закрытия модалки на мобильных
+            (function initModalSwipe() {
+                const modal = document.getElementById('hw-modal');
+                const ov = document.getElementById('hw-modal-overlay');
+                if (!modal || !ov) return;
+
+                let startY = 0;
+                let currentY = 0;
+                let dragging = false;
+
+                modal.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.hw-modal__body')) return;
+                    dragging = true;
+                    startY = e.touches[0].clientY;
+                    currentY = startY;
+                    modal.style.transition = 'none';
+                }, { passive: true });
+
+                modal.addEventListener('touchmove', (e) => {
+                    if (!dragging) return;
+                    currentY = e.touches[0].clientY;
+                    const delta = currentY - startY;
+                    if (delta > 0) {
+                        modal.style.transform = `translateY(${delta}px)`;
+                    }
+                }, { passive: true });
+
+                modal.addEventListener('touchend', () => {
+                    if (!dragging) return;
+                    dragging = false;
+                    const delta = currentY - startY;
+                    modal.style.transition = 'transform 0.25s ease';
+                    if (delta > 120) {
+                        closeHwModal();
+                    }
+                    modal.style.transform = '';
+                });
+            })();
         });
 
         function loadAnswersForHw(hwId) {
@@ -641,11 +976,9 @@
         function showResults(hwId, tasks, answers, revealCorrectAnswers = false) {
             let correctCount = 0;
             
-            // 1. Берем ОБЩЕЕ количество тестовых задач (Часть 1) из самого ДЗ
             const allTestTasks = tasks.filter(t => t.type === 'test');
             const totalTestCount = allTestTasks.length; 
 
-            // 2. Отрисовываем результаты по тем задачам, на которые даны ответы
             answers.forEach(ans => {
                 const task = tasks[ans.taskId];
                 if (!task || task.type !== 'test') return;
@@ -675,7 +1008,6 @@
                 }
             });
 
-            // После проверки показываем ключ и решение также для пропущенных тестовых задач.
             if (revealCorrectAnswers) {
                 allTestTasks.forEach((task, idx) => {
                     const wasAnswered = answers.some(ans => Number(ans.taskId) === idx && ans.type === 'test');
@@ -694,12 +1026,10 @@
                 });
             }
 
-            // 3. Показываем общий итог (зеленый/желтый/красный блок)
             if (totalTestCount > 0) {
                 const scoreEl = document.getElementById(`score_${hwId}`);
                 if (!scoreEl) return;
 
-                // Считаем процент от ОБЩЕГО количества тестовых задач в ДЗ
                 const percent = Math.round((correctCount / totalTestCount) * 100);
                 let variant = 'great', emoji = '🎉', titleText = 'Отлично!';
                 let messageText = 'Ты отлично справился с этой частью. Так держать!';
@@ -844,13 +1174,11 @@
             if (r.status === 'checked') { statusText = '✅ Проверено'; statusCls = 'checked'; }
             else if (r.status === 'needs_revision') { statusText = '⚠️ На доработку'; statusCls = 'revision'; }
 
-            // 1. Считаем максимум по ВСЕМ задачам Части 2 из ДЗ
             let totalMax = 0;
             (tasks || []).forEach(t => {
                 if (t.type === 'extended' && t.maxScore) totalMax += Number(t.maxScore);
             });
 
-            // 2. Собираем выставленные баллы
             let totalGot = 0;
             let taskScores = [];
 
@@ -868,7 +1196,6 @@
                             max: Number(task.maxScore) || 0
                         });
                     });
-                // Сортируем по номеру задачи
                 taskScores.sort((a, b) => {
                     const numA = parseInt(a.title.replace(/\D/g,''));
                     const numB = parseInt(b.title.replace(/\D/g,''));
@@ -879,12 +1206,10 @@
             const examScore = (r.scores && r.scores.examScore != null) ? Number(r.scores.examScore) : null;
             const isExam = examScore !== null;
 
-            // Главный итог (для пробника — по 100-балльной шкале, для обычного ДЗ — по сумме баллов за задачи)
             const mainGot = isExam ? examScore : totalGot;
             const mainMax = isExam ? 100 : totalMax;
             const percent = mainMax > 0 ? Math.round((mainGot / mainMax) * 100) : 0;
 
-            // Цвет для акцента
             let colorClass = 'neutral';
             if (mainMax > 0) {
                 if (percent >= 70) colorClass = 'success';
@@ -892,7 +1217,6 @@
                 else colorClass = 'danger';
             }
 
-            // Формируем верстку
             block.className = 'review-block';
             block.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
@@ -900,7 +1224,6 @@
                     <span class="review-block__status review-block__status--${statusCls}">${statusText}</span>
                 </div>
 
-                <!-- Главный балл (Часть 2) -->
                 ${mainMax > 0 ? `
                     <div class="minimal-score-card minimal-score-card--${colorClass}">
                         <div class="minimal-score-card__numbers">
@@ -912,7 +1235,6 @@
                     </div>
                 ` : ''}
 
-                <!-- Детализация по задачам (показываем всегда, если есть баллы) -->
                 ${taskScores.length > 0 ? `
                     <div class="minimal-task-list" style="margin-top: 20px;">
                         ${taskScores.map(ts => `
@@ -924,7 +1246,6 @@
                     </div>
                 ` : ''}
 
-                <!-- Комментарий -->
                 ${r.teacherComment ? `
                     <div class="minimal-comment">
                         <div class="minimal-comment__label">Комментарий учителя</div>
@@ -932,10 +1253,8 @@
                     </div>
                 ` : ''}
 
-                <!-- Фото от учителя -->
                 ${r.teacherImageUrl ? `<img src="${escapeHtml(r.teacherImageUrl)}" class="minimal-img" alt="Работа с исправлениями">` : ''}
 
-                <!-- Дата -->
                 ${r.checkedAt ? `<div class="minimal-date">Проверено: ${formatDate(r.checkedAt)}</div>` : ''}
             `;
             
@@ -962,10 +1281,8 @@
 
                 let percentBadge = '';
                 if (hw.homeworkType === 'exam' && hw.examScore != null) {
-                    // Для пробника показываем итоговый балл
                     percentBadge = `<span class="hw-score-percent hw-score-percent--exam">🎯 ${hw.examScore} / 100</span>`;
                 } else if (hw.scorePercent !== null && hw.scorePercent !== undefined) {
-                    // Для обычного ДЗ показываем процент
                     percentBadge = `<span class="hw-score-percent">⭐ ${hw.scorePercent}%</span>`;
                 }
 
