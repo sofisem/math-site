@@ -659,7 +659,33 @@
                 }
             }
 
-            
+            /* Убираем белый прямоугольник вокруг списка ДЗ и фильтров */
+            #hw-list, 
+            .hw-filter,
+            .content > div:not(.content-header) {
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+
+            @media (max-width: 640px) {
+            /* Убираем прозрачный/белый фон у контейнера списка */
+            #hw-list {
+                background: transparent !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+
+            /* Сами карточки делаем сплошными белыми */
+            .hw-card {
+                background-color: #ffffff !important; 
+                /* и добавляем легкую тень, чтобы они выделялись на фоне полосок */
+                box-shadow: 0 4px 15px rgba(110, 168, 254, 0.1) !important;
+            }
+        }
+
+                        
         }
 
         body.modal-open { overflow: hidden; }
