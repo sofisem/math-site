@@ -21,6 +21,20 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ИСПРАВЛЕНИЕ ФОНА: убираем белые прямоугольники вокруг контента на мобильных */
+        @media (max-width: 1100px) {
+            .content, 
+            .app-wrapper, 
+            main,
+            #user-badge-placeholder,
+            #hw-list,
+            .hw-filter {
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+
         /* Плашка пользователя по центру */
         .user-badge {
             margin: 0 auto 25px auto !important;
